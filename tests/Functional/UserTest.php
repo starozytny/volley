@@ -12,11 +12,16 @@ class UserTest extends ApiTestCase
     {
         $client = static::createClient();
 
-
-
-        $client->request('GET', '/api/account', [
-            'auth_bearer' => "55e21a3efcc855ae0a45c5015c17641ffdc14ff1b07d157fc6c60c5566d0ad095192437d9906e19849cb764bd73abf66ff76b355408e5ef9fa66d55e"
+        $client->request('POST', '/api/login_check', [
+            'headers' => [
+                'Content-type' => 'application/json'
+            ],
+            'json' => [
+                'username' => 'shanbo',
+                'password' => 'azerty'
+            ]
         ]);
+
         $this->assertResponseIsSuccessful();
     }
 }

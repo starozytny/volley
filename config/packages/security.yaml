@@ -37,12 +37,11 @@ security:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
     access_control:
-         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api, roles: ROLE_USER }
          - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
