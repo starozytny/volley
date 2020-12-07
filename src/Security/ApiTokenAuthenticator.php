@@ -13,17 +13,19 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 {
     public function supports(Request $request)
     {
-        // todo
+        return $request->headers->has('Authorization ');
     }
 
     public function getCredentials(Request $request)
     {
-        // todo
+        $authorizationHeader = $request->headers->get('Authorization');
+
+        return substr($authorizationHeader, 7);
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // todo
+        dd($credentials);
     }
 
     public function checkCredentials($credentials, UserInterface $user)
