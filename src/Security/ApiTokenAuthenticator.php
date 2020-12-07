@@ -40,8 +40,6 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
             'token' => $credentials
         ]);
 
-        dd('user credentials');
-
         if (!$token) {
             return;
         }
@@ -51,7 +49,6 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        dd('checking credentials');
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)

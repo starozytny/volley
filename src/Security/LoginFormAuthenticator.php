@@ -4,11 +4,14 @@ namespace App\Security;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -97,6 +100,17 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
          return new RedirectResponse($this->urlGenerator->generate('app_homepage'));
+    }
+
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        $isApi = substr($request->getPathInfo(), 0,4);
+
+        if($isApi !== "/api"){
+            return new RedirectResponse($this->getLoginUrl());
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate('api_login'));
     }
 
     protected function getLoginUrl()

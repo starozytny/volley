@@ -30,6 +30,16 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/api/login", name="api_login")
+     */
+    public function loginApi()
+    {
+        return $this->json([
+            'message' => "Ca fonctionne !"
+        ]);
+    }
+
+    /**
      * @Route("/api/account", name="api_account")
      * @return Response
      */
