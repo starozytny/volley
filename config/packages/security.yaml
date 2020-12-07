@@ -15,11 +15,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        api:
-            pattern: ^/api/
-            guard:
-                authenticators:
-                    - App\Security\ApiTokenAuthenticator
+#        api:
+#            pattern: ^/api/
+#            guard:
+#                authenticators:
+#                    - App\Security\ApiTokenAuthenticator
 
         main:
             anonymous: true
@@ -28,6 +28,8 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+                    - App\Security\ApiTokenAuthenticator
+                entry_point: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
 
