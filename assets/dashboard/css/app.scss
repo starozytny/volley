@@ -1,12 +1,28 @@
 @import "~normalize.css";
 
+:root{
+    --primary: #9d4edd;
+    --danger: #ff6b6b;
+    --warning: #ffe66d;
+
+    --grey: #c7c7c7;
+    --grey2: #929292;
+
+    --alpha: #fff;
+    --beta: #000;
+
+    --txt: #101010;
+    --fond: #e8e8e8;
+}
+
 @import "vars/fonts";
 @import "vars/vars";
 
 @import "components/menu";
 
 body {
-    background-color: lightcoral;
+    color: var(--txt);
+    background-color: var(--fond);
     @include fontRegular();
 }
 
