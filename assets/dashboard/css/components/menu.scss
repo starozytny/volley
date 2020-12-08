@@ -54,7 +54,8 @@
 
   .nav-mobile{ display: none; }
   .nav-body{
-    display: block;
+    @include flex(column, flex-start, space-between);
+    min-height: 88vh;
   }
 }
 
@@ -72,8 +73,23 @@
       padding: 24px 32px;
   }
   .nav-body{
+    min-height: 84vh;
+
     a{
       padding: 12px 32px;
+      width: calc(100% - 64px);
     }
+  }
+}
+
+//                      __   _  __    ___   ___    __
+//                     | _| / |/ /_  / _ \ / _ \  |_ |
+//    _____ _____ _____| |  | | '_ \| | | | | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | | (_) | |_| | |_| |  | |_____|_____|_____|
+//                     | |  |_|\___/ \___/ \___/   | |
+//                     |__|                       |__|
+@media (min-width: 1600px){
+  nav{
+    width: 14%;
   }
 }
