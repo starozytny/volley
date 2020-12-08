@@ -1,3 +1,13 @@
+@import "~normalize.css";
+
+@import "vars/fonts";
+@import "vars/vars";
+
 body {
-    background-color: lightgrey;
+    background-color: lightcoral;
+    @include fontRegular();
+}
+
+h1{
+    @include fontBold();
 }
