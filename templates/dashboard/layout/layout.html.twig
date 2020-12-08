@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ page_title }} | {{ page_prefix }} {% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
+
+{% block body %}
+    <div class="body">
+        <nav>
+            <div class="nav-header">
+                <div class="nav-header-logo">
+                    <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo du site">
+                </div>
+            </div>
+            <div id="menu" data-menu="{{ menu | json_encode }}" data-menu-bottom="{{ menuBottom | json_encode }}"></div>
+        </nav>
+
+        <main>
+
+            <header>
+                <div class="header-container">
+                    <span>Shanbo</span>
+                </div>
+            </header>
+
+            {% include "dashboard/layout/components/page_title.html.twig" %}
+
+            <div class="main">
+                {% block main_content %}{% endblock %}
+            </div>
+
+            <footer>
+                <div class="copyright">Copyright 2020 - Logilink</div>
+            </footer>
+        </main>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('dashboard') }}
+{% endblock %}

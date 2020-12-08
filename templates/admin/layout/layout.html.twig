@@ -1,75 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashboard/layout/layout.html.twig' %}
 
-{% block title %} {{ page_title}} | Admin {% endblock %}
+{% set page_prefix = "Admin" %}
+{% set menu = [
+    {
+        'path': path('admin_homepage'),
+        'icon': 'home',
+        'label': 'Dashboard',
+        'name': 'admin'
+    },
+    {
+        'path': path('admin_users_index'),
+        'icon': 'user',
+        'label': 'Utilisateurs',
+        'name': 'utilisateurs'
+    },
+    {
+        'path': path('admin_styleguide'),
+        'icon': 'heart',
+        'label': 'Styleguide',
+        'name': 'styleguide'
+    }
+] %}
 
-{% block stylesheets %}
-    {{ encore_entry_link_tags('dashboard') }}
-{% endblock %}
-
-{% block body %}
-    {% set menu = [
-        {
-            'path': path('admin_homepage'),
-            'icon': 'home',
-            'label': 'Dashboard',
-            'name': 'admin'
-        },
-        {
-            'path': path('admin_users_index'),
-            'icon': 'user',
-            'label': 'Utilisateurs',
-            'name': 'utilisateurs'
-        },
-        {
-            'path': path('admin_styleguide'),
-            'icon': 'heart',
-            'label': 'Styleguide',
-            'name': 'styleguide'
-        }
-    ] %}
-
-    {% set menuBottom = [
-        {
-            'path': path('app_logout'),
-            'icon': 'cancel',
-            'label': 'Se déconnecter',
-            'name': 'logout'
-        }
-    ] %}
-
-    <div class="body">
-        <nav>
-            <div class="nav-header">
-                <div class="nav-header-logo">
-                    <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo du site">
-                </div>
-            </div>
-            <div id="menu" data-menu="{{ menu | json_encode }}" data-menu-bottom="{{ menuBottom | json_encode }}"></div>
-        </nav>
-
-        <main>
-
-            <header>
-                <div class="header-container">
-                    <span>Shanbo</span>
-                </div>
-            </header>
-
-            {% include "admin/layout/components/page_title.html.twig" %}
-
-            <div class="main">
-                {% block main_content %}{% endblock %}
-            </div>
-
-            <footer>
-                <div class="copyright">Copyright 2020 - Logilink</div>
-            </footer>
-        </main>
-    </div>
-
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('dashboard') }}
-{% endblock %}
+{% set menuBottom = [
+    {
+        'path': path('app_logout'),
+        'icon': 'cancel',
+        'label': 'Se déconnecter',
+        'name': 'logout'
+    }
+] %}
