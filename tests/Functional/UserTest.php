@@ -12,6 +12,9 @@ class UserTest extends ApiTestCase
     {
         $client = static::createClient();
 
+        $client->request('GET', '/api/account', []);
+        $this->assertResponseRedirects();
+
         $client->request('POST', '/api/login_check', [
             'headers' => [
                 'Content-type' => 'application/json'
@@ -22,6 +25,9 @@ class UserTest extends ApiTestCase
             ]
         ]);
 
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/api/account', []);
         $this->assertResponseIsSuccessful();
     }
 }
