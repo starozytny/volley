@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} {{ page_title}} | Admin {% endblock %}
+
 {% block stylesheets %}
     {{ encore_entry_link_tags('dashboard') }}
 {% endblock %}
@@ -40,6 +42,8 @@
                     <span>Shanbo</span>
                 </div>
             </header>
+
+            {% include "admin/layout/components/page_title.html.twig" %}
 
             <div class="main">
                 {% block main_content %}{% endblock %}
