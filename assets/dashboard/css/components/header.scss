@@ -1,0 +1,26 @@
+@import "../vars/vars";
+
+header{
+  padding: 12px;
+  background-color: var(--fond);
+
+  .header-container{
+    @include flex(row, center, flex-end);
+  }
+}
+
+//                      __   _ ____  ___   ___    __
+//                     | _| / |___ \( _ ) / _ \  |_ |
+//    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |/ __/ (_) | |_| |  | |_____|_____|_____|
+//                     | |  |_|_____\___/ \___/   | |
+//                     |__|                      |__|
+@media (min-width:1280px) {
+  header{
+    padding: 24px 32px;
+
+    .header-container{
+      @include maxscreen();
+    }
+  }
+}

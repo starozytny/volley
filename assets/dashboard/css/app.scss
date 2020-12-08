@@ -20,10 +20,10 @@
 @import "vars/vars";
 
 @import "components/menu";
+@import "components/header";
 
 body {
     color: var(--txt);
-    background-color: var(--fond);
     @include fontRegular();
 }
 
@@ -44,6 +44,8 @@ h1{
 
 .main{
     min-height: 100vh;
+    padding: 12px;
+    margin-top: 24px;
 }
 
 //                      __   _  ___ ____  _  _     __
@@ -72,5 +74,9 @@ h1{
     main{
         width: 84%;
         margin-left: 16%;
+    }
+    .main{
+        padding: 24px 32px;
+        @include maxscreen();
     }
 }
