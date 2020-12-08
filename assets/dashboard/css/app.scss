@@ -3,9 +3,22 @@
 @import "vars/fonts";
 @import "vars/vars";
 
+@import "components/menu";
+
 body {
     background-color: lightcoral;
     @include fontRegular();
+}
+
+img{
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+h1, h2, h3, h4, p{
+    margin: 0;
 }
 
 h1{
