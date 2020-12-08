@@ -4,6 +4,15 @@
     {{ encore_entry_link_tags('dashboard') }}
 {% endblock %}
 
+{% block body %}
+
+
+
+    <main>
+        {% block main_content %}{% endblock %}
+    </main>
+{% endblock %}
+
 {% block javascripts %}
     {{ encore_entry_script_tags('dashboard') }}
 {% endblock %}
