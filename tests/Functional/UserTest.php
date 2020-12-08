@@ -5,9 +5,12 @@ namespace App\Tests\Functional;
 
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
 class UserTest extends ApiTestCase
 {
+    use ReloadDatabaseTrait;
+
     public function testLogin()
     {
         $client = static::createClient();
