@@ -13,7 +13,7 @@ class UserTest extends CustomApiTestCase
     public function testCreateUser()
     {
         $client = static::createClient();
-        $this->createUserAndLogIn($client,'shanbo', 'azerty');
+        $this->loginUser($client);
 
         $client->request('POST', '/api/users', [
             'json' => [
@@ -22,7 +22,18 @@ class UserTest extends CustomApiTestCase
             ]
         ]);
         $this->assertResponseStatusCodeSame(201);
+    }
 
-        $this->logIn($client, 'cheeseplease', 'brie');
+    public function testCreateUserNoPassword()
+    {
+        $client = static::createClient();
+        $this->loginUser($client);
+
+        $client->request('POST', '/api/users', [
+            'json' => [
+                'username' => 'cheesepleaseNoPassword',
+            ]
+        ]);
+        $this->assertResponseStatusCodeSame(400);
     }
 }

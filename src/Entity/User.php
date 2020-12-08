@@ -18,6 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}},
+ *     collectionOperations={
+ *          "get",
+            "post"={ "validation_groups"= {"Default", "create"} }
+ *     }
  * )
  * @ApiFilter(PropertyFilter::class)
  * @UniqueEntity(fields={"username"})
@@ -51,6 +55,7 @@ class User implements UserInterface
 
     /**
      * @SerializedName("password")
+     * @Assert\NotBlank(groups={"create"})
      * @Groups("user:write")
      */
     private $plainPassword;
