@@ -1,0 +1,29 @@
+@import "../vars/vars";
+
+.btn{
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+$icons:
+  "default" var(alpha) var(txt) var(--greyShadow),
+  "primary" var(--primary) var(--alpha) var(--primaryShadow),
+  "danger" var(--danger) var(--alpha) var(--dangerShadow),
+  "warning" var(--warning) var(--alpha) var(--warningShadow);
+
+@each $name, $bg, $txt, $shadow in $icons {
+  .btn-#{$name} {
+    background: $bg;
+    color: $txt;
+    border: 1px slod $bg;
+    box-shadow: 0 5px 10px $shadow;
+  }
+}
+
+.btn-default{
+  border-color: 1px solid var(--grey);
+}

@@ -1,12 +1,18 @@
 @import "~normalize.css";
 
 :root{
-    --primary: #9d4edd;
-    --danger: #ff6b6b;
-    --warning: #ffe66d;
+    --primary: #7b7dec;
+    --danger: #e54a4a;
+    --warning: #e7cd34;
+
+    --primaryShadow: rgba(123,125,236, 0.4);
+    --dangerShadow: rgba(229,74,74, 0.4);
+    --warningShadow: rgba(231,205,52, 0.4);
 
     --grey: #c7c7c7;
     --grey2: #929292;
+
+    --greyShadow: rgba(199,199,199, 0.4);
 
     --alpha: #fff;
     --beta: #000;
@@ -22,6 +28,8 @@
 @import "components/menu";
 @import "components/header";
 @import "components/page";
+
+@import "components/button";
 
 body {
     color: var(--txt);
