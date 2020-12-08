@@ -16,11 +16,14 @@
 .nav-body{
   min-height: 92vh;
   display: none;
+  background: var(--fondMenu);
+  padding-top: 24px;
 
   a{
-    display: inline-block;
+    @include flex(row, center, flex-start);
     padding: 12px;
     width: calc(100% - 24px);
+    color: var(--fond);
 
     [class^="icon-"]{
       display: inline-block;
@@ -33,3 +36,36 @@
   }
 }
 
+//                      __   _  ___ ____  _  _     __
+//                     | _| / |/ _ \___ \| || |   |_ |
+//    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
+//   |_____|_____|_____| |  | | |_| / __/|__   _|  | |_____|_____|_____|
+//                     | |  |_|\___/_____|  |_|    | |
+//                     |__|                       |__|
+@media (min-width: 1024px) {
+  nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100vh;
+    background: var(--fondMenu);
+  }
+
+  .nav-mobile{ display: none; }
+  .nav-body{
+    display: block;
+  }
+}
+
+//                      __   _ ____  ___   ___    __
+//                     | _| / |___ \( _ ) / _ \  |_ |
+//    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |/ __/ (_) | |_| |  | |_____|_____|_____|
+//                     | |  |_|_____\___/ \___/   | |
+//                     |__|                      |__|
+@media (min-width:1280px) {
+  nav{
+    width: 16%;
+  }
+}
