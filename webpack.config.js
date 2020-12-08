@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+var path   = require('path');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -14,6 +15,24 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
+    .addAliases({
+        '@publicFolder': path.resolve(__dirname, './public'),
+    })
+
+    .copyFiles({
+        from: './assets/dashboard/fonts',
+        to: 'dashboard/fonts/[path][name].[ext]',
+    })
+    .copyFiles({
+        from: './assets/dashboard/images',
+        to: 'dashboard/images/[path][name].[ext]',
+    })
+
+    .configureFilenames({
+        css: 'css/[name].css',
+        js: 'js/[name].js'
+    })
+
     /*
      * ENTRY CONFIG
      *
@@ -22,8 +41,10 @@ Encore
      */
     .addEntry('app', './assets/app/js/app.js')
 
+    .addEntry('dashboard', './assets/dashboard/js/app.js')
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/controllers.json')
+    //.enableStimulusBridge('./assets/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
