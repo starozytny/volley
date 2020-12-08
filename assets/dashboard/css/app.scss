@@ -1,13 +1,21 @@
 @import "~normalize.css";
 
 :root{
-    --primary: #7b7dec;
-    --danger: #e54a4a;
-    --warning: #e7cd34;
+    --primaryNuance: #7b7dec;
+    --dangerNuance: #e54a4a;
+    --warningNuance: #e7cd34;
 
-    --primaryShadow: rgba(123,125,236, 0.4);
-    --dangerShadow: rgba(229,74,74, 0.4);
-    --warningShadow: rgba(231,205,52, 0.4);
+    --primary: #b1c7e8;
+    --danger: #e59595;
+    --warning: #e7d087;
+
+    --primaryNuanceShadow: rgba(123,125,236, 0.4);
+    --dangerNuanceShadow: rgba(229,74,74, 0.4);
+    --warningNuanceShadow: rgba(231, 205, 52, 0.4);
+
+    --primaryShadow: rgba(177,178,232, 0.4);
+    --dangerShadow: rgba(229,149,149, 0.4);
+    --warningShadow: rgba(231,205,135, 0.4);
 
     --grey: #c7c7c7;
     --grey2: #929292;
