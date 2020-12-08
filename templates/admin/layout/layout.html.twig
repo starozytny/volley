@@ -5,12 +5,49 @@
 {% endblock %}
 
 {% block body %}
+    {% set menu = [
+        {
+            'path': path('admin_homepage'),
+            'icon': 'home',
+            'label': 'Dashboard',
+            'name': 'admin'
+        }
+    ] %}
+
+    <div class="body">
+        <nav>
+            <div class="nav-header">
+                <div class="nav-header-logo">
+                    <img src="" alt="Logo du site">
+                </div>
+                <div class="nav-header-mobile">
+                    <span></span>
+                </div>
+            </div>
+            <div class="nav-body">
+                <div class="menu">
+                    <div class="item">
+                        <a href="#">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+
+            <header>
+                <span>Shanbo</span>
+            </header>
+
+            {% block main_content %}{% endblock %}
+
+            <footer>
+                <div class="copyright">Copyright 2020 - Logilink</div>
+            </footer>
+        </main>
+    </div>
 
 
-
-    <main>
-        {% block main_content %}{% endblock %}
-    </main>
 {% endblock %}
 
 {% block javascripts %}
