@@ -3,34 +3,26 @@
 
 namespace App\Tests\Functional;
 
-
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class UserTest extends ApiTestCase
+class UserTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 
-    public function testLogin()
+    public function testCreateUser()
     {
         $client = static::createClient();
+        $this->createUserAndLogIn($client,'shanbo', 'azerty');
 
-        $client->request('GET', '/api/account', []);
-        $this->assertResponseRedirects();
-
-        $client->request('POST', '/api/login_check', [
-            'headers' => [
-                'Content-type' => 'application/json'
-            ],
+        $client->request('POST', '/api/users', [
             'json' => [
-                'username' => 'shanbo',
-                'password' => 'azerty'
+                'username' => 'cheeseplease',
+                'password' => 'brie'
             ]
         ]);
+        $this->assertResponseStatusCodeSame(201);
 
-        $this->assertResponseIsSuccessful();
-
-        $client->request('GET', '/api/account', []);
-        $this->assertResponseIsSuccessful();
+        $this->logIn($client, 'cheeseplease', 'brie');
     }
 }
