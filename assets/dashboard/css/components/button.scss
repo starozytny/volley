@@ -7,10 +7,19 @@
   background: none;
   border: none;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  [class^="icon-"]{
+    font-size: 14px;
+  }
+
+  &:hover{
+    transform: translateY(-2px);
+  }
 }
 
 $icons:
-  "default" var(alpha) var(txt) var(--greyShadow),
+  "default" var(alpha) var(--txt) var(--greyShadow),
   "primary" var(--primary) var(--alpha) var(--primaryShadow),
   "danger" var(--danger) var(--alpha) var(--dangerShadow),
   "warning" var(--warning) var(--alpha) var(--warningShadow);
