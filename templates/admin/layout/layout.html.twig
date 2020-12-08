@@ -20,17 +20,8 @@
                 <div class="nav-header-logo">
                     <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo du site">
                 </div>
-                <div class="nav-header-mobile">
-                    <span></span>
-                </div>
             </div>
-            <div class="nav-body">
-                <div class="menu">
-                    <div class="item">
-                        <a href="#">Dashboard</a>
-                    </div>
-                </div>
-            </div>
+            <div id="menu" data-menu="{{ menu | json_encode }}"></div>
         </nav>
 
         <main>
@@ -39,7 +30,9 @@
                 <span>Shanbo</span>
             </header>
 
-            {% block main_content %}{% endblock %}
+            <div class="main">
+                {% block main_content %}{% endblock %}
+            </div>
 
             <footer>
                 <div class="copyright">Copyright 2020 - Logilink</div>
