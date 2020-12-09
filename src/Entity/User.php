@@ -23,7 +23,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={
  *          "get",
             "post"={ "validation_groups"= {"Default", "create"} }
- *     }
+ *     },
+ *     attributes={"formats"={"jsonld", "json", "html", "csv"={"text/csv"}}}
  * )
  * @ApiFilter(PropertyFilter::class)
  * @ApiFilter(SearchFilter::class, properties={"username": "partial"})
