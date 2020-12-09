@@ -19,16 +19,23 @@ class UserGetTest extends CustomApiTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testGetUserInfo()
+    public function testGetUserInfoRoleUser()
     {
         $client = static::createClient();
         $user = $this->loginUser($client);
 
-        $otherUser = $this->createUser('space', 'space');
+        $data = $client->request('GET', 'api/users/'.$user->getId());
+        $data = $data->toArray();
+        $this->assertArrayNotHasKey('roles', $data);
+    }
 
-        $client->request('GET', 'api/users/'.$user->getId());
-        $client->request('GET', 'api/users/'.$otherUser->getId());
+    public function testGetUserInfoRoleAdmin()
+    {
+        $client = static::createClient();
+        $user = $this->loginUserAdmin($client);
 
-        $this->assertResponseIsSuccessful();
+        $data = $client->request('GET', 'api/users/'.$user->getId());
+        $data = $data->toArray();
+        $this->assertArrayHasKey('roles', $data);
     }
 }

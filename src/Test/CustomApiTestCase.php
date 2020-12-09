@@ -10,6 +10,11 @@ use App\Entity\User;
 
 class CustomApiTestCase extends ApiTestCase
 {
+    protected function getEntityManager()
+    {
+        return self::$container->get('doctrine')->getManager();
+    }
+
     protected function createUser(string $username, string $password)
     {
         $user = new User();
@@ -19,7 +24,7 @@ class CustomApiTestCase extends ApiTestCase
             ->encodePassword($user, $password);
         $user->setPassword($encoded);
 
-        $em = self::$container->get('doctrine')->getManager();
+        $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
 
@@ -58,7 +63,7 @@ class CustomApiTestCase extends ApiTestCase
     {
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
 
-        $em = self::$container->get('doctrine')->getManager();
+        $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
 
