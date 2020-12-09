@@ -20,6 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     normalizationContext={"groups"={"user:read"}, "swagger_definition_name"="read"},
  *     denormalizationContext={"groups"={"user:write"}, "swagger_definition_name"="write"},
+ *     itemOperations={
+            "get", "delete", "put"
+ *     },
  *     collectionOperations={
  *          "get",
             "post"={
