@@ -53,14 +53,12 @@ class UserController extends AbstractController
      * @OA\Response(
      *     response=200,
      *     description="Returns a new user object",
-     *
+     *     @Model(type=User::class, groups={"admin:write"})
      * )
      *
-     * @OA\Parameter(
-     *     name="body",
-     *     in="path",
-     *     required=true,
-     *     @Model(type=User::class, groups={"admin:write"})
+     * @OA\RequestBody (
+     *     @Model(type=User::class, groups={"admin:write"}),
+     *     required=true
      * )
      *
      * @OA\Tag(name="Users")
@@ -68,8 +66,10 @@ class UserController extends AbstractController
      * @param ApiResponse $apiResponse
      * @return JsonResponse
      */
-    public function add(Request $request, ApiResponse $apiResponse): JsonResponse
+    public function create(Request $request, ApiResponse $apiResponse): JsonResponse
     {
+        dump($request->getContent());
+
         return new JsonResponse("a", 200);
     }
 }

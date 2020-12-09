@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -35,7 +36,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"admin:read"})
+     * @Groups({"admin:read", "admin:write"})
      */
     private $email;
 
@@ -51,6 +52,8 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank()
+     * @Groups({"admin:write"})
+     * @SerializedName("password")
      */
     private $plainPassword;
 
