@@ -26,7 +26,3 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
-
-    App\Serializer\AdminGroupsContextBuilder:
-        decorates: 'api_platform.serializer.context_builder'
-        arguments: [ '@App\Serializer\AdminGroupsContextBuilder.inner' ]

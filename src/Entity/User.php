@@ -2,38 +2,15 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource(
- *     normalizationContext={"groups"={"user:read"}, "swagger_definition_name"="read"},
- *     denormalizationContext={"groups"={"user:write"}, "swagger_definition_name"="write"},
- *     itemOperations={
-            "get", "delete", "put"
- *     },
- *     collectionOperations={
- *          "get",
-            "post"={
- *              "security"="is_granted('ROLE_ADMIN')",
- *              "validation_groups"={"Default", "create"}
- *           }
- *     },
- *     attributes={"formats"={"jsonld", "json", "html", "csv"={"text/csv"}}}
- * )
- * @ApiFilter(PropertyFilter::class)
- * @ApiFilter(SearchFilter::class, properties={"username": "partial"})
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  */
@@ -48,14 +25,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:read", "user:write"})
      * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:read", "user:write"})
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -63,7 +38,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"admin:read", "admin:write"})
      */
     private $roles = ['ROLE_USER'];
 
@@ -73,9 +47,7 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @SerializedName("password")
      * @Assert\NotBlank(groups={"create"})
-     * @Groups("user:write")
      */
     private $plainPassword;
 
@@ -194,7 +166,6 @@ class User implements UserInterface
      * How long ago an user was added.
      *
      * @return string
-     * @Groups("user:read")
      */
     public function getCreatedAtAgo(): string
     {
