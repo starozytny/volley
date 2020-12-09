@@ -11,6 +11,22 @@ export class Menu extends Component {
         this.handleOpenMenu = this.handleOpenMenu.bind();
     }
 
+    componentDidMount () {
+        const { menu } = this.props
+
+        let tab = location.pathname.split("/");
+        tab = tab.filter(elem => elem !== "");
+
+        tab.forEach(element => {
+            JSON.parse(menu).forEach(el => {
+                if(element === el.name){
+                    this.setState({active: element})
+                }
+            })
+
+        });
+    }
+
     handleOpenMenu = () => {
         this.setState(prevState => {
             return { isOpened: !prevState.isOpened }
@@ -19,7 +35,7 @@ export class Menu extends Component {
 
     render () {
         const { menu, menuBottom } = this.props
-        const { isOpened } = this.state
+        const { isOpened, active } = this.state
 
         return <>
             <div className="nav-mobile" onClick={this.handleOpenMenu}>
@@ -27,10 +43,10 @@ export class Menu extends Component {
             </div>
             <div className={`nav-body ${isOpened}`}>
                 <div className="items">
-                    { <MenuItem menu={menu} /> }
+                    { <MenuItem menu={menu} active={active} /> }
                 </div>
                 <div className="items">
-                    { <MenuItem menu={menuBottom} /> }
+                    { <MenuItem menu={menuBottom} active={active}/> }
                 </div>
             </div>
         </>
@@ -38,12 +54,12 @@ export class Menu extends Component {
 }
 
 function MenuItem (props){
-    const { menu } = props
+    const { menu, active } = props
 
     return (
         JSON.parse(menu).map(el => {
             return <div key={el.name} className="item">
-                <a href={el.path}>
+                <a href={el.path} className={ active === el.name ? "active" : "" }>
                     <span className={`icon-${el.icon}`} />
                     <span>{el.label}</span>
                 </a>
