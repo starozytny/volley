@@ -178,7 +178,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get createdAt for human like x years ago
+     * How long ago an user was added.
      *
      * @return string
      * @Groups("user:read")
