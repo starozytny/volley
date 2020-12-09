@@ -14,6 +14,7 @@ class CustomApiTestCase extends ApiTestCase
     {
         $user = new User();
         $user->setUsername($username);
+        $user->setEmail(sprintf("%s@outlook.fr", $username));
         $encoded = self::$container->get('security.password_encoder')
             ->encodePassword($user, $password);
         $user->setPassword($encoded);
