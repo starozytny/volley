@@ -48,13 +48,20 @@ class CustomApiTestCase extends ApiTestCase
     protected function createUserAdminAndLogIn(Client $client, string $username, string $password): User
     {
         $user = $this->createUser($username, $password);
+        $this->setToAdmin($user);
+
+        $this->logIn($client, $username, $password);
+        return $user;
+    }
+
+    protected function setToAdmin(User $user)
+    {
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
 
         $em = self::$container->get('doctrine')->getManager();
         $em->persist($user);
         $em->flush();
 
-        $this->logIn($client, $username, $password);
         return $user;
     }
 

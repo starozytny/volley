@@ -22,7 +22,7 @@ class UserGetTest extends CustomApiTestCase
     public function testGetUserInfo()
     {
         $client = static::createClient();
-        $user = $this->loginUserAdmin($client);
+        $user = $this->loginUser($client);
 
         $otherUser = $this->createUser('space', 'space');
 

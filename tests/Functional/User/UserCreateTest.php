@@ -11,6 +11,18 @@ class UserCreateTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 
+    public function testCreateUserAdminRole()
+    {
+        $client = static::createClient();
+        $this->loginUserAdmin($client);
+
+        $this->createUserApi($client, [
+            'username' => 'cheeseplease',
+            'email' => 'cheseplease@outlook.fr',
+            'password' => 'brie'
+        ], 201);
+    }
+
     public function testCreateUserWrongRole()
     {
         $client = static::createClient();
@@ -21,18 +33,6 @@ class UserCreateTest extends CustomApiTestCase
             'email' => 'cheseplease@outlook.fr',
             'password' => 'brie'
         ], 403);
-    }
-
-    public function testCreateUser()
-    {
-        $client = static::createClient();
-        $this->loginUserAdmin($client);
-
-        $this->createUserApi($client, [
-            'username' => 'cheeseplease',
-            'email' => 'cheseplease@outlook.fr',
-            'password' => 'brie'
-        ], 201);
     }
 
     public function testCreateUserWrongEmail()
