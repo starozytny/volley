@@ -5,6 +5,12 @@ nelmio_api_doc:
             description: Quelle incroyable Api !
             version: 1.0.0
 
+    models:
+        names:
+            - { alias: User_read,  type: App\Entity\User, groups: [ admin:read ] }
+            - { alias: User_write,  type: App\Entity\User, groups: [ admin:write ] }
+
+
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc

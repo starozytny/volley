@@ -7,6 +7,8 @@ use App\Repository\UserRepository;
 use App\Service\ApiResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -18,6 +20,8 @@ use OpenApi\Annotations as OA;
 class UserController extends AbstractController
 {
     /**
+     * Admin - Get array of users
+     *
      * @Security("is_granted('ROLE_ADMIN')")
      *
      * @Route("/", name="index", methods={"GET"})
@@ -25,19 +29,47 @@ class UserController extends AbstractController
      * @OA\Response(
      *     response=200,
      *     description="Returns array of users",
-     *     @Model(type=User::class, groups={"user:read"})
+     *     @Model(type=User::class, groups={"admin:read"})
      * )
      * @OA\Tag(name="Users")
      *
      * @param UserRepository $userRepository
      * @param ApiResponse $apiResponse
-     * @return Response
+     * @return JsonResponse
      */
-    public function index(UserRepository $userRepository, ApiResponse $apiResponse): Response
+    public function index(UserRepository $userRepository, ApiResponse $apiResponse): JsonResponse
     {
         $users = $userRepository->findAll();
-        return $apiResponse->apiJsonResponse($users, ['user:read']);
+        return $apiResponse->apiJsonResponse($users, ['admin:read']);
     }
 
-
+    /**
+     * Admin - Create an user
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/", name="create", methods={"POST"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a new user object",
+     *
+     * )
+     *
+     * @OA\Parameter(
+     *     name="body",
+     *     in="path",
+     *     required=true,
+     *     @Model(type=User::class, groups={"admin:write"})
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param ApiResponse $apiResponse
+     * @return JsonResponse
+     */
+    public function add(Request $request, ApiResponse $apiResponse): JsonResponse
+    {
+        return new JsonResponse("a", 200);
+    }
 }

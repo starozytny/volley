@@ -27,7 +27,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Groups({"user:read"})
+     * @Groups({"admin:read", "admin:write"})
      */
     private $username;
 
@@ -35,7 +35,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"user:read"})
+     * @Groups({"admin:read"})
      */
     private $email;
 
@@ -50,7 +50,7 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @Assert\NotBlank(groups={"create"})
+     * @Assert\NotBlank()
      */
     private $plainPassword;
 
@@ -169,7 +169,7 @@ class User implements UserInterface
      * How long ago an user was added.
      *
      * @return string
-     * @Groups({"user:read"})
+     * @Groups({"admin:read"})
      */
     public function getCreatedAtAgo(): string
     {
