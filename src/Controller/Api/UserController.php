@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -20,6 +21,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UserController extends AbstractController
 {
+    const ADMIN_READ = ['admin:read'];
+
     /**
      * Admin - Get array of users
      *
@@ -41,7 +44,7 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository, ApiResponse $apiResponse): JsonResponse
     {
         $users = $userRepository->findAll();
-        return $apiResponse->apiJsonResponse($users, ['admin:read']);
+        return $apiResponse->apiJsonResponse($users, self::ADMIN_READ);
     }
 
     /**
@@ -66,16 +69,19 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param ValidatorService $validator
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param ApiResponse $apiResponse
      * @return JsonResponse
      */
-    public function create(Request $request, ValidatorService $validator): JsonResponse
+    public function create(Request $request, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder, ApiResponse $apiResponse): JsonResponse
     {
+        $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
         $user = new User();
         $user->setUsername($data->username);
         $user->setEmail($data->email);
-        $user->setPlainPassword($data->password);
+        $user->setPassword($passwordEncoder->encodePassword($user, $data->password));
 
         $noErrors = $validator->validate($user);
 
@@ -83,6 +89,9 @@ class UserController extends AbstractController
             return new JsonResponse($noErrors, 400);
         }
 
-        return new JsonResponse("a", 200);
+        $em->persist($user);
+        $em->flush();
+
+        return $apiResponse->apiJsonResponse($user, self::ADMIN_READ);
     }
 }

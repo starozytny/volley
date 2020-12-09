@@ -51,15 +51,9 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @Assert\NotBlank()
-     * @Groups({"admin:write"})
-     * @SerializedName("password")
-     */
-    private $plainPassword;
-
-    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"admin:write"})
      */
     private $password;
 
@@ -138,17 +132,7 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        $this->plainPassword = null;
-    }
-
-    public function getPlainPassword(): ?string
-    {
-        return $this->plainPassword;
-    }
-    public function setPlainPassword(string $plainPassword): self
-    {
-        $this->plainPassword = $plainPassword;
-        return $this;
+        // $this->plainPassword = null;
     }
 
     public function getEmail(): ?string
