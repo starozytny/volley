@@ -17,8 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
- *     normalizationContext={"groups"={"user:read"}},
- *     denormalizationContext={"groups"={"user:write"}},
+ *     normalizationContext={"groups"={"user:read"}, "swagger_definition_name"="read"},
+ *     denormalizationContext={"groups"={"user:write"}, "swagger_definition_name"="write"},
  *     collectionOperations={
  *          "get",
             "post"={ "validation_groups"= {"Default", "create"} }
@@ -45,7 +45,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("user:read")
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
 
