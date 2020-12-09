@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/users", name="api_users_")
@@ -82,6 +81,10 @@ class UserController extends AbstractController
         $user->setUsername($data->username);
         $user->setEmail($data->email);
         $user->setPassword($passwordEncoder->encodePassword($user, $data->password));
+
+        if(isset($data->roles)){
+            $user->setRoles($data->roles);
+        }
 
         $noErrors = $validator->validate($user);
 

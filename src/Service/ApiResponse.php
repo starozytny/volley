@@ -15,7 +15,7 @@ class ApiResponse
     {
         $this->serializer = $serializer;
     }
-    public function apiJsonResponse($data, $groups = [], $code = 200)
+    public function apiJsonResponse($data, $groups = [], $code = 200): JsonResponse
     {
         $data = $this->serializer->serialize($data, "json", ['groups' => $groups]);
 

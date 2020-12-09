@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -42,6 +42,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"admin:write"})
+     * @OA\Property(type="array", @OA\Items(type="string"))
      */
     private $roles = ['ROLE_USER'];
 
