@@ -74,4 +74,13 @@ class CustomApiTestCase extends WebTestCase
     {
         return $this->createUserAdminAndLogIn($client, "shanbo", "azerty");
     }
+
+    protected function sendRequestJson($client, $method, $url, $json, $codeExpected)
+    {
+        $client->request($method, $url, [], [],
+            ['CONTENT_TYPE' => 'application/json'],
+            $json
+        );
+        $this->assertResponseStatusCodeSame($codeExpected);
+    }
 }

@@ -10,16 +10,20 @@ class UserCreateTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 
+    const URL_CREATE = "/api/users/";
+
     public function testCreateUserAdminRole()
     {
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [
-            'username' => 'cheeseplease',
-            'email' => 'cheseplease@outlook.fr',
-            'password' => 'brie'
-        ], 201);
+        $json = '{
+            "username":"henry", 
+            "email":"henry@outlook.fr", 
+            "password":"azerty"
+        }';
+
+        $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 200);
     }
 
     public function testCreateUserWrongRole()
@@ -27,11 +31,13 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUser($client);
 
-        $this->createUserApi($client, [
-            'username' => 'cheeseplease',
-            'email' => 'cheseplease@outlook.fr',
-            'password' => 'brie'
-        ], 403);
+        $json = '{
+            "username":"henry", 
+            "email":"henry@outlook.fr", 
+            "password":"azerty"
+        }';
+
+        $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 403);
     }
 
     public function testCreateUserWrongEmail()
@@ -39,11 +45,13 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [
-            'username' => 'cheeseplease',
-            'email' => 'cheseplease',
-            'password' => 'brie'
-        ], 400);
+        $json = '{
+            "username":"henry", 
+            "email":"henry", 
+            "password":"azerty"
+        }';
+
+        $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 400);
     }
 
     public function testCreateUserNoWriteableProperty()
@@ -51,7 +59,7 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [ 'roles' => ['ROLE_USER'] ], 400);
+//        $this->createUserApi($client, [ 'roles' => ['ROLE_USER'] ], 400);
     }
 
     public function testCreateUserEmpty()
@@ -59,7 +67,7 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [], 400);
+//        $this->createUserApi($client, [], 400);
     }
 
     public function testCreateUserNoUsername()
@@ -67,7 +75,7 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [ 'password' => 'azerty' ], 400);
+//        $this->createUserApi($client, [ 'password' => 'azerty' ], 400);
     }
 
     public function testCreateUserNoPassword()
@@ -75,12 +83,8 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword' ], 400);
+//        $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword' ], 400);
     }
 
-    protected function createUserApi($client, Array $json, $codeReturn)
-    {
-        $client->request('POST', '/api/users', [ 'json' => $json ]);
-        $this->assertResponseStatusCodeSame($codeReturn);
-    }
+
 }
