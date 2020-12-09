@@ -17,24 +17,27 @@ class DatabaseService
         $this->entityManager = $entityManager;
     }
 
-    public function resetTable(SymfonyStyle $io, $item)
+    public function resetTable(SymfonyStyle $io, $list)
     {
-        $connection = $this->entityManager->getConnection();
+        foreach ($list as $item) {
+            $connection = $this->entityManager->getConnection();
 
-        $connection->beginTransaction();
-        try {
-            $connection->query('SET FOREIGN_KEY_CHECKS=0');
-            $connection->executeUpdate(
-                $connection->getDatabasePlatform()->getTruncateTableSQL(
-                    $item, true
-                )
-            );
-            $connection->query('SET FOREIGN_KEY_CHECKS=1');
-            $connection->commit();
+            $connection->beginTransaction();
+            try {
+                $connection->query('SET FOREIGN_KEY_CHECKS=0');
+                $connection->executeUpdate(
+                    $connection->getDatabasePlatform()->getTruncateTableSQL(
+                        $item, true
+                    )
+                );
+                $connection->query('SET FOREIGN_KEY_CHECKS=1');
+                $connection->commit();
+            } catch (DBALException $e) {
+                $io->error('Database reset [FAIL] : ' . $e);
+            }
 
-        } catch (DBALException $e) {
-            $io->error('Reset [FAIL] : ' . $e);
         }
         $io->text('Reset [OK]');
+
     }
 }
