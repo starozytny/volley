@@ -23,6 +23,26 @@ class UserTest extends CustomApiTestCase
         ], 201);
     }
 
+    public function testCreateUserWrongEmail()
+    {
+        $client = static::createClient();
+        $this->loginUser($client);
+
+        $this->createUserApi($client, [
+            'username' => 'cheeseplease',
+            'email' => 'cheseplease',
+            'password' => 'brie'
+        ], 400);
+    }
+
+    public function testCreateUserNoWriteableProperty()
+    {
+        $client = static::createClient();
+        $this->loginUser($client);
+
+        $this->createUserApi($client, [ 'roles' => 'ROLE_USER', ], 400);
+    }
+
     public function testCreateUserEmpty()
     {
         $client = static::createClient();
@@ -45,14 +65,6 @@ class UserTest extends CustomApiTestCase
         $this->loginUser($client);
 
         $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword', ], 400);
-    }
-
-    public function testCreateUserNoWriteableProperty()
-    {
-        $client = static::createClient();
-        $this->loginUser($client);
-
-        $this->createUserApi($client, [ 'roles' => 'ROLE_USER', ], 400);
     }
 
     protected function createUserApi(Client $client, Array $json, $codeReturn)
