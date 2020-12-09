@@ -14,7 +14,7 @@ class UserCreateTest extends CustomApiTestCase
     public function testCreateUser()
     {
         $client = static::createClient();
-        $this->loginUser($client);
+//        $this->loginUser($client);
 
         $this->createUserApi($client, [
             'username' => 'cheeseplease',

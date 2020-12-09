@@ -18,11 +18,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
+ *     accessControl="is_granted('ROLE_USER')",
  *     normalizationContext={"groups"={"user:read"}, "swagger_definition_name"="read"},
  *     denormalizationContext={"groups"={"user:write"}, "swagger_definition_name"="write"},
  *     collectionOperations={
  *          "get",
-            "post"={ "validation_groups"= {"Default", "create"} }
+            "post"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"
+ *              "validation_groups"= {"Default", "create"}
+ *           }
  *     },
  *     attributes={"formats"={"jsonld", "json", "html", "csv"={"text/csv"}}}
  * )
