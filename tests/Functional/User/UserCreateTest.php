@@ -54,20 +54,12 @@ class UserCreateTest extends CustomApiTestCase
         $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 400);
     }
 
-    public function testCreateUserNoWriteableProperty()
-    {
-        $client = static::createClient();
-        $this->loginUserAdmin($client);
-
-//        $this->createUserApi($client, [ 'roles' => ['ROLE_USER'] ], 400);
-    }
-
     public function testCreateUserEmpty()
     {
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-//        $this->createUserApi($client, [], 400);
+        $this->sendRequestJson($client, "POST", self::URL_CREATE, null, 400);
     }
 
     public function testCreateUserNoUsername()
@@ -75,16 +67,11 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-//        $this->createUserApi($client, [ 'password' => 'azerty' ], 400);
+        $json = '{
+            "email":"henry", 
+            "password":"azerty"
+        }';
+
+        $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 400);
     }
-
-    public function testCreateUserNoPassword()
-    {
-        $client = static::createClient();
-        $this->loginUserAdmin($client);
-
-//        $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword' ], 400);
-    }
-
-
 }

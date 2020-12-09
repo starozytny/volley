@@ -77,6 +77,14 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
+        if($data === null){
+            return new JsonResponse(['message' => 'Les données sont vides.'], 400);
+        }
+
+        if(!isset($data->username) || !isset($data->email) || !isset($data->password)){
+            return new JsonResponse(['message' => 'Il manque des données.'], 400);
+        }
+
         $user = new User();
         $user->setUsername($data->username);
         $user->setEmail($data->email);
