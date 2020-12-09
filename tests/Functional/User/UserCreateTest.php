@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\User;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class UserTest extends CustomApiTestCase
+class UserCreateTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 

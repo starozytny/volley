@@ -47,6 +47,6 @@ class CustomApiTestCase extends ApiTestCase
 
     protected function loginUser(Client $client)
     {
-        $this->createUserAndLogIn($client, "shanbo", "azerty");
+        return $this->createUserAndLogIn($client, "shanbo", "azerty");
     }
 }
