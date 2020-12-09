@@ -23,7 +23,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={
  *          "get",
             "post"={
- *              "validation_groups"= {"Default", "create"}
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "validation_groups"={"Default", "create"}
  *           }
  *     },
  *     attributes={"formats"={"jsonld", "json", "html", "csv"={"text/csv"}}}

@@ -11,10 +11,22 @@ class UserCreateTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 
-    public function testCreateUser()
+    public function testCreateUserWrongRole()
     {
         $client = static::createClient();
         $this->loginUser($client);
+
+        $this->createUserApi($client, [
+            'username' => 'cheeseplease',
+            'email' => 'cheseplease@outlook.fr',
+            'password' => 'brie'
+        ], 403);
+    }
+
+    public function testCreateUser()
+    {
+        $client = static::createClient();
+        $this->loginUserAdmin($client);
 
         $this->createUserApi($client, [
             'username' => 'cheeseplease',
@@ -26,7 +38,7 @@ class UserCreateTest extends CustomApiTestCase
     public function testCreateUserWrongEmail()
     {
         $client = static::createClient();
-        $this->loginUser($client);
+        $this->loginUserAdmin($client);
 
         $this->createUserApi($client, [
             'username' => 'cheeseplease',
@@ -38,7 +50,7 @@ class UserCreateTest extends CustomApiTestCase
     public function testCreateUserNoWriteableProperty()
     {
         $client = static::createClient();
-        $this->loginUser($client);
+        $this->loginUserAdmin($client);
 
         $this->createUserApi($client, [ 'roles' => 'ROLE_USER', ], 400);
     }
@@ -46,7 +58,7 @@ class UserCreateTest extends CustomApiTestCase
     public function testCreateUserEmpty()
     {
         $client = static::createClient();
-        $this->loginUser($client);
+        $this->loginUserAdmin($client);
 
         $this->createUserApi($client, [], 400);
     }
@@ -54,7 +66,7 @@ class UserCreateTest extends CustomApiTestCase
     public function testCreateUserNoUsername()
     {
         $client = static::createClient();
-        $this->loginUser($client);
+        $this->loginUserAdmin($client);
 
         $this->createUserApi($client, [ 'password' => 'azerty' ], 400);
     }
@@ -62,7 +74,7 @@ class UserCreateTest extends CustomApiTestCase
     public function testCreateUserNoPassword()
     {
         $client = static::createClient();
-        $this->loginUser($client);
+        $this->loginUserAdmin($client);
 
         $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword', ], 400);
     }
