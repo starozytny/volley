@@ -30,17 +30,6 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/api/account", name="api_account")
-     * @return Response
-     */
-    public function accountApi(): Response
-    {
-        $user = $this->getUser();
-
-        return $this->json($user);
-    }
-
-    /**
      * @Route("/logout", name="app_logout")
      */
     public function logout()
