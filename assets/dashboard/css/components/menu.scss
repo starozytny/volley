@@ -24,10 +24,16 @@
     padding: 12px;
     width: calc(100% - 24px);
     color: var(--fond);
+    opacity: 0.7;
 
     [class^="icon-"]{
       display: inline-block;
       margin-right: 8px;
+    }
+
+
+    &:hover{
+      transform: translateX(5px);
     }
   }
 
