@@ -4,11 +4,10 @@
 namespace App\Test;
 
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class CustomApiTestCase extends ApiTestCase
+class CustomApiTestCase extends WebTestCase
 {
     protected function getEntityManager()
     {
@@ -31,26 +30,23 @@ class CustomApiTestCase extends ApiTestCase
         return $user;
     }
 
-    protected function logIn(Client $client, string $username, string $password)
+    protected function logIn($client, string $username, string $password)
     {
-        $client->request('POST', '/api/login_check', [
-            'headers' => ['Content-Type' => 'application/json'],
-            'json' => [
-                'username' => $username,
-                'password' => $password
-            ],
-        ]);
+        $client->request('POST', '/api/login_check', [], [],
+            ['CONTENT_TYPE' => 'application/json'],
+            sprintf('{"username":"%s", "password":"%s"}', $username, $password)
+        );
         $this->assertResponseStatusCodeSame(200);
     }
 
-    protected function createUserAndLogIn(Client $client, string $username, string $password): User
+    protected function createUserAndLogIn($client, string $username, string $password): User
     {
         $user = $this->createUser($username, $password);
         $this->logIn($client, $username, $password);
         return $user;
     }
 
-    protected function createUserAdminAndLogIn(Client $client, string $username, string $password): User
+    protected function createUserAdminAndLogIn($client, string $username, string $password): User
     {
         $user = $this->createUser($username, $password);
         $this->setToAdmin($user);
@@ -64,18 +60,17 @@ class CustomApiTestCase extends ApiTestCase
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
 
         $em = $this->getEntityManager();
-        $em->persist($user);
         $em->flush();
 
         return $user;
     }
 
-    protected function loginUser(Client $client)
+    protected function loginUser($client)
     {
         return $this->createUserAndLogIn($client, "shanbo", "azerty");
     }
 
-    protected function loginUserAdmin(Client $client)
+    protected function loginUserAdmin($client)
     {
         return $this->createUserAdminAndLogIn($client, "shanbo", "azerty");
     }

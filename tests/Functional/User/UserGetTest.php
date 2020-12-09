@@ -10,32 +10,21 @@ class UserGetTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 
-    public function testGetUsersInfo()
+    public function testGetUsersInfoRoleUser()
     {
         $client = static::createClient();
         $this->loginUser($client);
 
-        $client->request('GET', 'api/users');
-        $this->assertResponseIsSuccessful();
+        $client->request('GET', '/api/users/');
+        $this->assertResponseStatusCodeSame(403);
     }
 
-    public function testGetUserInfoRoleUser()
+    public function testGetUsersInfoRoleAdmin()
     {
         $client = static::createClient();
-        $user = $this->loginUser($client);
+        $this->loginUserADmin($client);
 
-        $data = $client->request('GET', 'api/users/'.$user->getId());
-        $data = $data->toArray();
-        $this->assertArrayNotHasKey('roles', $data);
-    }
-
-    public function testGetUserInfoRoleAdmin()
-    {
-        $client = static::createClient();
-        $user = $this->loginUserAdmin($client);
-
-        $data = $client->request('GET', 'api/users/'.$user->getId());
-        $data = $data->toArray();
-        $this->assertArrayHasKey('roles', $data);
+        $client->request('GET', '/api/users/');
+        $this->assertResponseStatusCodeSame(200);
     }
 }

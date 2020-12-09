@@ -3,7 +3,6 @@
 
 namespace App\Tests\Functional\User;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
@@ -79,7 +78,7 @@ class UserCreateTest extends CustomApiTestCase
         $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword' ], 400);
     }
 
-    protected function createUserApi(Client $client, Array $json, $codeReturn)
+    protected function createUserApi($client, Array $json, $codeReturn)
     {
         $client->request('POST', '/api/users', [ 'json' => $json ]);
         $this->assertResponseStatusCodeSame($codeReturn);

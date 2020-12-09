@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -26,6 +27,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
+     * @Groups({"user:read"})
      */
     private $username;
 
@@ -33,6 +35,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @Groups({"user:read"})
      */
     private $email;
 
@@ -166,6 +169,7 @@ class User implements UserInterface
      * How long ago an user was added.
      *
      * @return string
+     * @Groups({"user:read"})
      */
     public function getCreatedAtAgo(): string
     {
