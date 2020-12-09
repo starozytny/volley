@@ -52,7 +52,7 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [ 'roles' => 'ROLE_USER', ], 400);
+        $this->createUserApi($client, [ 'roles' => ['ROLE_USER'] ], 400);
     }
 
     public function testCreateUserEmpty()
@@ -76,7 +76,7 @@ class UserCreateTest extends CustomApiTestCase
         $client = static::createClient();
         $this->loginUserAdmin($client);
 
-        $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword', ], 400);
+        $this->createUserApi($client, [ 'username' => 'cheesepleaseNoPassword' ], 400);
     }
 
     protected function createUserApi(Client $client, Array $json, $codeReturn)
