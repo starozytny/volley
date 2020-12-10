@@ -3,7 +3,10 @@
 {% set page_title %}Utilisateurs{% endset %}
 
 {% block main_content %}
-    <div>
-        Hello world
-    </div>
+    <div class="react" id="user"></div>
+{% endblock %}
+
+{% block %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('dashboard_user') }}
 {% endblock %}
