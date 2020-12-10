@@ -25,6 +25,16 @@ export function UserItems (props) {
                                     <span className="icon-pencil" />
                                     <span className="tooltip">Modifier</span>
                                 </div>
+
+                                <div className="btn-icon">
+                                    <span className="icon-trash" />
+                                    <span className="tooltip">Supprimer</span>
+                                </div>
+
+                                <div className="btn-icon">
+                                    <span className="icon-share" />
+                                    <span className="tooltip">Impersonate</span>
+                                </div>
                             </div>
                         </div>
 
