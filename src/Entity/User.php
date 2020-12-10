@@ -18,6 +18,8 @@ use OpenApi\Annotations as OA;
  */
 class User implements UserInterface
 {
+    const ADMIN_READ = ['admin:read'];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

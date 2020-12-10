@@ -20,8 +20,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-    const ADMIN_READ = ['admin:read'];
-
     /**
      * Admin - Get array of users
      *
@@ -45,7 +43,7 @@ class UserController extends AbstractController
     {
         $orderUsername = $request->query->get('orderUsername') ?: 'ASC';
         $users = $userRepository->findBy([], ['username' => $orderUsername]);
-        return $apiResponse->apiJsonResponse($users, self::ADMIN_READ, 200);
+        return $apiResponse->apiJsonResponse($users, User::ADMIN_READ);
     }
 
     /**
@@ -105,6 +103,6 @@ class UserController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $apiResponse->apiJsonResponse($user, self::ADMIN_READ);
+        return $apiResponse->apiJsonResponse($user, User::ADMIN_READ);
     }
 }
