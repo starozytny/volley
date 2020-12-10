@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\ApiResponse;
+use App\Service\SanitizeData;
 use App\Service\ValidatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,9 +71,11 @@ class UserController extends AbstractController
      * @param ValidatorService $validator
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param ApiResponse $apiResponse
+     * @param SanitizeData $sanitizeData
      * @return JsonResponse
      */
-    public function create(Request $request, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder, ApiResponse $apiResponse): JsonResponse
+    public function create(Request $request, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder,
+                           ApiResponse $apiResponse, SanitizeData $sanitizeData): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
@@ -86,7 +89,7 @@ class UserController extends AbstractController
         }
 
         $user = new User();
-        $user->setUsername(trim($data->username));
+        $user->setUsername($sanitizeData->fullSanitize($data->username));
         $user->setEmail($data->email);
         $user->setPassword($passwordEncoder->encodePassword($user, $data->password));
 

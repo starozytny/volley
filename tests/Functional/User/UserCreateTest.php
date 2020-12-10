@@ -81,11 +81,11 @@ class UserCreateTest extends CustomApiTestCase
         $this->loginUserAdmin($client);
 
         $json = '{
-            "username": " Henry Potter",
+            "username": " Henry Potter é",
             "email":"henry@outlook.fr", 
             "password":"azerty"
         }';
 
-        $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 400);
+        $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 200);
     }
 }
