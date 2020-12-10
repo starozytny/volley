@@ -74,4 +74,18 @@ class UserCreateTest extends CustomApiTestCase
 
         $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 400);
     }
+
+    public function testCreateUserInvalidUsername()
+    {
+        $client = static::createClient();
+        $this->loginUserAdmin($client);
+
+        $json = '{
+            "username": " Henry Potter",
+            "email":"henry@outlook.fr", 
+            "password":"azerty"
+        }';
+
+        $this->sendRequestJson($client, "POST", self::URL_CREATE, $json, 400);
+    }
 }
