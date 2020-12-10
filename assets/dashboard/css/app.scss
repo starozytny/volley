@@ -36,7 +36,9 @@
 @import "components/menu";
 @import "components/header";
 @import "components/footer";
+
 @import "components/page";
+@import "components/toolbar";
 
 @import "components/button";
 @import "components/alert";
@@ -62,7 +64,7 @@ h1{
     @include fontBold();
 }
 
-.main{
+.main-content{
     min-height: 100vh;
     padding: 12px;
     margin-top: 24px;
@@ -95,7 +97,7 @@ h1{
         width: 84%;
         margin-left: 16%;
     }
-    .main{
+    .main-content{
         padding: 24px 32px;
         @include maxscreen();
     }

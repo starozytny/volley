@@ -1,0 +1,22 @@
+@import "../vars/vars";
+
+.toolbar{
+  background: var(--fond);
+  padding: 12px 12px 24px 12px;
+}
+
+//                      __   _ ____  ___   ___    __
+//                     | _| / |___ \( _ ) / _ \  |_ |
+//    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |/ __/ (_) | |_| |  | |_____|_____|_____|
+//                     | |  |_|_____\___/ \___/   | |
+//                     |__|                      |__|
+@media (min-width:1280px) {
+  .toolbar{
+    padding: 24px 32px 32px 32px;
+  }
+
+  .toolbar-container{
+    @include maxscreen();
+  }
+}
