@@ -20,11 +20,13 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "axios": "^0.21.0",
         "node-sass": "4.14.1",
         "normalize.css": "^8.0.1",
         "prop-types": "^15.7.2",
         "react": "^17.0.1",
-        "react-dom": "^17.0.1"
+        "react-dom": "^17.0.1",
+        "toastr": "^2.1.4"
     },
     "browserslist": [
         "last 4 version",

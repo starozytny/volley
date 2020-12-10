@@ -2,11 +2,14 @@
 
 .page-title{
   background: var(--fond);
-  padding: 12px 12px 24px 12px;
 
   h1{
     text-transform: uppercase;
   }
+}
+
+.page-title, .page-error{
+  padding: 12px 12px 24px 12px;
 }
 
 //                      __   _ ____  ___   ___    __
@@ -16,11 +19,11 @@
 //                     | |  |_|_____\___/ \___/   | |
 //                     |__|                      |__|
 @media (min-width:1280px) {
-  .page-title{
+  .page-title, .page-error{
     padding: 24px 32px 32px 32px;
   }
 
-  .page-title-container{
+  .page-title-container, .page-error-container{
     @include maxscreen();
   }
 }

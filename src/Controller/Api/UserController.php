@@ -27,7 +27,7 @@ class UserController extends AbstractController
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/", name="index", options={"expose"=true}, methods={"GET"})
      *
      * @OA\Response(
      *     response=200,
@@ -45,7 +45,7 @@ class UserController extends AbstractController
     {
         $orderUsername = $request->query->get('orderUsername') ?: 'ASC';
         $users = $userRepository->findBy([], ['username' => $orderUsername]);
-        return $apiResponse->apiJsonResponse($users, self::ADMIN_READ);
+        return $apiResponse->apiJsonResponse($users, self::ADMIN_READ, 400);
     }
 
     /**
