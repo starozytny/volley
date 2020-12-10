@@ -61,17 +61,16 @@ class AdminUsersCreateCommand extends Command
             ]
         );
 
+        $password = password_hash("azerty", PASSWORD_ARGON2I);
+
         $io->title('Création des utilisateurs');
         foreach ($users as $user) {
             $new = (new User())
                 ->setUsername($user['username'])
                 ->setEmail($user['email'])
                 ->setRoles($user['roles'])
+                ->setPassword($password)
             ;
-
-            $new->setPassword($this->passwordEncoder->encodePassword(
-                $new, 'azerty'
-            ));
 
             $this->em->persist($new);
             $io->text('USER : ' . $user['username'] . ' créé' );
@@ -84,11 +83,8 @@ class AdminUsersCreateCommand extends Command
                     ->setUsername("Utilisateur " . $i)
                     ->setEmail("utilisateur".$i."@utilisateur.fr")
                     ->setRoles(['ROLE_USER'])
+                    ->setPassword($password)
                 ;
-
-                $new->setPassword($this->passwordEncoder->encodePassword(
-                    $new, 'azerty'
-                ));
 
                 $this->em->persist($new);
             }
