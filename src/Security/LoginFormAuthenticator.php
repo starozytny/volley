@@ -100,6 +100,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             return new RedirectResponse($targetPath);
         }
 
+        /** @var User $user */
+        $user = $token->getUser();
+
+        $user->setLastLogin(new \DateTimeImmutable());
+        $this->entityManager->flush();
+
         if ($this->security->isGranted('ROLE_ADMIN')){
             return new RedirectResponse($this->urlGenerator->generate('admin_homepage'));
         }

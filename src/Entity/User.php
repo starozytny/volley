@@ -66,6 +66,11 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -141,7 +146,6 @@ class User implements UserInterface
         }
     }
 
-
     /**
      * @see UserInterface
      */
@@ -200,5 +204,31 @@ class User implements UserInterface
     public function getCreatedAtAgo(): string
     {
         return Carbon::instance($this->getCreatedAt())->diffForHumans();
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    /**
+     * How long ago an user was logged for the last time.
+     *
+     * @Groups({"admin:read"})
+     */
+    public function getLastLoginAgo(): ?string
+    {
+        if($this->getLastLogin()){
+            return Carbon::instance($this->getLastLogin())->diffForHumans();
+        }
+
+        return null;
     }
 }
