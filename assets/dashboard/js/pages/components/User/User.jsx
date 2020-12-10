@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import axios       from "axios";
-import toastr      from "toastr";
+import axios             from "axios";
+import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import Routing     from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
-
-import { Page } from "@dashboardComponents/Layout/Page";
+import { Page }          from "@dashboardComponents/Layout/Page";
 import { LoaderElement } from "@dashboardComponents/Layout/Loader";
+
+import { UserItems } from "./UserItems";
 
 export class User extends Component {
     constructor(props) {
@@ -23,8 +23,7 @@ export class User extends Component {
         const self = this;
         axios.get(Routing.generate('api_users_index'), {})
             .then(function (response) {
-                const data = response.data;
-                self.setState({ data });
+                self.setState({ data: response.data });
             })
             .catch(function (error) {
                 self.setState({ loadPageError: true });
@@ -39,9 +38,7 @@ export class User extends Component {
 
         return <>
             <Page haveLoadPageError={loadPageError}>
-                {loadData ? <LoaderElement /> :
-                    <div>Hello world</div>
-                }
+                {loadData ? <LoaderElement /> : <UserItems data={data} />}
             </Page>
         </>
     }
