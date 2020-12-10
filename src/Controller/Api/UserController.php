@@ -36,13 +36,15 @@ class UserController extends AbstractController
      * )
      * @OA\Tag(name="Users")
      *
+     * @param Request $request
      * @param UserRepository $userRepository
      * @param ApiResponse $apiResponse
      * @return JsonResponse
      */
-    public function index(UserRepository $userRepository, ApiResponse $apiResponse): JsonResponse
+    public function index(Request $request, UserRepository $userRepository, ApiResponse $apiResponse): JsonResponse
     {
-        $users = $userRepository->findAll();
+        $orderUsername = $request->query->get('orderUsername') ?: 'ASC';
+        $users = $userRepository->findBy([], ['username' => $orderUsername]);
         return $apiResponse->apiJsonResponse($users, self::ADMIN_READ);
     }
 
