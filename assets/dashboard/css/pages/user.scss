@@ -1,0 +1,28 @@
+@import "../vars/vars";
+
+.items-user{
+
+  .avatar{
+    background: var(--fond);
+    width: 64px; height: 64px;
+    overflow: hidden;
+    margin-right: 12px;
+
+    img{
+      width: 64px; height: 64px;
+    }
+  }
+
+  .username, .email{
+    word-break: break-all;
+  }
+
+  .username{
+    @include fontSemibold();
+  }
+
+  .email{
+    font-size: 14px;
+    opacity: 0.7;
+  }
+}

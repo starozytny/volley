@@ -1,0 +1,23 @@
+@import "../vars/vars";
+
+.items-table{
+  padding-bottom: 24px;
+
+  .item{
+    @include flex(row, flex-start, flex-start);
+    border-bottom: 1px solid var(--fond);
+    padding: 12px 0;
+  }
+
+  .item-content{
+    @include flex(row, flex-start, flex-start);
+  }
+
+  .item-selector{
+    width: 12px; height: 12px;
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 12px;
+  }
+}

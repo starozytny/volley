@@ -50,7 +50,7 @@ export class User extends Component {
             <Page haveLoadPageError={loadPageError}
                   havePagination={true} taille={data && data.length} data={data} onUpdate={this.handleUpdateData}
             >
-                {loadData ? <LoaderElement /> : <UserItems data={currentData} />}
+                {loadData ? <LoaderElement /> : <div className="items-table"><UserItems data={currentData} /></div>}
             </Page>
         </>
     }
