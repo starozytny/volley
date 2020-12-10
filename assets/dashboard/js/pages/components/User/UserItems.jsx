@@ -23,6 +23,7 @@ export function UserItems (props) {
                             <div className="actions">
                                 <div className="btn-icon">
                                     <span className="icon-pencil" />
+                                    <span className="tooltip">Modifier</span>
                                 </div>
                             </div>
                         </div>
