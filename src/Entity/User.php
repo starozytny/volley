@@ -20,6 +20,10 @@ class User implements UserInterface
 {
     const ADMIN_READ = ['admin:read'];
 
+    const CODE_ROLE_USER = 0;
+    const CODE_ROLE_SUPER_ADMIN = 1;
+    const CODE_ROLE_ADMIN = 2;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -107,6 +111,36 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getHighRole(): string
+    {
+        $rolesSortedByImportance = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER'];
+        $rolesLabel = ['Super admin', 'Administrateur', 'Utilisateur'];
+        $i = 0;
+        foreach ($rolesSortedByImportance as $role)
+        {
+            if (in_array($role, $this->roles))
+            {
+                return $rolesLabel[$i];
+            }
+            $i++;
+        }
+
+        return "Utilisateur";
+    }
+
+    public function getHighRoleCode(): int
+    {
+        switch($this->getHighRole()){
+            case 'Super admin':
+                return self::CODE_ROLE_SUPER_ADMIN;
+            case 'Administrateur':
+                return self::CODE_ROLE_ADMIN;
+            default:
+                return self::CODE_ROLE_USER;
+        }
+    }
+
 
     /**
      * @see UserInterface
