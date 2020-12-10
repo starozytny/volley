@@ -1,25 +1,33 @@
 @import "../vars/vars";
 
-.btn{
+.btn, .btn-icon{
   display: inline-block;
   padding: 8px 18px;
   border-radius: 4px;
   background: none;
   border: none;
   cursor: pointer;
+  opacity: 0.9;
   transition: all 0.2s ease-in-out;
 
   [class^="icon-"]{
     font-size: 14px;
+    margin-right: 4px;
   }
 
   &:hover{
     transform: translateY(-2px);
+    opacity: 1;
   }
 }
 
+.btn-icon{
+  padding: 8px;
+  opacity: 0.7;
+}
+
 $icons:
-  "default" var(alpha) var(--txt) var(--greyShadow),
+  "default" var(--alpha) var(--txt) var(--greyShadow),
   "primary" var(--primary) var(--txt) var(--primaryShadow),
   "danger" var(--danger) var(--txt) var(--dangerShadow),
   "warning" var(--warning) var(--txt) var(--warningShadow);
@@ -30,6 +38,10 @@ $icons:
     color: $txt;
     border: 1px slod $bg;
     box-shadow: 0 5px 10px $shadow;
+
+    &:hover{
+      box-shadow: 0 8px 10px $shadow;
+    }
   }
 }
 
