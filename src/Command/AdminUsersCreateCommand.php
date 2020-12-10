@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\User;
 use App\Service\DatabaseService;
 use Doctrine\ORM\EntityManagerInterface;
+use Faker\Factory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,7 +20,8 @@ class AdminUsersCreateCommand extends Command
     protected $em;
     private $databaseService;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, DatabaseService $databaseService)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager,
+                                DatabaseService $databaseService)
     {
         parent::__construct();
 
@@ -78,10 +80,11 @@ class AdminUsersCreateCommand extends Command
 
         if ($input->getOption('fake')) {
             $io->title('Création de 110 utilisateurs lambdas');
+            $fake = Factory::create();
             for($i=0; $i<110 ; $i++) {
                 $new = (new User())
-                    ->setUsername("Utilisateur " . $i)
-                    ->setEmail("utilisateur".$i."@utilisateur.fr")
+                    ->setUsername($fake->userName)
+                    ->setEmail($fake->freeEmail)
                     ->setRoles(['ROLE_USER'])
                     ->setPassword($password)
                 ;
