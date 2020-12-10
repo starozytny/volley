@@ -2,6 +2,11 @@
 
 .items-user{
 
+  .item-body{
+    flex-direction: row;
+    align-items: stretch;
+  }
+
   .avatar{
     background: var(--fond);
     width: 64px; height: 64px;
@@ -11,6 +16,11 @@
     img{
       width: 64px; height: 64px;
     }
+  }
+
+  .infos{
+    width: calc(100% - 64px - 12px);
+    @include flex(column, flex-start, space-between);
   }
 
   .username, .email{
