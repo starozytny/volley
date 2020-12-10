@@ -45,7 +45,7 @@ class UserController extends AbstractController
     {
         $orderUsername = $request->query->get('orderUsername') ?: 'ASC';
         $users = $userRepository->findBy([], ['username' => $orderUsername]);
-        return $apiResponse->apiJsonResponse($users, self::ADMIN_READ, 400);
+        return $apiResponse->apiJsonResponse($users, self::ADMIN_READ, 200);
     }
 
     /**
