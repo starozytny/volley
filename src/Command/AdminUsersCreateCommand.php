@@ -12,9 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class AdminCreateUsersCommand extends Command
+class AdminUsersCreateCommand extends Command
 {
-    protected static $defaultName = 'admin:create:users';
+    protected static $defaultName = 'admin:users:create';
     protected $passwordEncoder;
     protected $em;
     private $databaseService;
@@ -32,7 +32,7 @@ class AdminCreateUsersCommand extends Command
     {
         $this
             ->setDescription('Create an user and an admin.')
-            ->addOption('option', null, InputOption::VALUE_NONE, 'Option shit values')
+            ->addOption('fake', null, InputOption::VALUE_NONE, 'Option shit values')
         ;
     }
 
@@ -77,7 +77,7 @@ class AdminCreateUsersCommand extends Command
             $io->text('USER : ' . $user['username'] . ' créé' );
         }
 
-        if ($input->getOption('option')) {
+        if ($input->getOption('fake')) {
             $io->title('Création de 110 utilisateurs lambdas');
             for($i=0; $i<110 ; $i++) {
                 $new = (new User())

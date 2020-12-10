@@ -15,15 +15,19 @@ export class User extends Component {
         this.state = {
             loadPageError: false,
             loadData: true,
-            data: null
+            data: null,
+            currentData: null
         }
+
+        this.handleUpdateData = this.handleUpdateData.bind(this);
     }
 
     componentDidMount() {
         const self = this;
         axios.get(Routing.generate('api_users_index'), {})
             .then(function (response) {
-                self.setState({ data: response.data });
+                let data = response.data;
+                self.setState({ data: data, currentData: data.slice(0, 12) });
             })
             .catch(function (error) {
                 self.setState({ loadPageError: true });
@@ -33,12 +37,20 @@ export class User extends Component {
             });
     }
 
+    /**
+     *
+     * @param data
+     */
+    handleUpdateData = (data) => { this.setState({ currentData: data })  }
+
     render () {
-        const { loadPageError, loadData, data } = this.state;
+        const { loadPageError, loadData, data, currentData } = this.state;
 
         return <>
-            <Page haveLoadPageError={loadPageError}>
-                {loadData ? <LoaderElement /> : <UserItems data={data} />}
+            <Page haveLoadPageError={loadPageError}
+                  havePagination={true} taille={data && data.length} data={data} onUpdate={this.handleUpdateData}
+            >
+                {loadData ? <LoaderElement /> : <UserItems data={currentData} />}
             </Page>
         </>
     }
