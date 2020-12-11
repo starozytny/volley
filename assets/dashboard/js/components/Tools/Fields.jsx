@@ -11,14 +11,15 @@ export function Input(props) {
 export function Checkbox({items, name, valeur, onChange, children}) {
     let itemsInputs = items.map(elem => {
 
+        let isChecked = false
         valeur.value.map(el => {
-            if (el === elem.value){ elem.checked = true }
+            if (el === elem.value){ isChecked = true }
         })
 
-        return <div className={"checkbox-item " + (elem.checked ? 'checked' : '')} key={elem.id}>
+        return <div className={"checkbox-item " + (isChecked ? 'checked' : '')} key={elem.id}>
             <label htmlFor={elem.identifiant}>
                 {elem.label}
-                <input type="checkbox" name={name} id={elem.identifiant} value={elem.value} checked={elem.checked ? 'checked' : ''} onChange={onChange}/>
+                <input type="checkbox" name={name} id={elem.identifiant} value={elem.value} checked={isChecked ? 'checked' : ''} onChange={onChange}/>
             </label>
         </div>
     })
@@ -31,14 +32,15 @@ export function Checkbox({items, name, valeur, onChange, children}) {
 export function Radiobox({items, name, valeur, onChange, children}) {
     let itemsInputs = items.map(elem => {
 
+        let isChecked = false
         valeur.value.map(el => {
-            if (el === elem.value){ elem.checked = true }
+            if (el === elem.value){ isChecked = true }
         })
 
-        return <div className={"radiobox-item " + (elem.checked ? 'checked' : '')} key={elem.id}>
+        return <div className={"radiobox-item " + (isChecked ? 'checked' : '')} key={elem.id}>
             <label htmlFor={elem.identifiant}>
                 <span>{elem.label}</span>
-                <input type="radio" name={name} id={elem.identifiant} value={elem.value} checked={elem.checked ? 'checked' : ''} onChange={onChange}/>
+                <input type="radio" name={name} id={elem.identifiant} value={elem.value} checked={isChecked ? 'checked' : ''} onChange={onChange}/>
             </label>
         </div>
     })

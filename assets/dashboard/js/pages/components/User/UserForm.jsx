@@ -42,9 +42,18 @@ export class UserForm extends Component {
         const { username, email, password, passwordConfirm, roles } = this.state;
 
         let rolesItems = [
-            { 'id': 1, 'value': 'ROLE_SUPER_ADMIN', 'label': 'Super admin', 'identifiant': 'superamdin', 'checked': false },
-            { 'id': 2, 'value': 'ROLE_ADMIN', 'label': 'Admin', 'identifiant': 'admin', 'checked': false },
-            { 'id': 0, 'value': 'ROLE_USER',  'label': 'Utilisateur', 'identifiant': 'utilisateur', 'checked': false },
+            { 'id': 1, 'value': 'ROLE_SUPER_ADMIN',
+                'label':        'Super admin',
+                'identifiant':  'superamdin'
+            },
+            { 'id': 2, 'value': 'ROLE_ADMIN',
+                'label':        'Admin',
+                'identifiant':  'admin'
+            },
+            { 'id': 0, 'value': 'ROLE_USER',
+                'label':        'Utilisateur',
+                'identifiant':  'utilisateur'
+            },
         ]
 
         return <>
