@@ -1,0 +1,25 @@
+<section>
+    <h2>Boutons</h2>
+    <div class="buttons-items">
+
+        {% for variante in variantes %}
+            <button class="btn btn-{{ variante }}">{{ variante | capitalize }}</button>
+        {% endfor %}
+
+        <button class="btn btn-default">
+            <span class="icon-padlock"></span>
+            Defalut
+        </button>
+
+        <div class="btn-icon">
+            <span class="icon-pencil"></span>
+            <span class="tooltip">Modifier</span>
+        </div>
+
+        <div class="btn-icon">
+            <span class="icon-pencil"></span>
+            Default
+        </div>
+
+    </div>
+</section>

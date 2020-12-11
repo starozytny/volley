@@ -1,0 +1,27 @@
+<section>
+    <h2>Alerts</h2>
+    <div class="alerts-items">
+        {% for variante in variantes %}
+            <div class="alert alert-{{ variante }}">
+                <span class="icon-information"></span>
+                <p>{{ variante | capitalize }}</p>
+            </div>
+        {% endfor %}
+        <div class="alert alert-default">
+            <span class="icon-information"></span>
+            <p>
+                <span class="title">Title</span>
+                Default
+            </p>
+        </div>
+        <div class="alert alert-default">
+            <p>Default</p>
+        </div>
+        <div class="alert alert-default">
+            <p>
+                <span class="title">Title</span>
+                Default
+            </p>
+        </div>
+    </div>
+</section>

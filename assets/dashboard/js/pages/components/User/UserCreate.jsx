@@ -17,7 +17,7 @@ export class UserCreate extends Component {
                 <div className="form">
                     <h2>Ajouter un utilisateur</h2>
                     <form>
-
+                        <input type="text" name="username" id="username"/>
                     </form>
                 </div>
 
