@@ -13,10 +13,12 @@ export class UserForm extends Component {
     constructor(props) {
         super(props);
 
+        console.log(props.roles)
+
         this.state = {
             username: props.username,
             email: props.email,
-            roles: [],
+            roles: props.roles,
             password: '',
             passwordConfirm: '',
             errors: [],
@@ -82,7 +84,6 @@ export class UserForm extends Component {
                             password: '',
                             passwordConfirm: '',
                         })
-                        document.getElementById("form").reset();
                     }
                 })
                 .catch(function (error) {
@@ -118,7 +119,7 @@ export class UserForm extends Component {
             <p className="form-infos">
                 Le nom d'utilisateur est automatiquement formaté pour supprimer les espaces et les accents sont supprimés ou remplacés.
             </p>
-            <form onSubmit={this.handleSubmit} id="form">
+            <form onSubmit={this.handleSubmit}>
                 {success !== false && <Alert type="info">{success}</Alert>}
                 <div className="line line-2">
                     <Input valeur={username} identifiant="username" errors={errors} onChange={this.handleChange} >Nom utilisateur</Input>

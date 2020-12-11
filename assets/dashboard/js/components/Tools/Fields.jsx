@@ -3,7 +3,7 @@ import React from "react";
 export function Input (props) {
     const { type="text", identifiant, valeur, errors, onChange, children, placeholder } = props;
 
-    let content = <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur.value} onChange={onChange}/>
+    let content = <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur} onChange={onChange}/>
 
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }

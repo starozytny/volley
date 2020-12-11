@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { UserForm }  from "./UserForm";
-
-import { Button }    from "@dashboardComponents/Tools/Button";
+import { UserForm }      from "./UserForm";
+import { Button }        from "@dashboardComponents/Tools/Button";
 
 export class UserCreate extends Component {
     constructor(props) {
@@ -29,6 +28,7 @@ export class UserCreate extends Component {
                         url={Routing.generate('api_users_create')}
                         username=""
                         email=""
+                        roles={[]}
                         onUpdateList={onUpdateList}
                         messageSuccess="Félicitation ! Vous avez ajouté un nouveau utilisateur !"
                     />

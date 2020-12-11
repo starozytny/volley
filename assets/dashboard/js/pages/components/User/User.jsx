@@ -70,7 +70,7 @@ export class User extends Component {
                 content = <UserCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
                 break;
             case "update":
-                content =<UserUpdate onChangeContext={this.handleChangeContext} element={element} />
+                content =<UserUpdate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element} />
                 break;
             default:
                 havePagination = true;

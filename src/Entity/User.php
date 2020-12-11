@@ -49,7 +49,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"admin:write"})
+     * @Groups({"admin:read", "admin:write"})
      * @OA\Property(type="array", @OA\Items(type="string"))
      */
     private $roles = ['ROLE_USER'];

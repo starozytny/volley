@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
-import { Button }    from "@dashboardComponents/Tools/Button";
+import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
+
+import { UserForm }      from "./UserForm";
+import { Button }        from "@dashboardComponents/Tools/Button";
 
 export class UserUpdate extends Component {
     render () {
-        const { onChangeContext, element } = this.props;
+        const { onChangeContext, onUpdateList, element } = this.props;
 
         return <>
             <div>
@@ -13,7 +16,18 @@ export class UserUpdate extends Component {
                         <Button icon="left-arrow" type="default" onClick={() => onChangeContext("list")}>Retour à la liste</Button>
                     </div>
                 </div>
-                <h2>Modifier {element.username}</h2>
+                <div className="form">
+                    <h2>Modifier {element.username}</h2>
+                    <UserForm
+                        type="create"
+                        url={Routing.generate('api_users_create')}
+                        username={element.username}
+                        email={element.email}
+                        roles={element.roles}
+                        onUpdateList={onUpdateList}
+                        messageSuccess="Félicitation ! La mise à jour s'est réalisé avec succès !"
+                    />
+                </div>
             </div>
         </>
     }
