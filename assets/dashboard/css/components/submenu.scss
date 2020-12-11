@@ -1,6 +1,6 @@
 @import "../vars/vars";
 
-.toolbar{
+.submenu{
   background: var(--fond);
   padding: 12px 12px 24px 12px;
 }
@@ -12,11 +12,11 @@
 //                     | |  |_|_____\___/ \___/   | |
 //                     |__|                      |__|
 @media (min-width:1280px) {
-  .toolbar{
+  .submenu{
     padding: 24px 32px 32px 32px;
   }
 
-  .toolbar-container{
+  .submenu-container{
     @include maxscreen();
   }
 }
