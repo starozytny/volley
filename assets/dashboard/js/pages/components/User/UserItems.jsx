@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { ButtonIcon } from "@dashboardComponents/Tools/Button";
+
 export function UserItems (props) {
-    const { data } = props
+    const { data, onChangeContext } = props
 
     return <div className="items items-user">
         {data.map(elem => {
@@ -21,20 +23,9 @@ export function UserItems (props) {
                                 <div className="email">{elem.email}</div>
                             </div>
                             <div className="actions">
-                                <div className="btn-icon">
-                                    <span className="icon-pencil" />
-                                    <span className="tooltip">Modifier</span>
-                                </div>
-
-                                <div className="btn-icon">
-                                    <span className="icon-trash" />
-                                    <span className="tooltip">Supprimer</span>
-                                </div>
-
-                                <div className="btn-icon">
-                                    <span className="icon-share" />
-                                    <span className="tooltip">Impersonate</span>
-                                </div>
+                                <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
+                                <ButtonIcon icon={"trash"} onClick={() => onChangeContext("delete")}>Supprimer</ButtonIcon>
+                                <ButtonIcon icon={"share"} onClick={() => onChangeContext("impersonate")}>Impersonate</ButtonIcon>
                             </div>
                         </div>
 
