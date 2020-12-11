@@ -7,6 +7,7 @@ import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
 import { Alert }               from "@dashboardComponents/Tools/Alert";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
+import Loader              from "@dashboardComponents/functions/loader";
 
 export class UserForm extends Component {
     constructor(props) {
@@ -66,6 +67,7 @@ export class UserForm extends Component {
         if(!validate.code){
             this.setState({ errors: validate.errors });
         }else{
+            Loader.loader(true);
             let self = this;
             axios({ method: 'post', url: url, data: self.state })
                 .then(function (response) {
@@ -86,6 +88,9 @@ export class UserForm extends Component {
                 .catch(function (error) {
                     self.setState({ errors: error.response.data })
                     toastr.error("Veuillez vérifier les informations transmises.")
+                })
+                .then(() => {
+                    Loader.loader(false);
                 })
             ;
         }
