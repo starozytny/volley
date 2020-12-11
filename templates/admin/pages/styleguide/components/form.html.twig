@@ -2,6 +2,7 @@
     <h2>Formulaire</h2>
     <div class="form-items">
         <div class="form">
+            {#      TEXT      #}
             <div class="line">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -9,6 +10,7 @@
                     <div class="error"></div>
                 </div>
             </div>
+            {#      TEXT x2 + ERROR     #}
             <div class="line line-2">
                 <div class="form-group">
                     <label for="password">Mot de passe</label>
@@ -24,6 +26,120 @@
                     </div>
                 </div>
             </div>
+
+            {#      CHECKBOX + RADIOBOX      #}
+            <div class="line line-2">
+                <div class="form-group">
+                    <label for="password">Roles</label>
+                    <div class="checkbox-items">
+                        <div class="checkbox-item">
+                            <label for="c-superadmin">
+                                Super admnistrateur
+                                <input type="checkbox" name="c-roles" id="c-superadmin" value="c-superadmin"/>
+                            </label>
+                        </div>
+                        <div class="checkbox-item checked">
+                            <label for="c-admin">
+                                Admnistrateur
+                                <input type="checkbox" name="c-roles" id="c-admin" value="c-admin"/>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label for="c-user">
+                                Utilisateur
+                                <input type="checkbox" name="c-roles" id="c-user" value="c-user"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Role principal</label>
+                    <div class="radiobox-items">
+                        <div class="radiobox-item">
+                            <label for="r-superadmin">
+                                Super admnistrateur
+                                <input type="radio" name="r-roles" id="r-superadmin" value="r-superadmin"/>
+                            </label>
+                        </div>
+                        <div class="radiobox-item checked">
+                            <label for="r-admin">
+                                Admnistrateur
+                                <input type="radio" name="r-roles" id="r-admin" value="r-admin"/>
+                            </label>
+                        </div>
+                        <div class="radiobox-item">
+                            <label for="r-user">
+                                Utilisateur
+                                <input type="radio" name="r-roles" id="r-user" value="r-user"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="error"></div>
+                </div>
+            </div>
+
+            {#      CHECKBOX + RADIOBOX + ERROR     #}
+            <div class="line line-2">
+                <div class="form-group form-group-error">
+                    <label for="password">Roles</label>
+                    <div class="checkbox-items">
+                        <div class="checkbox-item">
+                            <label for="c-superadmin">
+                                Super admnistrateur
+                                <input type="checkbox" name="c-roles" id="c-superadmin" value="c-superadmin"/>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label for="c-admin">
+                                Admnistrateur
+                                <input type="checkbox" name="c-roles" id="c-admin" value="c-admin"/>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label for="c-user">
+                                Utilisateur
+                                <input type="checkbox" name="c-roles" id="c-user" value="c-user"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="error">
+                        <span class='icon-warning'></span>
+                        <span>Au moins une option doit être sélectionnée.</span>
+                    </div>
+                </div>
+
+                <div class="form-group form-group-error">
+                    <label for="password">Role principal</label>
+                    <div class="radiobox-items">
+                        <div class="radiobox-item">
+                            <label for="r-superadmin">
+                                Super admnistrateur
+                                <input type="radio" name="r-roles" id="r-superadmin" value="r-superadmin"/>
+                            </label>
+                        </div>
+                        <div class="radiobox-item">
+                            <label for="r-admin">
+                                Admnistrateur
+                                <input type="radio" name="r-roles" id="r-admin" value="r-admin"/>
+                            </label>
+                        </div>
+                        <div class="radiobox-item">
+                            <label for="r-user">
+                                Utilisateur
+                                <input type="radio" name="r-roles" id="r-user" value="r-user"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="error">
+                        <span class='icon-warning'></span>
+                        <span>Une option doit être sélectionnée.</span>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </section>

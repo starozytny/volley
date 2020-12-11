@@ -48,14 +48,17 @@ select{
 .checkbox-items, .radiobox-items{
   @include flex(row, stretch, flex-start);
   flex-wrap: wrap;
-  & > .checkbox-item:not(:last-child){
+
+  & > .checkbox-item:not(:last-child),
+  & > .radiobox-item:not(:last-child),{
     margin-right: 10px;
   }
 }
-.checkbox-item{
+.checkbox-item, .radiobox-item{
   margin-top: 4px;
+
   &.checked > label{
-    border: 1px solid var(--grey);
+    border: 1px solid var(--grey2);
     color: var(--beta);
     opacity: 1;
 
@@ -68,8 +71,7 @@ select{
     padding: 5px 10px;
     text-transform: capitalize;
     border: 1px dashed var(--grey);
-    opacity: 0.7;
-    color: var(--beta);
+    opacity: 0.6;
     cursor: pointer;
     border-radius: 3px;
     transition: all 0.2s ease-in-out;
@@ -84,21 +86,9 @@ select{
   }
 }
 
-.radiobox-items{
-  width: 100%;
-}
-
 .radiobox-item{
   label{
-    @include flex(row, center, flex-start);
-
-    span{
-      width: calc(95% - 12px);
-    }
-  }
-  input{
-    width: 5%;
-    margin-left: 12px;
+    border-radius: 20px;
   }
 }
 
