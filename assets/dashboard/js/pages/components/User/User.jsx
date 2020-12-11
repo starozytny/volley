@@ -6,8 +6,10 @@ import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.
 import { Page }          from "@dashboardComponents/Layout/Page";
 import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 
-import { UserItems }     from "./UserItems";
-import { Button }    from "@dashboardComponents/Tools/Button";
+import { UserList }      from "./UserList";
+import { UserCreate }    from "./UserCreate";
+import { UserUpdate }    from "./UserUpdate";
+import { Button }        from "@dashboardComponents/Tools/Button";
 
 export class User extends Component {
     constructor(props) {
@@ -52,21 +54,14 @@ export class User extends Component {
 
         let content = null;
         switch (context){
+            case "create":
+                content = <UserCreate onChangeContext={this.handleChangeContext} />
+                break;
             case "update":
-                content = <div>
-                    <Button icon="left-arrow" onClick={() => this.handleChangeContext("list")}>Retour à la liste</Button>
-                    <h2>Modifier {element.username}</h2>
-                </div>
+                content =<UserUpdate onChangeContext={this.handleChangeContext} element={element} />
                 break;
             default:
-                content = loadData ? <LoaderElement /> : <div className="items-table">
-                    <div className="toolbar">
-                        <div className="item add">
-                            <Button>Ajouter un utilisateur</Button>
-                        </div>
-                    </div>
-                    <UserItems data={currentData} onChangeContext={this.handleChangeContext} />
-                </div>
+                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext} data={currentData}/>
                 break;
         }
 

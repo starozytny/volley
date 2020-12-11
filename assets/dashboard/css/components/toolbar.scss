@@ -9,7 +9,7 @@
     width: 100%;
   }
 
-  .add{
+  .create{
     .btn{
       width: calc(100% - 36px);
     }
@@ -24,7 +24,7 @@
 //                     |__|                    |__|
 @media (min-width:768px) {
   .toolbar{
-    .add{
+    .create{
       .btn{
         width: auto;
       }

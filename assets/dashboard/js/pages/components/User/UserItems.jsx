@@ -12,7 +12,6 @@ export function UserItems (props) {
                 <div className="item-selector" />
 
                 <div className="item-content">
-
                     <div className="item-body">
                         <div className="avatar">
                             <img src={`https://robohash.org/${elem.username}?size=64x64`} alt={`Avatar de ${elem.username}`}/>
@@ -28,10 +27,9 @@ export function UserItems (props) {
                                 <ButtonIcon icon={"share"} onClick={() => onChangeContext("impersonate")}>Impersonate</ButtonIcon>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
+
             </div>
         })}
     </div>
