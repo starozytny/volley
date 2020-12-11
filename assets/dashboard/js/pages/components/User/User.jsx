@@ -60,7 +60,11 @@ export class User extends Component {
                 break;
             default:
                 content = loadData ? <LoaderElement /> : <div className="items-table">
-
+                    <div className="toolbar">
+                        <div className="item add">
+                            <Button>Ajouter un utilisateur</Button>
+                        </div>
+                    </div>
                     <UserItems data={currentData} onChangeContext={this.handleChangeContext} />
                 </div>
                 break;
