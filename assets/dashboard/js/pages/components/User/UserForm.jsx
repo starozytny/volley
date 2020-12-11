@@ -5,6 +5,7 @@ import axios             from "axios";
 import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
+import Errors                  from "@dashboardComponents/functions/errors";
 
 export class UserForm extends Component {
     constructor(props) {
@@ -56,29 +57,26 @@ export class UserForm extends Component {
         // validate global
         let validate = Validateur.validateur(paramsToValidate)
 
-        console.log(validate)
-
-        // check password confirme
-        // if(type === "create"){
-        //     console.log(password.value, passwordConfirm.value)
-        //     if(password.value !== passwordConfirm.value){
-        //         validate.code = false;
-        //         validate.errors = {...validate.errors, ...{password: {value: password.value, error: 'Les mot de passes ne sont pas identique.'}}};
-        //     }
-        // }
-
         // check validate success
         if(!validate.code){
             this.setState(validate.errors);
         }else{
-
-            let fd = new FormData();
-            fd.append('data', JSON.stringify(this.state));
-
-            let self = this
-            axios({ method: 'post', url: url, data: fd, headers: {'Content-Type': 'multipart/form-data'} }).then(function (response) {
-                let data = response.data;
-            });
+            let jsonData = {
+                username: username.value,
+                email: email.value,
+                roles: roles.value,
+                password: password.value
+            };
+            let self = this;
+            axios({ method: 'post', url: url, data: jsonData })
+                .then(function (response) {
+                    let data = response.data;
+                })
+                .catch(function (error) {
+                    let errors = Errors.setErrors(error, self.state)
+                    self.setState(errors)
+                })
+            ;
         }
 
     }
