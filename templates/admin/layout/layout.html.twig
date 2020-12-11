@@ -24,6 +24,12 @@
 
 {% set menuBottom = [
     {
+        'path': path('app.swagger_ui'),
+        'icon': 'dashboard',
+        'label': 'API',
+        'name': 'api'
+    },
+    {
         'path': path('app_logout'),
         'icon': 'cancel',
         'label': 'Se déconnecter',
