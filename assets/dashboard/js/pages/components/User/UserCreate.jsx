@@ -5,7 +5,6 @@ import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.
 import { UserForm }  from "./UserForm";
 
 import { Button }    from "@dashboardComponents/Tools/Button";
-import { Input }     from "@dashboardComponents/Tools/Fields";
 
 export class UserCreate extends Component {
     constructor(props) {
@@ -31,6 +30,7 @@ export class UserCreate extends Component {
                         username=""
                         email=""
                         onUpdateList={onUpdateList}
+                        messageSuccess="Félicitation ! Vous avez ajouté un nouveau utilisateur !"
                     />
                 </div>
             </div>

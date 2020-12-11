@@ -3,17 +3,19 @@ import React from "react";
 export function Alert(props){
     const { type, title, children } = props;
 
-    let icon;
+    let icon, alert;
     switch (type){
         case "info":
+            alert = "primary";
             icon = "information";
             break;
         default:
+            alert = "danger";
             icon = "warning";
             break;
     }
 
-    return <div className="alert alert-danger">
+    return <div className={`alert alert-${alert}`}>
         <span className={`icon-${icon}`} />
         <p>
             {title && <span className="title">{title}</span>}

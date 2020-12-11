@@ -1,5 +1,11 @@
 @import '../vars/vars.scss';
 
+.form{
+  .alert{
+    margin-bottom: 24px;
+  }
+}
+
 .form-group{
   @include flex(column, flex-start, flex-start);
 }

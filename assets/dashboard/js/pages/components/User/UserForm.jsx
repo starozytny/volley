@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
 import axios             from "axios";
+import toastr            from "toastr";
 
 import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
+import { Alert }               from "@dashboardComponents/Tools/Alert";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
 
@@ -16,7 +18,8 @@ export class UserForm extends Component {
             roles: [],
             password: '',
             passwordConfirm: '',
-            errors: []
+            errors: [],
+            success: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,8 +43,10 @@ export class UserForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { type, url } = this.props;
+        const { type, url, messageSuccess } = this.props;
         const { username, password, passwordConfirm, email, roles } = this.state;
+
+        this.setState({ success: false})
 
         let paramsToValidate = [
             {type: "text", id: 'username', value: username},
@@ -59,23 +64,25 @@ export class UserForm extends Component {
 
         // check validate success
         if(!validate.code){
-            this.setState({errors: validate.errors});
+            this.setState({ errors: validate.errors });
         }else{
             let self = this;
             axios({ method: 'post', url: url, data: self.state })
                 .then(function (response) {
                     let data = response.data;
                     self.props.onUpdateList(data)
+                    self.setState({ success: messageSuccess, errors: [] })
                 })
                 .catch(function (error) {
-                    self.setState({errors: error.response.data})
+                    self.setState({ errors: error.response.data })
+                    toastr.error("Veuillez vérifier les informations transmises.")
                 })
             ;
         }
     }
 
     render () {
-        const { errors, username, email, password, passwordConfirm, roles } = this.state;
+        const { errors, success, username, email, password, passwordConfirm, roles } = this.state;
 
         let rolesItems = [
             { 'id': 1, 'value': 'ROLE_SUPER_ADMIN',
@@ -94,6 +101,7 @@ export class UserForm extends Component {
 
         return <>
             <form onSubmit={this.handleSubmit}>
+                {success !== false && <Alert type="info">{success}</Alert>}
                 <div className="line line-2">
                     <Input valeur={username} identifiant="username" errors={errors} onChange={this.handleChange} >Nom utilisateur</Input>
                     <Input valeur={email} identifiant="email" errors={errors} onChange={this.handleChange} type="email" >Adresse e-mail</Input>
