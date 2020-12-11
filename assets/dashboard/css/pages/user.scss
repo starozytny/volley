@@ -12,6 +12,13 @@
 
 .items-user{
 
+  .item{
+    transition: all 0.2s ease-in-out;
+    &:hover{
+      transform: translateX(6px);
+    }
+  }
+
   .item-body{
     flex-direction: row;
     align-items: stretch;
