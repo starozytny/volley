@@ -13,7 +13,15 @@ export class UserCreate extends Component {
                         <Button icon="left-arrow" type="default" onClick={() => onChangeContext("list")}>Retour à la liste</Button>
                     </div>
                 </div>
-                <h2>Ajouter un utilisateur</h2>
+
+                <div className="form">
+                    <h2>Ajouter un utilisateur</h2>
+                    <form>
+
+                    </form>
+                </div>
+
+
             </div>
         </>
     }

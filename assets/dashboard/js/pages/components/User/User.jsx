@@ -9,7 +9,6 @@ import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 import { UserList }      from "./UserList";
 import { UserCreate }    from "./UserCreate";
 import { UserUpdate }    from "./UserUpdate";
-import { Button }        from "@dashboardComponents/Tools/Button";
 
 export class User extends Component {
     constructor(props) {
@@ -52,7 +51,7 @@ export class User extends Component {
     render () {
         const { loadPageError, context, loadData, data, currentData, element } = this.state;
 
-        let content = null;
+        let content = null, havePagination = false;
         switch (context){
             case "create":
                 content = <UserCreate onChangeContext={this.handleChangeContext} />
@@ -61,13 +60,14 @@ export class User extends Component {
                 content =<UserUpdate onChangeContext={this.handleChangeContext} element={element} />
                 break;
             default:
+                havePagination = true;
                 content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext} data={currentData}/>
                 break;
         }
 
         return <>
             <Page haveLoadPageError={loadPageError}
-                  havePagination={true} taille={data && data.length} data={data} onUpdate={this.handleUpdateData}
+                  havePagination={havePagination} taille={data && data.length} data={data} onUpdate={this.handleUpdateData}
             >
                 {content}
             </Page>
