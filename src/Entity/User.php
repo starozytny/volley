@@ -117,6 +117,12 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Get label of the high role
+     *
+     * @return string
+     * @Groups({"admin:read"})
+     */
     public function getHighRole(): string
     {
         $rolesSortedByImportance = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER'];
@@ -134,6 +140,12 @@ class User implements UserInterface
         return "Utilisateur";
     }
 
+    /**
+     * Get code of the high role
+     *
+     * @return int
+     * @Groups({"admin:read"})
+     */
     public function getHighRoleCode(): int
     {
         switch($this->getHighRole()){

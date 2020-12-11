@@ -18,7 +18,10 @@ export function UserItems (props) {
                         </div>
                         <div className="infos">
                             <div>
-                                <div className="username">{elem.username}</div>
+                                <div className="username">
+                                    <span>{elem.username}</span>
+                                    {elem.highRoleCode !== 0 && <span className="role">{elem.highRole.toLowerCase()}</span>}
+                                </div>
                                 <div className="email">{elem.email}</div>
                             </div>
                             <div className="actions">
