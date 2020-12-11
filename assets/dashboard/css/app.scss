@@ -30,6 +30,7 @@
 
     --txt: #101010;
     --fond: #e8e8e8;
+    --fondContent: #f6f6f6;
     --fondMenu: #212121;
 }
 
@@ -76,6 +77,10 @@ h1{
 h2{
     @include fontSemibold();
     text-transform: uppercase;
+}
+
+main{
+    background-color: var(--fondContent);
 }
 
 .main-content{
