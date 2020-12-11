@@ -72,6 +72,16 @@ export class UserForm extends Component {
                     let data = response.data;
                     self.props.onUpdateList(data)
                     self.setState({ success: messageSuccess, errors: [] })
+                    if(type === "create"){
+                        self.setState( {
+                            username: '',
+                            email: '',
+                            roles: [],
+                            password: '',
+                            passwordConfirm: '',
+                        })
+                        document.getElementById("form").reset();
+                    }
                 })
                 .catch(function (error) {
                     self.setState({ errors: error.response.data })
@@ -100,7 +110,7 @@ export class UserForm extends Component {
         ]
 
         return <>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} id="form">
                 {success !== false && <Alert type="info">{success}</Alert>}
                 <div className="line line-2">
                     <Input valeur={username} identifiant="username" errors={errors} onChange={this.handleChange} >Nom utilisateur</Input>

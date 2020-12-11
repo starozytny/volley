@@ -91,7 +91,6 @@ export function Error({error}){
 export function ClassiqueStructure({valeur, identifiant, content, errors, label, classForm=""}){
 
     let error;
-    console.log(errors, identifiant)
     if(errors.length !== 0){
         errors.map(err => {
           if(err.name === identifiant){
