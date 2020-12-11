@@ -1,0 +1,46 @@
+@import "../vars/vars";
+
+.welcome-back{
+  position: relative;
+  @include flex(column, center, center);
+  margin-bottom: 24px;
+
+  .avatar{
+    background: var(--fond);
+    border-radius: 40px;
+    width: 126px; height: 126px;
+    overflow: hidden;
+
+    img{
+      width: 126px; height: 126px;
+    }
+  }
+
+  .me{
+    @include flex(column, center, center);
+
+    p:first-child{
+      font-size: 18px;
+      margin: 12px 0 4px 0;
+    }
+
+    .username{
+      @include fontSemibold();
+      font-size: 24px;
+    }
+  }
+}
+
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+  .dash-line-1{
+    .welcome-back{
+      width: 126px;
+    }
+  }
+}

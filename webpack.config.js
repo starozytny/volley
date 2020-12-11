@@ -43,6 +43,7 @@ Encore
     .addEntry('app', './assets/app/js/app.js')
 
     .addEntry('dashboard', './assets/dashboard/js/app.js')
+    .addEntry('dashboard_homepage', './assets/dashboard/js/pages/homepage.js')
     .addEntry('dashboard_styleguide', './assets/dashboard/js/pages/styleguide.js')
     .addEntry('dashboard_user', './assets/dashboard/js/pages/user.js')
 
