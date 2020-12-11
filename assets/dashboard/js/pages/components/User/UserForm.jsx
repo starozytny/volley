@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { Button }              from "@dashboardComponents/Tools/Button";
+import axios             from "axios";
+
 import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
@@ -38,18 +39,46 @@ export class UserForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email, password, passwordConfirm, roles } = this.state;
+        const { type, url } = this.props;
+        const { username, password, passwordConfirm, email, roles } = this.state;
 
-        let validate = Validateur.validateur([
+        let paramsToValidate = [
             {type: "text", id: 'username', value: username.value},
             {type: "email", id: 'email', value: email.value},
             {type: "array", id: 'roles', value: roles.value}
-        ])
+        ];
+        if(type === "create"){
+            paramsToValidate = [...paramsToValidate,
+                ...[{type: "password", id: 'password', value: password.value, idCheck: 'passwordConfirm', valueCheck: passwordConfirm.value}]
+            ];
+        }
 
+        // validate global
+        let validate = Validateur.validateur(paramsToValidate)
+
+        console.log(validate)
+
+        // check password confirme
+        // if(type === "create"){
+        //     console.log(password.value, passwordConfirm.value)
+        //     if(password.value !== passwordConfirm.value){
+        //         validate.code = false;
+        //         validate.errors = {...validate.errors, ...{password: {value: password.value, error: 'Les mot de passes ne sont pas identique.'}}};
+        //     }
+        // }
+
+        // check validate success
         if(!validate.code){
             this.setState(validate.errors);
         }else{
 
+            let fd = new FormData();
+            fd.append('data', JSON.stringify(this.state));
+
+            let self = this
+            axios({ method: 'post', url: url, data: fd, headers: {'Content-Type': 'multipart/form-data'} }).then(function (response) {
+                let data = response.data;
+            });
         }
 
     }

@@ -52,7 +52,7 @@ class UserController extends AbstractController
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @Route("/", name="create", methods={"POST"})
+     * @Route("/", name="create", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,

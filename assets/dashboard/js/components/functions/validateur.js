@@ -18,14 +18,24 @@ function validateEmail($value){
     };
 }
 
-function validatePassword($value){
+function validatePassword($value, $valueCheck){
     if($value === ""){
         return {
             'code': false,
             'message': 'Ce champ doit être renseigné.'
         };
     }
+
     if (/^(?=.{12,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\w).*$/.test($value)){
+
+        if($value !== $valueCheck){
+            return {
+                'code': false,
+                'isCheckError': true,
+                'message': 'Les mots de passes ne sont pas identique.'
+            };
+        }
+
         return {'code': true};
     }else{
         return {
@@ -60,14 +70,22 @@ function validateur(values){
                 validate = validateArray(element.value);
                 break;
             case 'password':
-                validate = validatePassword(element.value);
+                validate = validatePassword(element.value, element.valueCheck);
                 break;
         }
         if(!validate.code){
-            errors[element.id] = {
-                value: element.value,
-                error: validate.message
-            };
+            if(validate.isCheckError){
+                errors[element.idCheck] = {
+                    value: element.valueCheck,
+                    error: validate.message
+                };
+            }else{
+                errors[element.id] = {
+                    value: element.value,
+                    error: validate.message
+                };
+            }
+
             code = false;
         }
     });
