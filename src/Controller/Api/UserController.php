@@ -101,7 +101,6 @@ class UserController extends AbstractController
         $noErrors = $validator->validate($user);
 
         if($noErrors !== true){
-            dump($noErrors);
             return new JsonResponse($noErrors, 400);
         }
 

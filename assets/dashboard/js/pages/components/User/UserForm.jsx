@@ -5,18 +5,18 @@ import axios             from "axios";
 import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
-import Errors                  from "@dashboardComponents/functions/errors";
 
 export class UserForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            username:           {value: props.username, error: ''},
-            email:              {value: props.email,    error: ''},
-            password:           {value: '', error: ''},
-            passwordConfirm:    {value: '', error: ''},
-            roles:              {value: [], error: ''}
+            username: props.username,
+            email: props.email,
+            roles: [],
+            password: '',
+            passwordConfirm: '',
+            errors: []
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -31,10 +31,10 @@ export class UserForm extends Component {
 
         const {roles} = this.state
         if(name === "roles"){
-            value = (e.currentTarget.checked) ? [...roles.value, ...[value]] :  roles.value.filter(v => v !== value)
+            value = (e.currentTarget.checked) ? [...roles, ...[value]] :  roles.filter(v => v !== value)
         }
 
-        this.setState({[name]: {value: value, error: ''}})
+        this.setState({[name]: value})
     }
 
     handleSubmit = (e) => {
@@ -44,13 +44,13 @@ export class UserForm extends Component {
         const { username, password, passwordConfirm, email, roles } = this.state;
 
         let paramsToValidate = [
-            {type: "text", id: 'username', value: username.value},
-            {type: "email", id: 'email', value: email.value},
-            {type: "array", id: 'roles', value: roles.value}
+            {type: "text", id: 'username', value: username},
+            {type: "email", id: 'email', value: email},
+            {type: "array", id: 'roles', value: roles}
         ];
         if(type === "create"){
             paramsToValidate = [...paramsToValidate,
-                ...[{type: "password", id: 'password', value: password.value, idCheck: 'passwordConfirm', valueCheck: passwordConfirm.value}]
+                ...[{type: "password", id: 'password', value: password, idCheck: 'passwordConfirm', valueCheck: passwordConfirm}]
             ];
         }
 
@@ -59,22 +59,15 @@ export class UserForm extends Component {
 
         // check validate success
         if(!validate.code){
-            this.setState(validate.errors);
+            this.setState({errors: validate.errors});
         }else{
-            let jsonData = {
-                username: username.value,
-                email: email.value,
-                roles: roles.value,
-                password: password.value
-            };
             let self = this;
-            axios({ method: 'post', url: url, data: jsonData })
+            axios({ method: 'post', url: url, data: self.state })
                 .then(function (response) {
                     let data = response.data;
                 })
                 .catch(function (error) {
-                    let errors = Errors.setErrors(error, self.state)
-                    self.setState(errors)
+                    self.setState({errors: error.response.data})
                 })
             ;
         }
@@ -82,7 +75,7 @@ export class UserForm extends Component {
     }
 
     render () {
-        const { username, email, password, passwordConfirm, roles } = this.state;
+        const { errors, username, email, password, passwordConfirm, roles } = this.state;
 
         let rolesItems = [
             { 'id': 1, 'value': 'ROLE_SUPER_ADMIN',
@@ -102,15 +95,15 @@ export class UserForm extends Component {
         return <>
             <form onSubmit={this.handleSubmit}>
                 <div className="line line-2">
-                    <Input valeur={username} identifiant="username" onChange={this.handleChange} >Nom utilisateur</Input>
-                    <Input valeur={email} identifiant="email" onChange={this.handleChange} type="email" >Adresse e-mail</Input>
+                    <Input valeur={username} identifiant="username" errors={errors} onChange={this.handleChange} >Nom utilisateur</Input>
+                    <Input valeur={email} identifiant="email" errors={errors} onChange={this.handleChange} type="email" >Adresse e-mail</Input>
                 </div>
                 <div className="line">
-                    <Checkbox items={rolesItems} name="roles" valeur={roles} onChange={this.handleChange}>Roles</Checkbox>
+                    <Checkbox items={rolesItems} name="roles" valeur={roles} errors={errors} onChange={this.handleChange}>Roles</Checkbox>
                 </div>
                 <div className="line line-2">
-                    <Input type="password" valeur={password} identifiant="password" onChange={this.handleChange} >Mot de passe</Input>
-                    <Input type="password" valeur={passwordConfirm} identifiant="passwordConfirm" onChange={this.handleChange} >Confirmer le mot de passe</Input>
+                    <Input type="password" valeur={password} identifiant="password" errors={errors} onChange={this.handleChange} >Mot de passe</Input>
+                    <Input type="password" valeur={passwordConfirm} identifiant="passwordConfirm" errors={errors} onChange={this.handleChange} >Confirmer le mot de passe</Input>
                 </div>
                 <div className="line">
                     <div className="form-button">

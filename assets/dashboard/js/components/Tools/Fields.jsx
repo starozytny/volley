@@ -1,18 +1,21 @@
 import React from "react";
 
-export function Input(props) {
-    const { type="text", identifiant, valeur, onChange, children, placeholder } = props;
+export function Input (props) {
+    const { type="text", identifiant, valeur, errors, onChange, children, placeholder } = props;
 
     let content = <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur.value} onChange={onChange}/>
 
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
-export function Checkbox({items, name, valeur, onChange, children}) {
+export function Checkbox (props) {
+    const {items, name, valeur, errors, onChange, children} = props
+
     let itemsInputs = items.map(elem => {
 
+        // get checker value
         let isChecked = false
-        valeur.value.map(el => {
+        valeur.map(el => {
             if (el === elem.value){ isChecked = true }
         })
 
@@ -26,7 +29,7 @@ export function Checkbox({items, name, valeur, onChange, children}) {
 
     let content = <div className="checkbox-items">{itemsInputs}</div>
 
-    return (<ClassiqueStructure valeur={valeur} identifiant="" content={content} label={children} classForm="form-group-checkbox " />)
+    return (<ClassiqueStructure {...props} content={content} label={children} classForm="form-group-checkbox " />)
 }
 
 export function Radiobox({items, name, valeur, onChange, children}) {
@@ -79,18 +82,28 @@ export function Switcher({identifiant, valeur, children, isChecked, onChange}){
     return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
 }
 
-export function Error({valeur}){
+export function Error({error}){
     return (
-        <div className="error">{valeur.error ? <><span className='icon-warning'/>{valeur.error}</> : null}</div>
+        <div className="error">{error ? <><span className='icon-warning'/>{error}</> : null}</div>
     )
 }
 
-export function ClassiqueStructure({valeur, identifiant, content, label, classForm=""}){
+export function ClassiqueStructure({valeur, identifiant, content, errors, label, classForm=""}){
+
+    let error;
+    if(errors.length !== 0){
+        errors.map(err => {
+          if(err.name === identifiant){
+              error = err.message
+          }
+        })
+    }
+
     return (
-        <div className={classForm + 'form-group' + (valeur.error ? " form-group-error" : "")}>
+        <div className={classForm + 'form-group' + (error ? " form-group-error" : "")}>
             <label htmlFor={identifiant}>{label}</label>
             {content}
-            <Error valeur={valeur}/>
+            <Error error={error}/>
         </div>
     )
 }

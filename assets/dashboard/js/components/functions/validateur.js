@@ -59,7 +59,7 @@ function validateArray($value){
 
 function validateur(values){
     let validate; let code = true;
-    let errors = {};
+    let errors = [];
     values.forEach(element => {
         switch (element.type) {
             case 'text':
@@ -76,25 +76,17 @@ function validateur(values){
                 break;
         }
         if(!validate.code){
-            if(validate.isCheckError){
-                errors[element.idCheck] = {
-                    value: element.valueCheck,
-                    error: validate.message
-                };
-            }else{
-                errors[element.id] = {
-                    value: element.value,
-                    error: validate.message
-                };
-            }
-
             code = false;
+            errors.push({
+                name: validate.isCheckError ? element.idCheck : element.id,
+                message: validate.message
+            })
         }
     });
 
     return {
-        'code': code,
-        'errors': errors
+        code: code,
+        errors: errors
     };
 }
 
