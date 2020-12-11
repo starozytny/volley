@@ -5,6 +5,10 @@ export function Alert(props){
 
     let icon, alert;
     switch (type){
+        case "warning":
+            alert = "warning";
+            icon = "warning";
+            break;
         case "info":
             alert = "primary";
             icon = "information";
