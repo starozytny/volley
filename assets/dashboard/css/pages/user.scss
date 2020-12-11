@@ -1,6 +1,17 @@
 @import "../vars/vars";
 
+.items-table {
+  & > .items > .item{
+    align-items: flex-start;
+  }
+
+  .item-selector{
+    transform: translateY(24px);
+  }
+}
+
 .items-user{
+
   .item-body{
     flex-direction: row;
     align-items: stretch;
@@ -34,10 +45,10 @@
   .role{
     display: inline-block;
     padding: 4px 8px;
-    background: var(--primary);
+    background: var(--primaryShadow);
     border-radius: 4px;
     font-size: 12px;
-    opacity: 0.7;
+    opacity: 0.5;
     margin: 4px 0 8px 0;
   }
 
@@ -50,5 +61,31 @@
 .form{
   h2{
     margin-bottom: 24px;
+  }
+}
+
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+  .items-user{
+
+    .infos{
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .username{
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .role{
+      margin: 0 0 0 8px;
+    }
   }
 }

@@ -13,10 +13,12 @@
 
   .item-content{
     @include flex(column, flex-start, space-between);
+    width: 100%;
   }
 
   .item-body{
     @include flex(column, flex-start, flex-start);
+    width: 100%;
     flex-wrap: wrap;
   }
 
