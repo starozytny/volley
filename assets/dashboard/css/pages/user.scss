@@ -1,7 +1,6 @@
 @import "../vars/vars";
 
 .items-user{
-
   .item-body{
     flex-direction: row;
     align-items: stretch;
@@ -34,5 +33,11 @@
   .email{
     font-size: 14px;
     opacity: 0.7;
+  }
+}
+
+.form{
+  h2{
+    margin-bottom: 24px;
   }
 }

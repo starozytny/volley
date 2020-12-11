@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Button }              from "@dashboardComponents/Tools/Button";
 import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
 
+import Validateur              from "@dashboardComponents/functions/validateur";
+
 export class UserForm extends Component {
     constructor(props) {
         super(props);
@@ -30,11 +32,25 @@ export class UserForm extends Component {
             value = (e.currentTarget.checked) ? [...roles.value, ...[value]] :  roles.value.filter(v => v !== value)
         }
 
-        this.setState({[name]: {value: value}})
+        this.setState({[name]: {value: value, error: ''}})
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+        const { username, email, password, passwordConfirm, roles } = this.state;
+
+        let validate = Validateur.validateur([
+            {type: "text", id: 'username', value: username.value},
+            {type: "email", id: 'email', value: email.value},
+            {type: "array", id: 'roles', value: roles.value}
+        ])
+
+        if(!validate.code){
+            this.setState(validate.errors);
+        }else{
+
+        }
 
     }
 
