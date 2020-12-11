@@ -13,7 +13,7 @@ export class UserCreate extends Component {
     }
 
     render () {
-        const { onChangeContext } = this.props;
+        const { onChangeContext, onUpdateList } = this.props;
 
         return <>
             <div>
@@ -30,6 +30,7 @@ export class UserCreate extends Component {
                         url={Routing.generate('api_users_create')}
                         username=""
                         email=""
+                        onUpdateList={onUpdateList}
                     />
                 </div>
             </div>

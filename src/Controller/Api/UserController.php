@@ -105,7 +105,7 @@ class UserController extends AbstractController
         }
 
         $em->persist($user);
-        $em->flush();
+//        $em->flush();
 
         return $apiResponse->apiJsonResponse($user, User::ADMIN_READ);
     }

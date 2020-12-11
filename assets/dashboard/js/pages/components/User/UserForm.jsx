@@ -65,13 +65,13 @@ export class UserForm extends Component {
             axios({ method: 'post', url: url, data: self.state })
                 .then(function (response) {
                     let data = response.data;
+                    self.props.onUpdateList(data)
                 })
                 .catch(function (error) {
                     self.setState({errors: error.response.data})
                 })
             ;
         }
-
     }
 
     render () {

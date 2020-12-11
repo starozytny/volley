@@ -6,6 +6,8 @@ import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.
 import { Page }          from "@dashboardComponents/Layout/Page";
 import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 
+import UpdateList  from "@dashboardComponents/functions/updateList";
+
 import { UserList }      from "./UserList";
 import { UserCreate }    from "./UserCreate";
 import { UserUpdate }    from "./UserUpdate";
@@ -25,6 +27,7 @@ export class User extends Component {
 
         this.handleUpdateData = this.handleUpdateData.bind(this);
         this.handleChangeContext = this.handleChangeContext.bind(this);
+        this.handleUpdateList = this.handleUpdateList.bind(this);
     }
 
     componentDidMount() {
@@ -44,6 +47,16 @@ export class User extends Component {
 
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
+    handleUpdateList = (element) => {
+        const { data, context } = this.state
+
+        let newData = UpdateList.update(context, data, element);
+        this.setState({
+            data: newData,
+            currentData: newData.slice(0,12)
+        })
+    }
+
     handleChangeContext = (context, element=null) => {
         this.setState({ context, element })
     }
@@ -54,7 +67,7 @@ export class User extends Component {
         let content = null, havePagination = false;
         switch (context){
             case "create":
-                content = <UserCreate onChangeContext={this.handleChangeContext} />
+                content = <UserCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
                 break;
             case "update":
                 content =<UserUpdate onChangeContext={this.handleChangeContext} element={element} />
