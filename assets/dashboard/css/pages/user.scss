@@ -59,8 +59,23 @@
 }
 
 .form{
+
   h2{
-    margin-bottom: 24px;
+    margin-bottom: 8px;
+  }
+
+  form{
+    margin-top: 24px;
+  }
+
+  .form-infos{
+    opacity: 0.7;
+    max-width: 414px;
+  }
+
+  .password-rules{
+    font-size: 14px;
+    opacity: 0.7;
   }
 }
 

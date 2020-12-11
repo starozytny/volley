@@ -115,14 +115,28 @@ export class UserForm extends Component {
         ]
 
         return <>
+            <p className="form-infos">
+                Le nom d'utilisateur est automatiquement formaté pour supprimer les espaces et les accents sont supprimés ou remplacés.
+            </p>
             <form onSubmit={this.handleSubmit} id="form">
                 {success !== false && <Alert type="info">{success}</Alert>}
                 <div className="line line-2">
                     <Input valeur={username} identifiant="username" errors={errors} onChange={this.handleChange} >Nom utilisateur</Input>
                     <Input valeur={email} identifiant="email" errors={errors} onChange={this.handleChange} type="email" >Adresse e-mail</Input>
                 </div>
-                <div className="line">
+                <div className="line line-2">
                     <Checkbox items={rolesItems} name="roles" valeur={roles} errors={errors} onChange={this.handleChange}>Roles</Checkbox>
+
+                    <div className="password-rules">
+                        <p>Règles de création de mot de passe :</p>
+                        <ul>
+                            <li>Au moins 12 caractères</li>
+                            <li>Au moins 1 minuscule</li>
+                            <li>Au moins 1 majuscule</li>
+                            <li>Au moins 1 chiffre</li>
+                            <li>Au moins 1 caractère spécial</li>
+                        </ul>
+                    </div>
                 </div>
                 <div className="line line-2">
                     <Input type="password" valeur={password} identifiant="password" errors={errors} onChange={this.handleChange} >Mot de passe</Input>
