@@ -1,16 +1,20 @@
 import React from "react";
 
-export function Input(props)
-{
+export function Input(props) {
     const { type="text", identifiant, valeur, onChange, children, placeholder } = props;
 
     let content = <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur.value} onChange={onChange}/>
 
-    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
+    return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
 export function Checkbox({items, name, valeur, onChange, children}) {
     let itemsInputs = items.map(elem => {
+
+        valeur.value.map(el => {
+            if (el === elem.value){ elem.checked = true }
+        })
+
         return <div className={"checkbox-item " + (elem.checked ? 'checked' : '')} key={elem.id}>
             <label htmlFor={elem.identifiant}>
                 {elem.label}
@@ -26,6 +30,11 @@ export function Checkbox({items, name, valeur, onChange, children}) {
 
 export function Radiobox({items, name, valeur, onChange, children}) {
     let itemsInputs = items.map(elem => {
+
+        valeur.value.map(el => {
+            if (el === elem.value){ elem.checked = true }
+        })
+
         return <div className={"radiobox-item " + (elem.checked ? 'checked' : '')} key={elem.id}>
             <label htmlFor={elem.identifiant}>
                 <span>{elem.label}</span>
