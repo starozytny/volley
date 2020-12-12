@@ -11,7 +11,33 @@
 
   .create{
     .btn{
-      width: calc(100% - 36px);
+      width: calc(100% - 48px);
+    }
+  }
+
+  .filter-search{
+    margin-top: 12px;
+    @include flex(row, flex-start, flex-start);
+
+    .filter{
+      width: 100px;
+    }
+
+    .search{
+      width: calc(100% - 100px);
+    }
+
+    .dropdown-btn{
+      padding: 11px 12px;
+      border-radius: 3px 0 0 3px;
+      justify-content: space-between;
+    }
+
+    input[type="search"]{
+      padding: 12px 10px;
+      width: 100%;
+      border-radius: 0 3px 3px 0;
+      border-left: none;
     }
   }
 }

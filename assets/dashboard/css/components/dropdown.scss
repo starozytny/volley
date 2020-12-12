@@ -1,0 +1,18 @@
+@import "../vars/vars";
+
+.dropdown-btn{
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  @include flex(row, center, center);
+  border: 1px solid var(--grey);
+  background: var(--alpha);
+
+  span:first-child{
+    display: inline-block;
+    margin-right: 8px;
+  }
+}
