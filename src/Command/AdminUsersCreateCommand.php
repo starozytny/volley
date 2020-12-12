@@ -94,7 +94,6 @@ class AdminUsersCreateCommand extends Command
             $io->text('USER : Utilisateurs fake créés' );
         }
 
-
         $this->em->flush();
 
         $io->newLine();

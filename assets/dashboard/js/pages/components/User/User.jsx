@@ -32,6 +32,8 @@ export class User extends Component {
             element: null
         }
 
+        this.page = React.createRef();
+
         this.handleUpdateData = this.handleUpdateData.bind(this);
         this.handleChangeContext = this.handleChangeContext.bind(this);
         this.handleUpdateList = this.handleUpdateList.bind(this);
@@ -43,7 +45,7 @@ export class User extends Component {
         axios.get(Routing.generate('api_users_index'), {})
             .then(function (response) {
                 let data = response.data;
-                self.setState({ data: data, currentData: data.slice(0, 12) });
+                self.setState({ data: data, currentData: data.slice(0, 10) });
             })
             .catch(function (error) {
                 self.setState({ loadPageError: true });
@@ -64,13 +66,17 @@ export class User extends Component {
 
         this.setState({
             data: newData,
-            currentData: newData.slice(0,12),
+            currentData: newData.slice(0,10),
             element: element
         })
     }
 
     handleChangeContext = (context, element=null) => {
-        this.setState({ context, element })
+        this.setState({ context, element });
+
+        if(context === "list"){
+            this.page.current.pagination.current.handleComeback()
+        }
     }
 
     handleDelete = (element) => {
@@ -118,7 +124,7 @@ export class User extends Component {
         }
 
         return <>
-            <Page haveLoadPageError={loadPageError}
+            <Page ref={this.page} haveLoadPageError={loadPageError}
                   havePagination={havePagination} taille={data && data.length} data={data} onUpdate={this.handleUpdateData}
             >
                 {content}

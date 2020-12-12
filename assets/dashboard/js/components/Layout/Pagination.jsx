@@ -12,22 +12,42 @@ export class Pagination extends Component {
         }
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleComeback = this.handleComeback.bind(this);
+    }
+
+    componentDidMount() {
+        localStorage.setItem('user.pagination', "0");
     }
 
     handleClick = (e) => {
+        const { perPage, items } = this.props;
+
         const selectedPage = e.selected;
+        const offset = selectedPage * perPage;
+
+        if(items !== null){
+            this.setState({ currentPage: selectedPage, offset: offset })
+            this.props.onUpdate(items.slice(offset, offset + parseInt(perPage)))
+            localStorage.setItem('user.pagination', selectedPage);
+        }
+    }
+
+    handleComeback = () => {
+        const selectedPage = localStorage.getItem('user.pagination');
         const offset = selectedPage * this.props.perPage;
+
+        console.log(selectedPage)
 
         this.setState({ currentPage: selectedPage, offset: offset })
         this.props.onUpdate(this.props.items.slice(offset, offset + parseInt(this.props.perPage)))
     }
 
     render () {
-        const { taille } = this.props
-        const { perPage } = this.state
+        const { havePagination, taille } = this.props
+        const { perPage, currentPage } = this.state
 
         return <>
-            <ReactPaginate
+            {havePagination && <ReactPaginate
                 previousLabel={<span className="icon-left-arrow" />}
                 nextLabel={<span className="icon-right-arrow" />}
                 breakLabel={'...'}
@@ -39,7 +59,8 @@ export class Pagination extends Component {
                 containerClassName={'pagination'}
                 subContainerClassName={'pages pagination'}
                 activeClassName={'active'}
-            />
+                initialPage={parseInt(currentPage)}
+            />}
         </>
     }
 }

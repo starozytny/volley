@@ -5,6 +5,12 @@ import { PageError } from "./PageError";
 import { Pagination } from "./Pagination";
 
 export class Page extends Component {
+    constructor(props) {
+        super(props);
+
+        this.pagination = React.createRef();
+    }
+
     render () {
         const { haveLoadPageError, children,
                 havePagination, perPage = "12", taille, data,
@@ -15,7 +21,8 @@ export class Page extends Component {
             {haveLoadPageError && <PageError />}
             <div className="main-content">
                 {children}
-                {havePagination && <Pagination perPage={perPage} taille={taille} items={data} onUpdate={(items) => this.props.onUpdate(items)}/>}
+                <Pagination ref={this.pagination} havePagination={havePagination} perPage={perPage} taille={taille} items={data}
+                            onUpdate={(items) => this.props.onUpdate(items)}/>
             </div>
 
         </>
