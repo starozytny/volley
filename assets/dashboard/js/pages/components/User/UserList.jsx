@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button }    from "@dashboardComponents/Tools/Button";
+import {Button, ButtonIcon} from "@dashboardComponents/Tools/Button";
 
 import { Filter }    from "@dashboardComponents/Layout/Filter";
 import { Search }    from "@dashboardComponents/Layout/Search";
@@ -21,7 +21,7 @@ export class UserList extends Component {
     }
 
     render () {
-        const { onChangeContext, onGetFilters, filters, onSearch } = this.props;
+        const { onChangeContext, onGetFilters, filters, onSearch, onDeleteAll } = this.props;
 
         let itemsFilterLabelArray = ["Utilisateur", "Super administrateur", "Administrateur"];
         let itemsFilterIdArray = ["f-user", "f-superadmin", "f-admin"];
@@ -59,6 +59,12 @@ export class UserList extends Component {
 
                 <div className="items-table">
                     <UserItems {...this.props} />
+                </div>
+
+                <div className="selectors-actions">
+                    <div className="item" onClick={onDeleteAll}>
+                        <ButtonIcon icon="trash" text="Supprimer la sélection" />
+                    </div>
                 </div>
             </div>
         </>

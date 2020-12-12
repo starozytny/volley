@@ -29,7 +29,6 @@ export class User extends Component {
             currentData: null,
             element: null,
             filters: [],
-            selectors: []
         }
 
         this.page = React.createRef();
@@ -40,7 +39,7 @@ export class User extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleGetFilters = this.handleGetFilters.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
-        this.handleSelectors = this.handleSelectors.bind(this);
+        this.handleDeleteAll = this.handleDeleteAll.bind(this);
     }
 
     componentDidMount() {
@@ -111,6 +110,38 @@ export class User extends Component {
             })
     }
 
+    handleDeleteAll = () => {
+
+        console.log(document.querySelectorAll('.i-selector:checked'))
+
+        let self = this;
+        Swal.fire(SwalOptions.options('Supprimer la sélection ?',
+            'Cette action est irréversible.'))
+            .then((result) => {
+                if (result.isConfirmed) {
+
+                    // Loader.loader(true);
+                    // axios.delete(Routing.generate('api_users_delete', {'id': element.id}), {})
+                    //     .then(function (response) {
+                    //         Swal.fire(response.data.message, '', 'success');
+                    //         self.handleUpdateList(element, "delete");
+                    //         self.page.current.pagination.current.handleComeback()
+                    //     })
+                    //     .catch(function (error) {
+                    //         if(error.response.data.message){
+                    //             toastr.error(error.response.data.message)
+                    //         }else{
+                    //             toastr.error("Une erreure est survenue, veuillez contacter le support.")
+                    //         }
+                    //     })
+                    //     .then(() => {
+                    //         Loader.loader(false);
+                    //     })
+
+                }
+            })
+    }
+
     handleGetFilters = (filters) => {
         const { dataImmuable } = this.state;
 
@@ -130,7 +161,7 @@ export class User extends Component {
 
         localStorage.setItem("user.pagination", "0")
         this.page.current.pagination.current.handlePageOne();
-        this.setState({ data: newData, currentData: newData.slice(0, 10), filters: filters, selectors: [] });
+        this.setState({ data: newData, currentData: newData.slice(0, 10), filters: filters });
         return newData;
     }
 
@@ -147,18 +178,6 @@ export class User extends Component {
                 if(v.username.toLowerCase().includes(search) || v.email.toLowerCase().includes(search)){ return v; }
             })
             this.setState({ data: newData, currentData: newData.slice(0, 10) });
-        }
-    }
-
-    handleSelectors = (id, isChecked) => {
-        const { selectors } = this.state;
-
-        console.log(selectors)
-
-        if(isChecked){
-            this.setState({ selectors: [...selectors, ...[id]] })
-        }else{
-            this.setState({ selectors: selectors.filter(el => el !== id) })
         }
     }
 
@@ -182,6 +201,7 @@ export class User extends Component {
                                                                    onSearch={this.handleSearch}
                                                                    onSelectors={this.handleSelectors}
                                                                    selectors={selectors}
+                                                                   onDeleteAll={this.handleDeleteAll}
                                                                    data={currentData} />
                 break;
         }

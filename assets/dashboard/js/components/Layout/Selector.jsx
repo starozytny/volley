@@ -6,50 +6,27 @@ export class Selector extends Component {
     constructor() {
         super();
 
+        this.state = {
+            isChecked: false
+        }
+
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-        const { id, selectors } = this.props;
-
-        let isChecked = false;
-        if(selectors.length !== 0){
-            selectors.map(el => {
-                if(el === id){
-                    isChecked = true;
-                }
-            })
-        }
-
-        document.getElementById('item-selector-' + id).checked = isChecked;
-    }
-
-
     // from fo uncheck via toolbar filter checked
     handleChange = (e) => {
-        let value = parseInt(e.currentTarget.value);
         let isChecked = !!(e.currentTarget.checked)
 
-        this.props.onSelectors(value, isChecked);
+        this.setState({ isChecked })
     }
 
     render () {
-        const { id, selectors } = this.props;
-
-        let isCheck;
-        if(selectors.length === 0){
-            isCheck = false
-        }else{
-            selectors.map(el => {
-                if(el === id){
-                    isCheck = true
-                }
-            })
-        }
+        const { id } = this.props;
+        const { isChecked } = this.state;
 
         return <div className="selector">
-            <input type="checkbox" name="item-selector" id={`item-selector-${id}`} value={id} checked={isCheck} onChange={this.handleChange}/>
-            <label htmlFor={`item-selector-${id}`} className={`item-selector ${isCheck}`}/>
+            <input type="checkbox" name="item-selector" className="i-selector" id={`item-selector-${id}`} value={id} checked={isChecked} onChange={this.handleChange}/>
+            <label htmlFor={`item-selector-${id}`} className={`item-selector ${isChecked}`}/>
         </div>
     }
 }

@@ -1,10 +1,11 @@
 import React from "react";
 
 export function ButtonIcon(props){
-    const { icon, children, onClick } = props;
+    const { icon, children, text, onClick } = props;
 
     return <div className="btn-icon" onClick={onClick}>
         <span className={`icon-${icon}`} />
+        {text && <span>{text}</span>}
         {children && <span className="tooltip">{children}</span>}
     </div>
 }
