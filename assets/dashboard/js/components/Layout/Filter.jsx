@@ -15,7 +15,7 @@ export class Filter extends Component {
 
     // from fo uncheck via toolbar filter checked
     handleChange = (e, from=false) => {
-        const {filters} = this.state;
+        const { filters } = this.state;
 
         let value = parseInt(e.currentTarget.value);
         let newFilter;

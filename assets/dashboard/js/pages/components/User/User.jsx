@@ -28,7 +28,8 @@ export class User extends Component {
             data: null,
             currentData: null,
             element: null,
-            filters: []
+            filters: [],
+            selectors: []
         }
 
         this.page = React.createRef();
@@ -39,6 +40,7 @@ export class User extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleGetFilters = this.handleGetFilters.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleSelectors = this.handleSelectors.bind(this);
     }
 
     componentDidMount() {
@@ -148,8 +150,22 @@ export class User extends Component {
         }
     }
 
+    handleSelectors = (id, isChecked) => {
+        if(isChecked){
+            this.setState(prevState => {
+                return { selectors: [...prevState.selectors, ...[id]] }
+            })
+        }else{
+            this.setState(prevState => {
+                return { selectors: prevState.selectors.filter(el => el !== id) }
+            })
+        }
+    }
+
     render () {
-        const { loadPageError, context, loadData, data, currentData, element, filters } = this.state;
+        const { loadPageError, context, loadData, data, currentData, element, filters, selectors } = this.state;
+
+        console.log(selectors)
 
         let content = null, havePagination = false;
         switch (context){
@@ -166,6 +182,8 @@ export class User extends Component {
                                                                    onGetFilters={this.handleGetFilters}
                                                                    filters={filters}
                                                                    onSearch={this.handleSearch}
+                                                                   onSelectors={this.handleSelectors}
+                                                                   selectors={selectors}
                                                                    data={currentData} />
                 break;
         }
