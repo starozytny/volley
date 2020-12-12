@@ -212,7 +212,6 @@ class User implements UserInterface
      * How long ago an user was added.
      *
      * @return string
-     * @Groups({"admin:read", "user:read"})
      */
     public function getCreatedAtAgo(): string
     {

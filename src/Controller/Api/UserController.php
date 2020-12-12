@@ -196,6 +196,7 @@ class UserController extends AbstractController
      *
      * @OA\Response(
      *     response=200,
+     *     description="Return message successful",
      * )
      * @OA\Response(
      *     response=403,
