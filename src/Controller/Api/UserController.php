@@ -116,7 +116,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * Admin - Update an user
+     * Update an user
      *
      * @Route("/{id}", name="update", options={"expose"=true}, methods={"PUT"})
      *
@@ -157,6 +157,61 @@ class UserController extends AbstractController
             return new JsonResponse(['message' => 'Vous n\'êtes pas autorisé à accéder à cette page.'], 403);
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent());
+
+        if(isset($data->username)){
+            $user->setUsername($sanitizeData->fullSanitize($data->username));
+        }
+
+        if(isset($data->email)){
+            $user->setEmail($data->email);
+        }
+
+        $groups = User::USER_READ;
+        if($this->isGranted("ROLE_ADMIN")){
+            if(isset($data->roles)){
+                $user->setRoles($data->roles);
+            }
+            $groups = User::ADMIN_READ;
+        }
+
+        $noErrors = $validator->validate($user);
+
+        if($noErrors !== true){
+            return new JsonResponse($noErrors, 400);
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        return $apiResponse->apiJsonResponse($user, $groups);
+    }
+
+    /**
+     * Admin - Delete an user
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/{id}", name="delete", options={"expose"=true}, methods={"DELETE"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return true if user deleted",
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param ValidatorService $validator
+     * @param ApiResponse $apiResponse
+     * @param SanitizeData $sanitizeData
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function delete(Request $request, ValidatorService $validator,
+                           ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user): JsonResponse
+    {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
