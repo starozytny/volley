@@ -123,7 +123,6 @@ main{
     }
     .main-content{
         padding: 24px 32px;
-        @include maxscreen();
     }
 }
 
@@ -137,5 +136,8 @@ main{
     main{
         width: 86%;
         margin-left: 14%;
+    }
+    .main-content{
+        @include maxscreen();
     }
 }
