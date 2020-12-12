@@ -37,6 +37,12 @@
         transform: scale(1);
         transition: all 0.2s ease-in-out;
       }
+
+      &.active{
+        [class^="icon-"] {
+          color: var(--primary);
+        }
+      }
     }
 
     .dropdown-btn{

@@ -24,7 +24,7 @@ export class Search extends Component {
     render () {
         const { search } = this.state;
 
-        return <div className="search">
+        return <div className={`search ${search !== "" ? " active" : ""}`}>
             <input type="search" name="search" id="search" value={search} placeholder="Recherche..." onChange={this.handleChange} />
             <span className="icon-search" />
         </div>
