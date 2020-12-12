@@ -1,5 +1,23 @@
 @import "../vars/vars";
 
+.toolbar{
+  .dropdown-items{
+    .item{
+      @include flex(row, flex-start, flex-start);
+
+      input{
+        width: 16px;
+        margin-right: 4px;
+        cursor: pointer;
+      }
+
+      label{
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 .items-table {
   & > .items > .item{
     align-items: flex-start;
@@ -93,6 +111,15 @@
 //                     | |   /_/  \___/ \___/   | |
 //                     |__|                    |__|
 @media (min-width:768px) {
+  .toolbar{
+    .create{
+      width: 195px;
+    }
+    .filter-search{
+      width: calc(100% - 24px - 195px);
+    }
+  }
+
   .items-user{
 
     .infos{

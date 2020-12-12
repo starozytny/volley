@@ -38,9 +38,18 @@ export class UserList extends Component {
                                     <span className="icon-filter" />
                                 </div>
                                 <div className="dropdown-items">
-                                    <div className="item">Super administrateur</div>
-                                    <div className="item">Administrateur</div>
-                                    <div className="item">Utilisateur</div>
+                                    <div className="item">
+                                        <input type="checkbox" name="filter-user" id="f-superadmin" value="1" onChange={this.handleChange}/>
+                                        <label htmlFor="f-superadmin">Super administrateur</label>
+                                    </div>
+                                    <div className="item">
+                                        <input type="checkbox" name="filter-user" id="f-admin" value="2" onChange={this.handleChange}/>
+                                        <label htmlFor="f-admin">Administrateur</label>
+                                    </div>
+                                    <div className="item">
+                                        <input type="checkbox" name="filter-user" id="f-user" value="0" onChange={this.handleChange}/>
+                                        <label htmlFor="f-user">Utilisateur</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
