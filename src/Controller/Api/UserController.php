@@ -203,6 +203,11 @@ class UserController extends AbstractController
      *     description="Forbidden for not good role or user",
      * )
      *
+     * @OA\Response(
+     *     response=400,
+     *     description="Cannot delete me",
+     * )
+     *
      * @OA\Tag(name="Users")
      *
      * @param ApiResponse $apiResponse
@@ -218,11 +223,11 @@ class UserController extends AbstractController
         }
 
         if($user === $this->getUser()){
-            return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez vous supprimer.');
+            return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
         }
 
         $em->remove($user);
-        $em->flush();
+//        $em->flush();
 
         return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
     }

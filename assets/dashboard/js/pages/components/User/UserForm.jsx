@@ -7,7 +7,7 @@ import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
 import { Alert }               from "@dashboardComponents/Tools/Alert";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
-import Loader              from "@dashboardComponents/functions/loader";
+import Loader                  from "@dashboardComponents/functions/loader";
 
 export class UserForm extends Component {
     constructor(props) {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import axios             from "axios";
+import toastr            from "toastr";
 import Swal              from "sweetalert2";
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
@@ -10,10 +11,13 @@ import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 import UpdateList        from "@dashboardComponents/functions/updateList";
 import Sort              from "@dashboardComponents/functions/sort";
 import SwalOptions       from "@dashboardComponents/functions/swalOptions";
+import Loader            from "@dashboardComponents/functions/loader";
 
 import { UserList }      from "./UserList";
 import { UserCreate }    from "./UserCreate";
 import { UserUpdate }    from "./UserUpdate";
+
+
 
 export class User extends Component {
     constructor(props) {
@@ -51,11 +55,13 @@ export class User extends Component {
 
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
-    handleUpdateList = (element) => {
+    handleUpdateList = (element, newContext=null) => {
         const { data, context } = this.state
 
-        let newData = UpdateList.update(context, data, element);
+        let nContext = (newContext !== null) ? newContext : context;
+        let newData = UpdateList.update(nContext, data, element);
         newData.sort(Sort.compareUsername)
+
         this.setState({
             data: newData,
             currentData: newData.slice(0,12),
@@ -68,14 +74,28 @@ export class User extends Component {
     }
 
     handleDelete = (element) => {
+        let self = this;
         Swal.fire(SwalOptions.options('Supprimer cet utilisateur ?', 'Cette action est irréversible.'))
             .then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
+
+                    Loader.loader(true);
+                    axios.delete(Routing.generate('api_users_delete', {'id': element.id}), {})
+                        .then(function (response) {
+                            Swal.fire(response.data.message, '', 'success');
+                            self.handleUpdateList(element, "delete");
+                        })
+                        .catch(function (error) {
+                            if(error.response.data.message){
+                                toastr.error(error.response.data.message)
+                            }else{
+                                toastr.error("Une erreure est survenue, veuillez contacter le support.")
+                            }
+                        })
+                        .then(() => {
+                            Loader.loader(false);
+                        })
+
                 }
             })
     }

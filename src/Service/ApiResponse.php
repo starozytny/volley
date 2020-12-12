@@ -38,7 +38,7 @@ class ApiResponse
 
     public function apiJsonResponseForbidden(): JsonResponse
     {
-        return new JsonResponse(['message' => 'Vous n\'êtes pas autorisé à accéder à cette page.'], 403);
+        return new JsonResponse(['message' => 'Vous n\'êtes pas autorisé à réaliser cette action.'], 403);
     }
 
     public function apiJsonResponseValidationFailed($errors): JsonResponse

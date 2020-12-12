@@ -28,7 +28,7 @@ export function UserItems (props) {
                                 {elem.highRoleCode !== 1 &&
                                     <>
                                         <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
-                                        <ButtonIcon icon={"trash"} onClick={() => onDelete("delete")}>Supprimer</ButtonIcon>
+                                        <ButtonIcon icon={"trash"} onClick={() => onDelete(elem)}>Supprimer</ButtonIcon>
                                         <ButtonIcon icon={"share"} onClick={() => onChangeContext("impersonate")}>Impersonate</ButtonIcon>
                                     </>
                                 }
