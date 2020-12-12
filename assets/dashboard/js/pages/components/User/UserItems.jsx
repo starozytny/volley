@@ -20,7 +20,7 @@ export function UserItems (props) {
                             <div>
                                 <div className="username">
                                     <span>{elem.username}</span>
-                                    {elem.highRoleCode !== 0 && <span className="role">{elem.highRole.toLowerCase()}</span>}
+                                    {elem.highRoleCode !== 0 && <span className="role">{elem.highRole}</span>}
                                 </div>
                                 <div className="email">{elem.email}</div>
                             </div>

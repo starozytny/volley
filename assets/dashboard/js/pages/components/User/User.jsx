@@ -30,6 +30,7 @@ export class User extends Component {
             data: null,
             currentData: null,
             element: null,
+            filters: []
         }
 
         this.page = React.createRef();
@@ -39,6 +40,7 @@ export class User extends Component {
         this.handleUpdateList = this.handleUpdateList.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleGetFilters = this.handleGetFilters.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     componentDidMount() {
@@ -46,7 +48,7 @@ export class User extends Component {
         axios.get(Routing.generate('api_users_index'), {})
             .then(function (response) {
                 let data = response.data;
-                self.setState({ data: data, currentData: data.slice(0, 10) });
+                self.setState({ dataImmuable: data, data: data, currentData: data.slice(0, 10) });
             })
             .catch(function (error) {
                 self.setState({ loadPageError: true });
@@ -66,6 +68,7 @@ export class User extends Component {
         newData.sort(Sort.compareUsername)
 
         this.setState({
+            dataImmuable: newData,
             data: newData,
             currentData: newData.slice(0,10),
             element: element
@@ -109,15 +112,13 @@ export class User extends Component {
     }
 
     handleGetFilters = (filters) => {
-        const { data, dataImmuable } = this.state;
+        const { dataImmuable } = this.state;
 
-        let dataIm = dataImmuable ? dataImmuable : data;
         let newData = [];
-
         if(filters.length === 0) {
-            newData = dataIm
+            newData = dataImmuable
         }else{
-            dataIm.forEach(el => {
+            dataImmuable.forEach(el => {
                 filters.forEach(filter => {
                     if(filter === el.highRoleCode){
                         newData.filter(elem => elem.id !== el.id)
@@ -127,7 +128,24 @@ export class User extends Component {
             })
         }
 
-        this.setState({ dataImmuable: dataIm, data: newData, currentData: newData.slice(0, 10), filters: filters });
+        this.setState({ data: newData, currentData: newData.slice(0, 10), filters: filters });
+        return newData;
+    }
+
+    handleSearch = (search) => {
+        const { filters } = this.state;
+
+        let dataSearch = this.handleGetFilters(filters);
+
+        if(search === "") {
+            this.handleGetFilters(filters)
+        }else{
+            let newData = [];
+            newData = dataSearch.filter(function(v) {
+                if(v.username.toLowerCase().includes(search) || v.email.toLowerCase().includes(search)){ return v; }
+            })
+            this.setState({ data: newData, currentData: newData.slice(0, 10) });
+        }
     }
 
     render () {
@@ -147,6 +165,7 @@ export class User extends Component {
                                                                    onDelete={this.handleDelete}
                                                                    onGetFilters={this.handleGetFilters}
                                                                    filters={filters}
+                                                                   onSearch={this.handleSearch}
                                                                    data={currentData} />
                 break;
         }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import { Button }    from "@dashboardComponents/Tools/Button";
-import { Input }    from "@dashboardComponents/Tools/Fields";
 
 import { Filter }    from "@dashboardComponents/Layout/Filter";
+import { Search }    from "@dashboardComponents/Layout/Search";
 
 import {UserItems}   from "./UserItems";
 
@@ -11,18 +11,9 @@ export class UserList extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            search: ""
-        }
-
         this.filter = React.createRef();
 
-        this.handleChange = this.handleChange.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
-    }
-
-    handleChange = (e) => {
-        this.setState({ [e.currentTarget.name]: e.currentTarget.value });
     }
 
     handleFilter = (e) => {
@@ -30,8 +21,7 @@ export class UserList extends Component {
     }
 
     render () {
-        const { onChangeContext, onGetFilters, filters } = this.props;
-        const { search } = this.state;
+        const { onChangeContext, onGetFilters, filters, onSearch } = this.props;
 
         let itemsFilterLabelArray = ["Utilisateur", "Super administrateur", "Administrateur"];
         let itemsFilterIdArray = ["f-user", "f-superadmin", "f-admin"];
@@ -50,11 +40,7 @@ export class UserList extends Component {
                     </div>
                     <div className="item filter-search">
                         <Filter ref={this.filter} items={itemsFilter} onGetFilters={onGetFilters} />
-                        <div className="search">
-                            <input type="search" name="search" id="search" value={search} placeholder="Recherche..." onChange={this.handleChange} />
-                            <span className="icon-search" />
-                        </div>
-
+                        <Search onSearch={onSearch} />
                         <div className="filters-items-checked">
                             {filters && filters.map(el => {
                                 return <div className="item" key={el}>
