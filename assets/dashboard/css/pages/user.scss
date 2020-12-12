@@ -76,10 +76,17 @@
   .item{
     transition: all 0.2s ease-in-out;
 
-    &:hover{
-      transform: translateX(6px);
+    .item-content{
+      transition: all 0.2s ease-in-out;
+    }
+
+    &:hover {
       background: var(--alpha);
-      padding-left: 12px;
+
+      & > .item-content{
+        transform: translateX(6px);
+        padding-left: 12px;
+      }
     }
   }
 

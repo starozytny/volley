@@ -130,7 +130,7 @@ export class User extends Component {
 
         localStorage.setItem("user.pagination", "0")
         this.page.current.pagination.current.handlePageOne();
-        this.setState({ data: newData, currentData: newData.slice(0, 10), filters: filters });
+        this.setState({ data: newData, currentData: newData.slice(0, 10), filters: filters, selectors: [] });
         return newData;
     }
 
@@ -151,21 +151,19 @@ export class User extends Component {
     }
 
     handleSelectors = (id, isChecked) => {
+        const { selectors } = this.state;
+
+        console.log(selectors)
+
         if(isChecked){
-            this.setState(prevState => {
-                return { selectors: [...prevState.selectors, ...[id]] }
-            })
+            this.setState({ selectors: [...selectors, ...[id]] })
         }else{
-            this.setState(prevState => {
-                return { selectors: prevState.selectors.filter(el => el !== id) }
-            })
+            this.setState({ selectors: selectors.filter(el => el !== id) })
         }
     }
 
     render () {
         const { loadPageError, context, loadData, data, currentData, element, filters, selectors } = this.state;
-
-        console.log(selectors)
 
         let content = null, havePagination = false;
         switch (context){
