@@ -25,9 +25,13 @@ export function UserItems (props) {
                                 <div className="email">{elem.email}</div>
                             </div>
                             <div className="actions">
-                                <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
-                                <ButtonIcon icon={"trash"} onClick={() => onChangeContext("delete")}>Supprimer</ButtonIcon>
-                                <ButtonIcon icon={"share"} onClick={() => onChangeContext("impersonate")}>Impersonate</ButtonIcon>
+                                {elem.highRoleCode !== 1 &&
+                                    <>
+                                        <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
+                                        <ButtonIcon icon={"trash"} onClick={() => onChangeContext("delete")}>Supprimer</ButtonIcon>
+                                        <ButtonIcon icon={"share"} onClick={() => onChangeContext("impersonate")}>Impersonate</ButtonIcon>
+                                    </>
+                                }
                             </div>
                         </div>
                     </div>

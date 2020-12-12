@@ -75,7 +75,7 @@ export class User extends Component {
                 break;
             default:
                 havePagination = true;
-                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext} data={currentData}/>
+                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext} data={currentData} />
                 break;
         }
 
