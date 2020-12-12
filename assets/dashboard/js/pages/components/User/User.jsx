@@ -90,6 +90,7 @@ export class User extends Component {
                         .then(function (response) {
                             Swal.fire(response.data.message, '', 'success');
                             self.handleUpdateList(element, "delete");
+                            self.page.current.pagination.current.handleComeback()
                         })
                         .catch(function (error) {
                             if(error.response.data.message){
