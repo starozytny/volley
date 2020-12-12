@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Button }    from "@dashboardComponents/Tools/Button";
 import { Input }    from "@dashboardComponents/Tools/Fields";
 
+import { Filter }    from "@dashboardComponents/Layout/Filter";
+
 import {UserItems}   from "./UserItems";
 
 export class UserList extends Component {
@@ -21,8 +23,14 @@ export class UserList extends Component {
     }
 
     render () {
-        const { onChangeContext } = this.props;
+        const { onChangeContext, onGetFilters } = this.props;
         const { search } = this.state;
+
+        let itemsFilter = [
+            { value: 1, id: "f-superadmin", label: "Super administrateur" },
+            { value: 2, id: "f-admin",      label: "Administrateur"},
+            { value: 0, id: "f-user",       label: "Utilistateur"}
+        ]
 
         return <>
             <div>
@@ -31,28 +39,7 @@ export class UserList extends Component {
                         <Button onClick={() => onChangeContext("create")}>Ajouter un utilisateur</Button>
                     </div>
                     <div className="item filter-search">
-                        <div className="filter">
-                            <div className="dropdown">
-                                <div className="dropdown-btn">
-                                    <span>Filtre</span>
-                                    <span className="icon-filter" />
-                                </div>
-                                <div className="dropdown-items">
-                                    <div className="item">
-                                        <input type="checkbox" name="filter-user" id="f-superadmin" value="1" onChange={this.handleChange}/>
-                                        <label htmlFor="f-superadmin">Super administrateur</label>
-                                    </div>
-                                    <div className="item">
-                                        <input type="checkbox" name="filter-user" id="f-admin" value="2" onChange={this.handleChange}/>
-                                        <label htmlFor="f-admin">Administrateur</label>
-                                    </div>
-                                    <div className="item">
-                                        <input type="checkbox" name="filter-user" id="f-user" value="0" onChange={this.handleChange}/>
-                                        <label htmlFor="f-user">Utilisateur</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Filter items={itemsFilter} onGetFilters={onGetFilters} />
                         <div className="search">
                             <input type="search" name="search" id="search" value={search} placeholder="Recherche..." onChange={this.handleChange} />
                             <span className="icon-search" />

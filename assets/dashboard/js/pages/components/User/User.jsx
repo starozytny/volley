@@ -29,7 +29,7 @@ export class User extends Component {
             loadData: true,
             data: null,
             currentData: null,
-            element: null
+            element: null,
         }
 
         this.page = React.createRef();
@@ -38,6 +38,7 @@ export class User extends Component {
         this.handleChangeContext = this.handleChangeContext.bind(this);
         this.handleUpdateList = this.handleUpdateList.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleGetFilters = this.handleGetFilters.bind(this);
     }
 
     componentDidMount() {
@@ -107,6 +108,28 @@ export class User extends Component {
             })
     }
 
+    handleGetFilters = (filters) => {
+        const { data, dataImmuable } = this.state;
+
+        let dataIm = dataImmuable ? dataImmuable : data;
+        let newData = [];
+
+        if(filters.length === 0) {
+            newData = dataIm
+        }else{
+            dataIm.forEach(el => {
+                filters.forEach(filter => {
+                    if(filter === el.highRoleCode){
+                        newData.filter(elem => elem.id !== el.id)
+                        newData.push(el);
+                    }
+                })
+            })
+        }
+
+        this.setState({ dataImmuable: dataIm, data: newData, currentData: newData.slice(0, 10) });
+    }
+
     render () {
         const { loadPageError, context, loadData, data, currentData, element } = this.state;
 
@@ -120,7 +143,10 @@ export class User extends Component {
                 break;
             default:
                 havePagination = true;
-                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext} onDelete={this.handleDelete} data={currentData} />
+                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext}
+                                                                   onDelete={this.handleDelete}
+                                                                   onGetFilters={this.handleGetFilters}
+                                                                   data={currentData} />
                 break;
         }
 
