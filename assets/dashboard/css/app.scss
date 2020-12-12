@@ -53,6 +53,10 @@
 @import "components/tooltip";
 @import "components/form";
 
+html, body{
+    scroll-behavior: smooth;
+}
+
 body {
     color: var(--txt);
     @include fontRegular();

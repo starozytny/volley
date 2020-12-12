@@ -27,7 +27,11 @@ export class UserForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() { document.getElementById("username").focus() }
+    componentDidMount() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        document.getElementById("username").focus()
+    }
 
     handleChange = (e) => {
         let name = e.currentTarget.name;
