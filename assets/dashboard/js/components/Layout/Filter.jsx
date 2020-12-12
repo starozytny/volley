@@ -33,10 +33,11 @@ export class Filter extends Component {
 
     render () {
         const { items } = this.props;
+        const { filters } = this.state;
 
         return <div className="filter">
             <div className="dropdown">
-                <div className="dropdown-btn">
+                <div className={`dropdown-btn ${filters.length !== 0 ? "active" : ""}`}>
                     <span>Filtre</span>
                     <span className="icon-filter" />
                 </div>

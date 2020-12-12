@@ -60,8 +60,10 @@ export class UserList extends Component {
                                 return <div className="item" key={el}>
                                     <div className="role">
                                         <input type="checkbox" name="filters-checked" id={`fcheck-${el}`} data-id={itemsFilterIdArray[el]} value={el} onChange={this.handleFilter}/>
-                                        <label htmlFor={`fcheck-${el}`}>{itemsFilterLabelArray[el]}</label>
-                                        <span className="icon-cancel" />
+                                        <label htmlFor={`fcheck-${el}`}>
+                                            {itemsFilterLabelArray[el]}
+                                            <span className="icon-cancel" />
+                                        </label>
                                     </div>
                                 </div>
                             })}

@@ -54,6 +54,7 @@
       &:hover + [class^="icon-"],
       &:focus + [class^="icon-"]{
         transform: scale(0.9);
+        color: var(--primary)
       }
     }
   }

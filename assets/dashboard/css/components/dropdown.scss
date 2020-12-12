@@ -8,11 +8,11 @@
     border-radius: 4px;
     cursor: pointer;
     opacity: 0.8;
-    transition: all 0.2s ease-in-out;
     text-align: center;
     @include flex(row, center, center);
     border: 1px solid var(--grey);
     background: var(--alpha);
+    transition: all 0.2s ease-in-out;
 
     span:first-child{
       display: inline-block;
@@ -21,9 +21,22 @@
 
     span{
       opacity: 0.7;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &.active{
+      [class^="icon-"]{
+        color: var(--primary);
+      }
     }
 
     &:hover{
+
+      [class^="icon-"]{
+        transform: scale(0.95);
+        color: var(--primary);
+      }
+
       & + .dropdown-items{
         opacity: 1;
         z-index: 12;
