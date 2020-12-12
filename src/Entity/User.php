@@ -19,6 +19,7 @@ use OpenApi\Annotations as OA;
 class User implements UserInterface
 {
     const ADMIN_READ = ['admin:read'];
+    const USER_READ = ['user:read'];
 
     const CODE_ROLE_USER = 0;
     const CODE_ROLE_SUPER_ADMIN = 1;
@@ -35,7 +36,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Groups({"admin:read", "admin:write", "update"})
+     * @Groups({"admin:read", "admin:write", "update", "user:read"})
      */
     private $username;
 
@@ -43,7 +44,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"admin:read", "admin:write", "update"})
+     * @Groups({"admin:read", "admin:write", "update", "user:read"})
      */
     private $email;
 
@@ -211,7 +212,7 @@ class User implements UserInterface
      * How long ago an user was added.
      *
      * @return string
-     * @Groups({"admin:read"})
+     * @Groups({"admin:read", "user:read"})
      */
     public function getCreatedAtAgo(): string
     {

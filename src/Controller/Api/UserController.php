@@ -142,13 +142,21 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
-        if(!isset($data->username) || !isset($data->email)){
-            return new JsonResponse(['message' => 'Il manque des données.'], 400);
+        if(isset($data->username)){
+            $user->setUsername($sanitizeData->fullSanitize($data->username));
         }
 
-        $user->setUsername($sanitizeData->fullSanitize($data->username));
-        $user->setEmail($data->email);
-        $user->setRoles($data->roles);
+        if(isset($data->email)){
+            $user->setEmail($data->email);
+        }
+
+        $groups = User::ADMIN_READ;
+        if($this->isGranted("ROLE_ADMIN")){
+            if(isset($data->roles)){
+                $user->setRoles($data->roles);
+            }
+            $groups = User::USER_READ;
+        }
 
         $noErrors = $validator->validate($user);
 
@@ -157,8 +165,8 @@ class UserController extends AbstractController
         }
 
         $em->persist($user);
-//        $em->flush();
+        $em->flush();
 
-        return $apiResponse->apiJsonResponse($user, User::ADMIN_READ);
+        return $apiResponse->apiJsonResponse($user, $groups);
     }
 }

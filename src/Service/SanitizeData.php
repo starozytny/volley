@@ -24,4 +24,13 @@ class SanitizeData
 
         return str_replace($spe, $noSpe, $data);
     }
+
+    public function updateValue ($value, $newValue)
+    {
+        if($newValue != "" && $newValue != null){
+            return $newValue;
+        }
+
+        return $value;
+    }
 }
