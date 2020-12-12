@@ -1,12 +1,14 @@
 @import "../vars/vars";
 
-.btn, .btn-icon{
+.btn, .btn-icon,
+button.swal2-confirm.swal2-styled,
+button.swal2-cancel.swal2-styled{
   display: inline-block;
   border-radius: 4px;
   background: none;
   border: none;
   cursor: pointer;
-  opacity: 0.9;
+  opacity: 0.8;
   transition: all 0.2s ease-in-out;
   text-align: center;
 
@@ -55,6 +57,29 @@ $icons:
       box-shadow: 0 8px 10px $shadow;
     }
   }
+}
+
+$icons:
+        "confirm" var(--primary) var(--txt) var(--primaryShadow),
+        "cancel" var(--danger) var(--txt) var(--dangerShadow)
+;
+
+@each $name, $bg, $txt, $shadow in $icons {
+  button.swal2-#{$name}.swal2-styled {
+    background: $bg;
+    color: $txt;
+    border: 1px slod $bg;
+    box-shadow: 0 5px 10px $shadow;
+
+    &:hover{
+      box-shadow: 0 8px 10px $shadow;
+
+    }
+  }
+}
+
+.swal2-actions:not(.swal2-loading) button.swal2-styled:hover{
+  background-image: none;
 }
 
 .btn-default{

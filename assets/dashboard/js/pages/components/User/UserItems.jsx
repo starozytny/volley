@@ -3,7 +3,7 @@ import React from 'react';
 import { ButtonIcon } from "@dashboardComponents/Tools/Button";
 
 export function UserItems (props) {
-    const { data, onChangeContext } = props
+    const { data, onChangeContext, onDelete } = props
 
     return <div className="items items-user">
         {data.map(elem => {
@@ -28,7 +28,7 @@ export function UserItems (props) {
                                 {elem.highRoleCode !== 1 &&
                                     <>
                                         <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
-                                        <ButtonIcon icon={"trash"} onClick={() => onChangeContext("delete")}>Supprimer</ButtonIcon>
+                                        <ButtonIcon icon={"trash"} onClick={() => onDelete("delete")}>Supprimer</ButtonIcon>
                                         <ButtonIcon icon={"share"} onClick={() => onChangeContext("impersonate")}>Impersonate</ButtonIcon>
                                     </>
                                 }

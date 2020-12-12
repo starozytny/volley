@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 import axios             from "axios";
+import Swal              from "sweetalert2";
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Page }          from "@dashboardComponents/Layout/Page";
 import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 
-import UpdateList  from "@dashboardComponents/functions/updateList";
-import Sort  from "@dashboardComponents/functions/sort";
+import UpdateList        from "@dashboardComponents/functions/updateList";
+import Sort              from "@dashboardComponents/functions/sort";
+import SwalOptions       from "@dashboardComponents/functions/swalOptions";
 
 import { UserList }      from "./UserList";
 import { UserCreate }    from "./UserCreate";
@@ -29,6 +31,7 @@ export class User extends Component {
         this.handleUpdateData = this.handleUpdateData.bind(this);
         this.handleChangeContext = this.handleChangeContext.bind(this);
         this.handleUpdateList = this.handleUpdateList.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentDidMount() {
@@ -64,6 +67,19 @@ export class User extends Component {
         this.setState({ context, element })
     }
 
+    handleDelete = (element) => {
+        Swal.fire(SwalOptions.options('Supprimer cet utilisateur ?', 'Cette action est irréversible.'))
+            .then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+    }
+
     render () {
         const { loadPageError, context, loadData, data, currentData, element } = this.state;
 
@@ -77,7 +93,7 @@ export class User extends Component {
                 break;
             default:
                 havePagination = true;
-                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext} data={currentData} />
+                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext} onDelete={this.handleDelete} data={currentData} />
                 break;
         }
 
