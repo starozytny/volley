@@ -16,15 +16,23 @@
   }
 
   .filter-search{
-    margin-top: 12px;
+    margin-top: 24px;
     @include flex(row, flex-start, flex-start);
 
     .filter{
+      position: relative;
       width: 100px;
     }
 
     .search{
+      position: relative;
       width: calc(100% - 100px);
+
+      [class^="icon-"]{
+        position: absolute;
+        top: 12px; left: 12px;
+        opacity: 0.7;
+      }
     }
 
     .dropdown-btn{
@@ -34,7 +42,7 @@
     }
 
     input[type="search"]{
-      padding: 12px 10px;
+      padding: 12px 10px 12px 40px;
       width: 100%;
       border-radius: 0 3px 3px 0;
       border-left: none;

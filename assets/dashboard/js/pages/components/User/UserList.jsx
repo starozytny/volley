@@ -46,6 +46,7 @@ export class UserList extends Component {
                         </div>
                         <div className="search">
                             <input type="search" name="search" id="search" value={search} placeholder="Recherche..." onChange={this.handleChange} />
+                            <span className="icon-search" />
                         </div>
                     </div>
                 </div>
