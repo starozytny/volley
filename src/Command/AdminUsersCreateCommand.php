@@ -97,6 +97,7 @@ class AdminUsersCreateCommand extends Command
 
         $this->em->flush();
 
+        $io->newLine();
         $io->comment('--- [FIN DE LA COMMANDE] ---');
         return 0;
     }
