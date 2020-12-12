@@ -25,4 +25,24 @@ class ApiResponse
 
         return $response;
     }
+
+    public function apiJsonResponseSuccessful($message): JsonResponse
+    {
+        return new JsonResponse(['message' => $message], 200);
+    }
+
+    public function apiJsonResponseBadRequest($message): JsonResponse
+    {
+        return new JsonResponse(['message' => $message], 400);
+    }
+
+    public function apiJsonResponseForbidden(): JsonResponse
+    {
+        return new JsonResponse(['message' => 'Vous n\'êtes pas autorisé à accéder à cette page.'], 403);
+    }
+
+    public function apiJsonResponseValidationFailed($errors): JsonResponse
+    {
+        return new JsonResponse($errors, 400);
+    }
 }

@@ -87,11 +87,11 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent());
 
         if($data === null){
-            return new JsonResponse(['message' => 'Les données sont vides.'], 400);
+            return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
         if(!isset($data->username) || !isset($data->email) || !isset($data->password)){
-            return new JsonResponse(['message' => 'Il manque des données.'], 400);
+            return $apiResponse->apiJsonResponseBadRequest('Il manque des données.');
         }
 
         $user = new User();
@@ -106,7 +106,7 @@ class UserController extends AbstractController
         $noErrors = $validator->validate($user);
 
         if($noErrors !== true){
-            return new JsonResponse($noErrors, 400);
+            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
 
         $em->persist($user);
@@ -129,7 +129,6 @@ class UserController extends AbstractController
      *     response=403,
      *     description="Forbidden for not good role or user",
      * )
-     *
      * @OA\Response(
      *     response=400,
      *     description="Validation failed",
@@ -154,7 +153,7 @@ class UserController extends AbstractController
                            ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user): JsonResponse
     {
         if($this->getUser() != $user && !$this->isGranted("ROLE_ADMIN") ){
-            return new JsonResponse(['message' => 'Vous n\'êtes pas autorisé à accéder à cette page.'], 403);
+            return $apiResponse->apiJsonResponseForbidden();
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -179,7 +178,7 @@ class UserController extends AbstractController
         $noErrors = $validator->validate($user);
 
         if($noErrors !== true){
-            return new JsonResponse($noErrors, 400);
+            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
 
         $em->persist($user);
@@ -197,49 +196,29 @@ class UserController extends AbstractController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Return true if user deleted",
+     * )
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden for not good role or user",
      * )
      *
      * @OA\Tag(name="Users")
      *
-     * @param Request $request
-     * @param ValidatorService $validator
      * @param ApiResponse $apiResponse
-     * @param SanitizeData $sanitizeData
      * @param User $user
      * @return JsonResponse
      */
-    public function delete(Request $request, ValidatorService $validator,
-                           ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user): JsonResponse
+    public function delete(ApiResponse $apiResponse, User $user): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $data = json_decode($request->getContent());
 
-        if(isset($data->username)){
-            $user->setUsername($sanitizeData->fullSanitize($data->username));
+        if($user->getHighRoleCode() === User::CODE_ROLE_SUPER_ADMIN){
+            return $apiResponse->apiJsonResponseForbidden();
         }
 
-        if(isset($data->email)){
-            $user->setEmail($data->email);
-        }
-
-        $groups = User::USER_READ;
-        if($this->isGranted("ROLE_ADMIN")){
-            if(isset($data->roles)){
-                $user->setRoles($data->roles);
-            }
-            $groups = User::ADMIN_READ;
-        }
-
-        $noErrors = $validator->validate($user);
-
-        if($noErrors !== true){
-            return new JsonResponse($noErrors, 400);
-        }
-
-        $em->persist($user);
+        $em->remove($user);
         $em->flush();
 
-        return $apiResponse->apiJsonResponse($user, $groups);
+        return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
     }
 }
