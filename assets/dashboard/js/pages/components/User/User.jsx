@@ -127,11 +127,11 @@ export class User extends Component {
             })
         }
 
-        this.setState({ dataImmuable: dataIm, data: newData, currentData: newData.slice(0, 10) });
+        this.setState({ dataImmuable: dataIm, data: newData, currentData: newData.slice(0, 10), filters: filters });
     }
 
     render () {
-        const { loadPageError, context, loadData, data, currentData, element } = this.state;
+        const { loadPageError, context, loadData, data, currentData, element, filters } = this.state;
 
         let content = null, havePagination = false;
         switch (context){
@@ -146,6 +146,7 @@ export class User extends Component {
                 content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext}
                                                                    onDelete={this.handleDelete}
                                                                    onGetFilters={this.handleGetFilters}
+                                                                   filters={filters}
                                                                    data={currentData} />
                 break;
         }

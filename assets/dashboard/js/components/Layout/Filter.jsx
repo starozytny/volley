@@ -13,11 +13,19 @@ export class Filter extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange = (e) => {
+    // from fo uncheck via toolbar filter checked
+    handleChange = (e, from=false) => {
         const {filters} = this.state;
-        let value = parseInt(e.currentTarget.value);
 
-        let newFilter = (e.currentTarget.checked) ? [...filters, ...[value]] : filters.filter(v => v !== value)
+        let value = parseInt(e.currentTarget.value);
+        let newFilter;
+        if(!from){
+            newFilter = (e.currentTarget.checked) ? [...filters, ...[value]] : filters.filter(v => v !== value)
+        }else{
+            newFilter = filters.filter(v => v !== value)
+            document.getElementById(e.currentTarget.dataset.id).click();
+        }
+
         this.setState({filters: newFilter});
 
         this.props.onGetFilters(newFilter);

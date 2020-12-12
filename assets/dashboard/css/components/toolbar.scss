@@ -18,6 +18,7 @@
   .filter-search{
     margin-top: 24px;
     @include flex(row, flex-start, flex-start);
+    flex-wrap: wrap;
 
     .filter{
       position: relative;
@@ -56,6 +57,21 @@
       }
     }
   }
+
+  .filters-items-checked{
+    @include flex(row, flex-start, flex-start);
+    flex-wrap: wrap;
+    margin-top: 12px;
+
+    & > .item{
+      margin: 0 8px 8px 0;
+      width: auto;
+
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 //                      __   _____ __    ___    __
@@ -67,6 +83,7 @@
 @media (min-width:768px) {
   .toolbar{
     @include flex(row, flex-start, flex-start);
+    flex-wrap: wrap;
 
     & > .item{
       width: auto;
