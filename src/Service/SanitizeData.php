@@ -6,7 +6,7 @@ namespace App\Service;
 
 class SanitizeData
 {
-    public function fullSanitize($value)
+    public function fullSanitize ($value)
     {
         $value = trim($value);
         $value = str_replace(" ", "", $value);
@@ -16,7 +16,7 @@ class SanitizeData
         return $value;
     }
 
-    public function reformatCara($data)
+    public function reformatCara ($data)
     {
 
         $spe = array(' ','é','ê','è','à','ô','ï','ä', 'ö', 'ë', '<','>');
@@ -24,5 +24,4 @@ class SanitizeData
 
         return str_replace($spe, $noSpe, $data);
     }
-
 }

@@ -35,7 +35,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Groups({"admin:read", "admin:write"})
+     * @Groups({"admin:read", "admin:write", "update"})
      */
     private $username;
 
@@ -43,13 +43,13 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"admin:read", "admin:write"})
+     * @Groups({"admin:read", "admin:write", "update"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"admin:read", "admin:write"})
+     * @Groups({"admin:read", "admin:write", "update"})
      * @OA\Property(type="array", @OA\Items(type="string"))
      */
     private $roles = ['ROLE_USER'];

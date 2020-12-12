@@ -105,6 +105,58 @@ class UserController extends AbstractController
         }
 
         $em->persist($user);
+        $em->flush();
+
+        return $apiResponse->apiJsonResponse($user, User::ADMIN_READ);
+    }
+
+    /**
+     * Admin - Update an user
+     *
+     * @Route("/{id}", name="update", options={"expose"=true}, methods={"PUT"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns an user object",
+     *     @Model(type=User::class, groups={"update"})
+     * )
+     *
+     * @OA\RequestBody (
+     *     description="Only admin can change roles",
+     *     @Model(type=User::class, groups={"update"}),
+     *     required=true
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param ValidatorService $validator
+     * @param ApiResponse $apiResponse
+     * @param SanitizeData $sanitizeData
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function update(Request $request, ValidatorService $validator,
+                           ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent());
+
+        if(!isset($data->username) || !isset($data->email)){
+            return new JsonResponse(['message' => 'Il manque des données.'], 400);
+        }
+
+        $user->setUsername($sanitizeData->fullSanitize($data->username));
+        $user->setEmail($data->email);
+        $user->setRoles($data->roles);
+
+        $noErrors = $validator->validate($user);
+
+        if($noErrors !== true){
+            return new JsonResponse($noErrors, 400);
+        }
+
+        $em->persist($user);
 //        $em->flush();
 
         return $apiResponse->apiJsonResponse($user, User::ADMIN_READ);

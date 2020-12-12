@@ -13,8 +13,6 @@ export class UserForm extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props.roles)
-
         this.state = {
             username: props.username,
             email: props.email,
