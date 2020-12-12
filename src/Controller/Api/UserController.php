@@ -217,6 +217,10 @@ class UserController extends AbstractController
             return $apiResponse->apiJsonResponseForbidden();
         }
 
+        if($user === $this->getUser()){
+            return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez vous supprimer.');
+        }
+
         $em->remove($user);
         $em->flush();
 
