@@ -61,6 +61,11 @@ class UserController extends AbstractController
      *     @Model(type=User::class, groups={"admin:write"})
      * )
      *
+     * @OA\Response(
+     *     response=400,
+     *     description="JSON empty or missing data or validation failed",
+     * )
+     *
      * @OA\RequestBody (
      *     @Model(type=User::class, groups={"admin:write"}),
      *     required=true
@@ -120,6 +125,15 @@ class UserController extends AbstractController
      *     description="Returns an user object",
      *     @Model(type=User::class, groups={"update"})
      * )
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden for not good role or user",
+     * )
+     *
+     * @OA\Response(
+     *     response=400,
+     *     description="Validation failed",
+     * )
      *
      * @OA\RequestBody (
      *     description="Only admin can change roles",
@@ -139,6 +153,10 @@ class UserController extends AbstractController
     public function update(Request $request, ValidatorService $validator,
                            ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user): JsonResponse
     {
+        if($this->getUser() != $user && !$this->isGranted("ROLE_ADMIN") ){
+            return new JsonResponse(['message' => 'Vous n\'êtes pas autorisé à accéder à cette page.'], 403);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
