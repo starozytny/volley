@@ -53,7 +53,8 @@ export class User extends Component {
         let newData = UpdateList.update(context, data, element);
         this.setState({
             data: newData,
-            currentData: newData.slice(0,12)
+            currentData: newData.slice(0,12),
+            element: element
         })
     }
 

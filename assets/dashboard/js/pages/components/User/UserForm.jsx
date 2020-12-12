@@ -49,12 +49,14 @@ export class UserForm extends Component {
 
         this.setState({ success: false})
 
+        let method = "PUT";
         let paramsToValidate = [
             {type: "text", id: 'username', value: username},
             {type: "email", id: 'email', value: email},
             {type: "array", id: 'roles', value: roles}
         ];
         if(type === "create"){
+            method = "POST";
             paramsToValidate = [...paramsToValidate,
                 ...[{type: "password", id: 'password', value: password, idCheck: 'passwordConfirm', valueCheck: passwordConfirm}]
             ];
@@ -69,7 +71,7 @@ export class UserForm extends Component {
         }else{
             Loader.loader(true);
             let self = this;
-            axios({ method: 'post', url: url, data: self.state })
+            axios({ method: method, url: url, data: self.state })
                 .then(function (response) {
                     let data = response.data;
                     self.props.onUpdateList(data)
@@ -113,8 +115,6 @@ export class UserForm extends Component {
                 'identifiant':  'utilisateur'
             },
         ]
-
-        console.log(type)
 
         return <>
             <p className="form-infos">

@@ -168,12 +168,12 @@ class UserController extends AbstractController
             $user->setEmail($data->email);
         }
 
-        $groups = User::ADMIN_READ;
+        $groups = User::USER_READ;
         if($this->isGranted("ROLE_ADMIN")){
             if(isset($data->roles)){
                 $user->setRoles($data->roles);
             }
-            $groups = User::USER_READ;
+            $groups = User::ADMIN_READ;
         }
 
         $noErrors = $validator->validate($user);
