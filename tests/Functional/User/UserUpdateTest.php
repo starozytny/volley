@@ -79,7 +79,7 @@ class UserUpdateTest extends CustomApiTestCase
     {
         $client = static::createClient();
         $user = $this->createUser("jason", "azerty");
-        $admin = $this->loginUserAdmin($client);
+        $this->loginUserAdmin($client);
 
         $json = '{
             "username":"henry", 
@@ -87,5 +87,18 @@ class UserUpdateTest extends CustomApiTestCase
         }';
 
         $this->sendRequestJson($client, "PUT", self::URL_UPDATE . $user->getId(), $json, 200);
+    }
+
+    public function testUpdateUserInexistant()
+    {
+        $client = static::createClient();
+        $this->loginUserAdmin($client);
+
+        $json = '{
+            "username":"henry", 
+            "email":"azerty@test.fr"
+        }';
+
+        $this->sendRequestJson($client, "PUT", self::URL_UPDATE . 999999, $json, 404);
     }
 }
