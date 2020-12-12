@@ -7,6 +7,7 @@ import { Page }          from "@dashboardComponents/Layout/Page";
 import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 
 import UpdateList  from "@dashboardComponents/functions/updateList";
+import Sort  from "@dashboardComponents/functions/sort";
 
 import { UserList }      from "./UserList";
 import { UserCreate }    from "./UserCreate";
@@ -51,6 +52,7 @@ export class User extends Component {
         const { data, context } = this.state
 
         let newData = UpdateList.update(context, data, element);
+        newData.sort(Sort.compareUsername)
         this.setState({
             data: newData,
             currentData: newData.slice(0,12),
