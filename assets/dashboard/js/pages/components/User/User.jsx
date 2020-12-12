@@ -17,8 +17,6 @@ import { UserList }      from "./UserList";
 import { UserCreate }    from "./UserCreate";
 import { UserUpdate }    from "./UserUpdate";
 
-
-
 export class User extends Component {
     constructor(props) {
         super();
@@ -128,6 +126,8 @@ export class User extends Component {
             })
         }
 
+        localStorage.setItem("user.pagination", "0")
+        this.page.current.pagination.current.handlePageOne();
         this.setState({ data: newData, currentData: newData.slice(0, 10), filters: filters });
         return newData;
     }
