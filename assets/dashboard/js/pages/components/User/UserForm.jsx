@@ -78,8 +78,8 @@ export class UserForm extends Component {
             axios({ method: method, url: url, data: self.state })
                 .then(function (response) {
                     let data = response.data;
-                    self.props.onUpdateList(data)
-                    self.setState({ success: messageSuccess, errors: [] })
+                    self.props.onUpdateList(data);
+                    self.setState({ success: messageSuccess, errors: [] });
                     if(type === "create"){
                         self.setState( {
                             username: '',
@@ -91,8 +91,8 @@ export class UserForm extends Component {
                     }
                 })
                 .catch(function (error) {
-                    self.setState({ errors: error.response.data })
-                    toastr.error("Veuillez vérifier les informations transmises.")
+                    self.setState({ errors: error.response.data });
+                    toastr.error("Veuillez vérifier les informations transmises.");
                 })
                 .then(() => {
                     Loader.loader(false);

@@ -93,13 +93,12 @@ export class User extends Component {
                         .then(function (response) {
                             Swal.fire(response.data.message, '', 'success');
                             self.handleUpdateList(element, "delete");
-                            self.page.current.pagination.current.handleComeback()
                         })
                         .catch(function (error) {
                             if(error.response.data.message){
                                 toastr.error(error.response.data.message)
                             }else{
-                                toastr.error("Une erreure est survenue, veuillez contacter le support.")
+                                toastr.error("Une erreur est survenue, veuillez contacter le support.")
                             }
                         })
                         .then(() => {
@@ -112,34 +111,42 @@ export class User extends Component {
 
     handleDeleteAll = () => {
 
-        console.log(document.querySelectorAll('.i-selector:checked'))
+        let checked = document.querySelectorAll('.i-selector:checked');
 
-        let self = this;
-        Swal.fire(SwalOptions.options('Supprimer la sélection ?',
-            'Cette action est irréversible.'))
-            .then((result) => {
-                if (result.isConfirmed) {
+        let selectors = []
+        checked.forEach(el => {
+            selectors.push(parseInt(el.value))
+        })
 
-                    // Loader.loader(true);
-                    // axios.delete(Routing.generate('api_users_delete', {'id': element.id}), {})
-                    //     .then(function (response) {
-                    //         Swal.fire(response.data.message, '', 'success');
-                    //         self.handleUpdateList(element, "delete");
-                    //         self.page.current.pagination.current.handleComeback()
-                    //     })
-                    //     .catch(function (error) {
-                    //         if(error.response.data.message){
-                    //             toastr.error(error.response.data.message)
-                    //         }else{
-                    //             toastr.error("Une erreure est survenue, veuillez contacter le support.")
-                    //         }
-                    //     })
-                    //     .then(() => {
-                    //         Loader.loader(false);
-                    //     })
+        if(selectors.length === 0){
+            toastr.info("Aucun utilisateur sélectionné.");
+        }else{
+            let self = this;
+            Swal.fire(SwalOptions.options('Supprimer la sélection ?',
+                'Cette action est irréversible.'))
+                .then((result) => {
+                    if (result.isConfirmed) {
 
-                }
-            })
+                        Loader.loader(true);
+                        axios({ method: "delete", url: Routing.generate('api_users_delete_group'), data: selectors })
+                            .then(function (response) {
+                                Swal.fire(response.data.message, '', 'success');
+                            })
+                            .catch(function (error) {
+                                if(error.response.data.message){
+                                    toastr.error(error.response.data.message)
+                                }else{
+                                    toastr.error("Une erreur est survenue, veuillez contacter le support.")
+                                }
+                            })
+                            .then(() => {
+                                Loader.loader(false);
+                            })
+                        ;
+
+                    }
+                })
+        }
     }
 
     handleGetFilters = (filters) => {

@@ -227,6 +227,55 @@ class UserController extends AbstractController
         }
 
         $em->remove($user);
+        $em->flush();
+
+        return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
+    }
+
+    /**
+     * Admin - Delete a group of user
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/", name="delete_group", options={"expose"=true}, methods={"DELETE"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return message successful",
+     * )
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden for not good role or user",
+     * )
+     *
+     * @OA\Response(
+     *     response=400,
+     *     description="Cannot delete me",
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param ApiResponse $apiResponse
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function deleteGroup(Request $request, ApiResponse $apiResponse, User $user): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent());
+
+        dump($data);
+
+//        if($user->getHighRoleCode() === User::CODE_ROLE_SUPER_ADMIN){
+//            return $apiResponse->apiJsonResponseForbidden();
+//        }
+//
+//        if($user === $this->getUser()){
+//            return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
+//        }
+//
+//        $em->remove($user);
 //        $em->flush();
 
         return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
