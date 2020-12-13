@@ -39,7 +39,7 @@ export class User extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleGetFilters = this.handleGetFilters.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
-        this.handleDeleteAll = this.handleDeleteAll.bind(this);
+        this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     }
 
     componentDidMount() {
@@ -109,7 +109,7 @@ export class User extends Component {
             })
     }
 
-    handleDeleteAll = () => {
+    handleDeleteGroup = () => {
 
         let checked = document.querySelectorAll('.i-selector:checked');
 
@@ -131,6 +131,7 @@ export class User extends Component {
                         axios({ method: "delete", url: Routing.generate('api_users_delete_group'), data: selectors })
                             .then(function (response) {
                                 Swal.fire(response.data.message, '', 'success');
+                                self.handleUpdateList(selectors, "delete_group");
                             })
                             .catch(function (error) {
                                 if(error.response.data.message){
@@ -206,9 +207,7 @@ export class User extends Component {
                                                                    onGetFilters={this.handleGetFilters}
                                                                    filters={filters}
                                                                    onSearch={this.handleSearch}
-                                                                   onSelectors={this.handleSelectors}
-                                                                   selectors={selectors}
-                                                                   onDeleteAll={this.handleDeleteAll}
+                                                                   onDeleteAll={this.handleDeleteGroup}
                                                                    data={currentData} />
                 break;
         }

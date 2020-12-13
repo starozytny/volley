@@ -281,6 +281,6 @@ class UserController extends AbstractController
         }
 
         $em->flush();
-        return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
+        return $apiResponse->apiJsonResponseSuccessful("Supression de la sélection réussie !");
     }
 }
