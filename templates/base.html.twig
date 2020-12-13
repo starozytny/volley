@@ -14,8 +14,19 @@
     </head>
 <body>
 
-    {# --------------- BODY ---------------- #}
-    {% block body %}{% endblock %}
+    {% if is_granted('IS_IMPERSONATOR') %}
+        <div class="impersonate">
+            <a href="{{ impersonation_exit_path(path('admin_users_index') ) }}">
+                <span class="icon-eject"></span>
+                Quitter l'impersonation
+            </a>
+        </div>
+    {% endif %}
+
+    <div>
+        {# --------------- BODY ---------------- #}
+        {% block body %}{% endblock %}
+    </div>
 
     {% block javascripts %}{% endblock %}
 </body>

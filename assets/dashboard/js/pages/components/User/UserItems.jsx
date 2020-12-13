@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
-import { ButtonIcon } from "@dashboardComponents/Tools/Button";
-import { Selector } from "@dashboardComponents/Layout/Selector";
+import Routing          from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
+
+import { ButtonIcon }   from "@dashboardComponents/Tools/Button";
+import { Selector }     from "@dashboardComponents/Layout/Selector";
 
 export class UserItems extends Component {
     render () {
@@ -32,7 +34,10 @@ export class UserItems extends Component {
                                         <>
                                             <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
                                             <ButtonIcon icon={"trash"} onClick={() => onDelete(elem)}>Supprimer</ButtonIcon>
-                                            <ButtonIcon icon={"share"} onClick={() => onChangeContext("impersonate")}>Impersonate</ButtonIcon>
+                                            <a href={Routing.generate('user_homepage', {'_switch_user' : elem.username})} target="_blank" className="btn-icon">
+                                                <span className="icon-share" />
+                                                <span className="tooltip">Impersonate</span>
+                                            </a>
                                         </>
                                         }
                                     </div>

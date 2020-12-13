@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/espace-membre", name="user_homepage")
+     * @Route("/espace-membre", options={"expose"=true}, name="user_homepage")
      */
     public function index(): Response
     {
