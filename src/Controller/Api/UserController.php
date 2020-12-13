@@ -257,27 +257,30 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param ApiResponse $apiResponse
-     * @param User $user
      * @return JsonResponse
      */
-    public function deleteGroup(Request $request, ApiResponse $apiResponse, User $user): JsonResponse
+    public function deleteGroup(Request $request, ApiResponse $apiResponse): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
-        dump($data);
+        $users = $em->getRepository(User::class)->findBy(['id' => $data]);
 
-//        if($user->getHighRoleCode() === User::CODE_ROLE_SUPER_ADMIN){
-//            return $apiResponse->apiJsonResponseForbidden();
-//        }
-//
-//        if($user === $this->getUser()){
-//            return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
-//        }
-//
-//        $em->remove($user);
-//        $em->flush();
+        if($users){
+            foreach($users as $user){
+                if($user->getHighRoleCode() === User::CODE_ROLE_SUPER_ADMIN){
+                    return $apiResponse->apiJsonResponseForbidden();
+                }
 
+                if($user === $this->getUser()){
+                    return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
+                }
+
+                $em->remove($user);
+            }
+        }
+
+        $em->flush();
         return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
     }
 }

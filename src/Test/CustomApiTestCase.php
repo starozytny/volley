@@ -55,6 +55,16 @@ class CustomApiTestCase extends WebTestCase
         return $user;
     }
 
+    protected function setToSuperAdmin(User $user)
+    {
+        $user->setRoles(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']);
+
+        $em = $this->getEntityManager();
+        $em->flush();
+
+        return $user;
+    }
+
     protected function setToAdmin(User $user)
     {
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
