@@ -1,0 +1,20 @@
+{% extends 'dashboard/layout/layout.html.twig' %}
+
+{% set page_prefix = "Espace membre" %}
+{% set menu = [
+    {
+        'path': path('user_homepage'),
+        'icon': 'home',
+        'label': 'Dashboard',
+        'name': 'espace-membre'
+    }
+] %}
+
+{% set menuBottom = [
+    {
+        'path': path('app_logout'),
+        'icon': 'eject',
+        'label': 'Se déconnecter',
+        'name': 'logout'
+    }
+] %}

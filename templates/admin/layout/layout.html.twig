@@ -1,6 +1,6 @@
 {% extends 'dashboard/layout/layout.html.twig' %}
 
-{% set page_prefix = "Admin" %}
+{% set page_prefix = "Administrateur" %}
 {% set menu = [
     {
         'path': path('admin_homepage'),
@@ -28,6 +28,12 @@
         'icon': 'dashboard',
         'label': 'API',
         'name': 'api'
+    },
+    {
+        'path': path('user_homepage'),
+        'icon': 'earth',
+        'label': 'Dashboard utilisateur',
+        'name': 'espace-membre'
     },
     {
         'path': path('app_logout'),
