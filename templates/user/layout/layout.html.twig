@@ -18,3 +18,15 @@
         'name': 'logout'
     }
 ] %}
+
+{% if is_granted("ROLE_ADMIN") %}
+    {% set menuAdd = [
+        {
+            'path': path('admin_homepage'),
+            'icon': 'earth',
+            'label': 'Espace admin',
+            'name': 'admin'
+        }
+    ]%}
+    {% set menuBottom = menuAdd | merge(menuBottom) %}
+{% endif %}
