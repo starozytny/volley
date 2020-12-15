@@ -5,7 +5,9 @@ namespace App\Test;
 
 
 use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Console\Input\StringInput;
 
 class CustomApiTestCase extends WebTestCase
 {
@@ -14,7 +16,7 @@ class CustomApiTestCase extends WebTestCase
         return self::$container->get('doctrine')->getManager();
     }
 
-    protected function createUser(string $username, string $password)
+    protected function createUser(string $username, string $password): User
     {
         $user = new User();
         $user->setUsername($username);
@@ -55,7 +57,17 @@ class CustomApiTestCase extends WebTestCase
         return $user;
     }
 
-    protected function setToSuperAdmin(User $user)
+    protected function setToRole(User $user, array $role): User
+    {
+        $user->setRoles($role);
+
+        $em = $this->getEntityManager();
+        $em->flush();
+
+        return $user;
+    }
+
+    protected function setToSuperAdmin(User $user): User
     {
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']);
 
@@ -65,7 +77,7 @@ class CustomApiTestCase extends WebTestCase
         return $user;
     }
 
-    protected function setToAdmin(User $user)
+    protected function setToAdmin(User $user): User
     {
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
 
@@ -75,12 +87,12 @@ class CustomApiTestCase extends WebTestCase
         return $user;
     }
 
-    protected function loginUser($client)
+    protected function loginUser($client): User
     {
         return $this->createUserAndLogIn($client, "shanbo", "azerty");
     }
 
-    protected function loginUserAdmin($client)
+    protected function loginUserAdmin($client): User
     {
         return $this->createUserAdminAndLogIn($client, "shanbo", "azerty");
     }
@@ -92,5 +104,28 @@ class CustomApiTestCase extends WebTestCase
             $json
         );
         $this->assertResponseStatusCodeSame($codeExpected);
+    }
+
+//    protected function initData($client)
+//    {
+//        self::runCommand('cite:tr:da 2020', $client);
+//    }
+
+    protected static function runCommand($command, $client): int
+    {
+        $command = sprintf('%s --quiet', $command);
+
+        return self::getApplication($client)->run(new StringInput($command));
+    }
+
+    protected static function getApplication($client): Application
+    {
+        if (null === self::$application) {
+
+            self::$application = new Application($client->getKernel());
+            self::$application->setAutoExit(false);
+        }
+
+        return self::$application;
     }
 }
