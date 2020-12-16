@@ -49,7 +49,7 @@ class AdminUsersCreateCommand extends Command
             [
                 'username' => 'shanbo',
                 'email' => 'chanbora.chhun@outlook.fr',
-                'roles' => ['ROLE_USER','ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
+                'roles' => ['ROLE_USER','ROLE_ADMIN', 'ROLE_DEVELOPER']
             ],
             [
                 'username' => 'staro',

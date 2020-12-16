@@ -35,7 +35,7 @@ security:
             switch_user: true
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+        ROLE_DEVELOPER: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
         ROLE_ADMIN: ROLE_USER
 
     access_control:

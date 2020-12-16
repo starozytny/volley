@@ -23,8 +23,8 @@ export class UserList extends Component {
     render () {
         const { onChangeContext, onGetFilters, filters, onSearch, onDeleteAll } = this.props;
 
-        let itemsFilterLabelArray = ["Utilisateur", "Super administrateur", "Administrateur"];
-        let itemsFilterIdArray = ["f-user", "f-superadmin", "f-admin"];
+        let itemsFilterLabelArray = ["Utilisateur", "Développeur", "Administrateur"];
+        let itemsFilterIdArray = ["f-user", "f-dev", "f-admin"];
 
         let itemsFilter = [
             { value: 0, id: itemsFilterIdArray[0], label: itemsFilterLabelArray[0]},

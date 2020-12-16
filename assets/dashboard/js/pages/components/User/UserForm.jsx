@@ -106,10 +106,10 @@ export class UserForm extends Component {
         const { errors, success, username, email, password, passwordConfirm, roles } = this.state;
 
         let rolesItems = [
-            { 'id': 1, 'value': 'ROLE_SUPER_ADMIN',
-                'label':        'Super admin',
-                'identifiant':  'superamdin'
-            },
+            // { 'id': 1, 'value': 'ROLE_DEVELOPER',
+            //     'label':        'Développeur',
+            //     'identifiant':  'dev'
+            // },
             { 'id': 2, 'value': 'ROLE_ADMIN',
                 'label':        'Admin',
                 'identifiant':  'admin'

@@ -218,7 +218,7 @@ class UserController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        if($user->getHighRoleCode() === User::CODE_ROLE_SUPER_ADMIN){
+        if($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER){
             return $apiResponse->apiJsonResponseForbidden();
         }
 
@@ -268,7 +268,7 @@ class UserController extends AbstractController
 
         if($users){
             foreach($users as $user){
-                if($user->getHighRoleCode() === User::CODE_ROLE_SUPER_ADMIN){
+                if($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER){
                     return $apiResponse->apiJsonResponseForbidden();
                 }
 

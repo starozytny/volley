@@ -22,7 +22,7 @@ class User implements UserInterface
     const USER_READ = ['user:read'];
 
     const CODE_ROLE_USER = 0;
-    const CODE_ROLE_SUPER_ADMIN = 1;
+    const CODE_ROLE_DEVELOPER = 1;
     const CODE_ROLE_ADMIN = 2;
 
     /**
@@ -126,8 +126,8 @@ class User implements UserInterface
      */
     public function getHighRole(): string
     {
-        $rolesSortedByImportance = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER'];
-        $rolesLabel = ['Super admin', 'Administrateur', 'Utilisateur'];
+        $rolesSortedByImportance = ['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_USER'];
+        $rolesLabel = ['Développeur', 'Administrateur', 'Utilisateur'];
         $i = 0;
         foreach ($rolesSortedByImportance as $role)
         {
@@ -150,8 +150,8 @@ class User implements UserInterface
     public function getHighRoleCode(): int
     {
         switch($this->getHighRole()){
-            case 'Super admin':
-                return self::CODE_ROLE_SUPER_ADMIN;
+            case 'Développeur':
+                return self::CODE_ROLE_DEVELOPER;
             case 'Administrateur':
                 return self::CODE_ROLE_ADMIN;
             default:

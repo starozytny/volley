@@ -63,9 +63,9 @@ class UserUpdateTest extends CustomApiTestCase
     public function testUpdateUserWrongUser()
     {
         $client = static::createClient();
-        $user = $this->createUser("jason", "azerty");
-        $hacker = $this->createUser("hacker", "azerty");
-        $this->logIn($client, $hacker->getUsername(), "azerty");
+        $user = $this->createUser("jason");
+        $hacker = $this->createUser("hacker");
+        $this->logIn($client, $hacker->getUsername());
 
         $json = '{
             "username":"henry", 
@@ -78,7 +78,7 @@ class UserUpdateTest extends CustomApiTestCase
     public function testUpdateUserAdminRole()
     {
         $client = static::createClient();
-        $user = $this->createUser("jason", "azerty");
+        $user = $this->createUser("jason");
         $this->loginUserAdmin($client);
 
         $json = '{

@@ -31,18 +31,18 @@ class UserDeleteTest extends CustomApiTestCase
     public function testDeleteUserSomebody()
     {
         $client = static::createClient();
-        $toDelete = $this->createUser('toDelete', 'azerty');
+        $toDelete = $this->createUser('toDelete');
         $this->loginUserAdmin($client);
 
         $this->sendRequestJson($client, "DELETE", self::URL_DELETE . $toDelete->getId(), null, 200);
     }
 
-    public function testDeleteUserGroupSuperAdminIn()
+    public function testDeleteUserGroupDevIn()
     {
         $client = static::createClient();
-        $toDelete = $this->createUser('toDelete', 'azerty');
-        $toDelete2 = $this->createUser('toDelete2', 'azerty');
-        $this->setToSuperAdmin($toDelete);
+        $toDelete = $this->createUser('toDelete');
+        $toDelete2 = $this->createUser('toDelete2');
+        $this->setToDev($toDelete);
         $this->loginUserAdmin($client);
 
         $json = '['. $toDelete->getId() .', '. $toDelete2->getId() .']';
@@ -53,8 +53,8 @@ class UserDeleteTest extends CustomApiTestCase
     public function testDeleteUserGroupMeIn()
     {
         $client = static::createClient();
-        $toDelete = $this->createUser('toDelete', 'azerty');
-        $toDelete2 = $this->createUser('toDelete2', 'azerty');
+        $toDelete = $this->createUser('toDelete');
+        $toDelete2 = $this->createUser('toDelete2');
         $user = $this->loginUserAdmin($client);
 
         $json = '['. $toDelete->getId() .', '. $toDelete2->getId() .', '. $user->getId() .']';
@@ -65,8 +65,8 @@ class UserDeleteTest extends CustomApiTestCase
     public function testDeleteUserGroupValid()
     {
         $client = static::createClient();
-        $toDelete = $this->createUser('toDelete', 'azerty');
-        $toDelete2 = $this->createUser('toDelete2', 'azerty');
+        $toDelete = $this->createUser('toDelete');
+        $toDelete2 = $this->createUser('toDelete2');
         $this->loginUserAdmin($client);
 
         $json = '['. $toDelete->getId() .', '. $toDelete2->getId() .']';
