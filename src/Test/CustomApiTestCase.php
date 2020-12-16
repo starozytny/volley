@@ -16,7 +16,7 @@ class CustomApiTestCase extends WebTestCase
         return self::$container->get('doctrine')->getManager();
     }
 
-    protected function createUser(string $username, string $password): User
+    protected function createUser(string $username, string $password="azerty"): User
     {
         $user = new User();
         $user->setUsername($username);
@@ -32,7 +32,7 @@ class CustomApiTestCase extends WebTestCase
         return $user;
     }
 
-    protected function logIn($client, string $username, string $password)
+    protected function logIn($client, string $username, string $password="azerty")
     {
         $client->request('POST', '/api/login_check', [], [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -41,14 +41,14 @@ class CustomApiTestCase extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    protected function createUserAndLogIn($client, string $username, string $password): User
+    protected function createUserAndLogIn($client, string $username, string $password="azerty"): User
     {
         $user = $this->createUser($username, $password);
         $this->logIn($client, $username, $password);
         return $user;
     }
 
-    protected function createUserAdminAndLogIn($client, string $username, string $password): User
+    protected function createUserAdminAndLogIn($client, string $username, string $password="azerty"): User
     {
         $user = $this->createUser($username, $password);
         $this->setToAdmin($user);
@@ -121,7 +121,7 @@ class CustomApiTestCase extends WebTestCase
     protected static function getApplication($client): Application
     {
         if (null === self::$application) {
-
+            self::bootKernel();
             self::$application = new Application($client->getKernel());
             self::$application->setAutoExit(false);
         }
