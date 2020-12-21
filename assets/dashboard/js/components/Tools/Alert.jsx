@@ -5,6 +5,10 @@ export function Alert(props){
 
     let icon, alert;
     switch (type){
+        case "danger":
+            alert = "danger";
+            icon = "warning";
+            break;
         case "warning":
             alert = "warning";
             icon = "warning";
@@ -14,8 +18,8 @@ export function Alert(props){
             icon = "information";
             break;
         default:
-            alert = "danger";
-            icon = "warning";
+            alert = "default";
+            icon = "question";
             break;
     }
 
