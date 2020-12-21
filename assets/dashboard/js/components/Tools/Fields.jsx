@@ -9,7 +9,7 @@ export function Input (props) {
 }
 
 export function Checkbox (props) {
-    const {items, name, valeur, errors, onChange, children} = props
+    const {items, name, valeur, errors, onChange, children} = props;
 
     let itemsInputs = items.map(elem => {
 
@@ -32,7 +32,9 @@ export function Checkbox (props) {
     return (<ClassiqueStructure {...props} identifiant={name} content={content} label={children} classForm="form-group-checkbox " />)
 }
 
-export function Radiobox({items, name, valeur, onChange, children}) {
+export function Radiobox(props) {
+    const {items, name, valeur, errors, onChange, children} = props;
+
     let itemsInputs = items.map(elem => {
 
         let isChecked = false
