@@ -36,9 +36,7 @@ export function Radiobox({items, name, valeur, onChange, children}) {
     let itemsInputs = items.map(elem => {
 
         let isChecked = false
-        valeur.value.map(el => {
-            if (el === elem.value){ isChecked = true }
-        })
+        if (valeur === elem.value){ isChecked = true }
 
         return <div className={"radiobox-item " + (isChecked ? 'checked' : '')} key={elem.id}>
             <label htmlFor={elem.identifiant}>
@@ -50,7 +48,7 @@ export function Radiobox({items, name, valeur, onChange, children}) {
 
     let content = <div className="radiobox-items">{itemsInputs}</div>
 
-    return (<ClassiqueStructure valeur={valeur} identifiant="" content={content} label={children} classForm="form-group-radiobox " />)
+    return (<ClassiqueStructure {...props} identifiant={name} content={content} label={children} classForm="form-group-radiobox " />)
 }
 
 export function TextArea({identifiant, valeur, onChange, rows="8", children}) {
