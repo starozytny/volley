@@ -38,7 +38,7 @@ export function Radiobox(props) {
     let itemsInputs = items.map(elem => {
 
         let isChecked = false
-        if (valeur === elem.value){ isChecked = true }
+        if (parseInt(valeur) === elem.value){ isChecked = true }
 
         return <div className={"radiobox-item " + (isChecked ? 'checked' : '')} key={elem.id}>
             <label htmlFor={elem.identifiant}>
