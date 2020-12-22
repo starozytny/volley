@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { SubMenu }   from "./SubMenu";
 import { PageError } from "./PageError";
 import { Pagination } from "./Pagination";
 
@@ -17,7 +16,6 @@ export class Page extends Component {
         } = this.props;
 
         return <>
-            <SubMenu />
             {haveLoadPageError && <PageError />}
             <div className="main-content">
                 {children}
