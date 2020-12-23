@@ -7,9 +7,9 @@ import { StyleguideForm }     from "./components/StyleguideForm";
 export class Styleguide extends Component {
     render () {
         return <div className="main-content">
+            <StyleguideForm />
             <StyleguideButton />
             <StyleguideAlert />
-            <StyleguideForm />
         </div>
     }
 }

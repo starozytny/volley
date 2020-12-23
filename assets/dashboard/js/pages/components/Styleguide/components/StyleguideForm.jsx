@@ -14,9 +14,9 @@ export class StyleguideForm extends Component {
             username: "",
             email: "",
             message: "",
-            roles: ["ROLE_USER"], // default : ["ROLE_USER"]
-            sexe: "",             // default : 0
-            city: "",             // default : "France"
+            roles: [], // default : ["ROLE_USER"]
+            sexe: "",  // default : 0
+            city: "",  // default : "France"
         }
 
         this.handleChange = this.handleChange.bind(this);
