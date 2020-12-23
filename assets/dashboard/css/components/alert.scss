@@ -8,9 +8,17 @@
   width: 100%;
   margin-bottom: 12px;
 
-  [class^="icon-"] + p{
-    margin-left: 8px;
+  p{
     font-size: 14px;
+    opacity: 0.9;
+  }
+
+  [class^="icon-"] {
+    opacity: 0.9;
+
+    & + p{
+      margin-left: 8px;
+    }
   }
 
   .title{
@@ -22,9 +30,9 @@
 
 $icons:
         "default" var(--alpha) var(--txt) var(--greyShadow),
-        "primary" var(--primary) var(--txt) var(--primaryShadow),
-        "danger" var(--danger) var(--txt) var(--dangerShadow),
-        "warning" var(--warning) var(--txt) var(--warningShadow);
+        "primary" var(--primaryShadow) var(--txt) var(--primaryShadow),
+        "danger" var(--dangerShadow) var(--txt) var(--dangerShadow),
+        "warning" var(--warningShadow) var(--txt) var(--warningShadow);
 
 @each $name, $bg, $txt, $shadow in $icons {
   .alert-#{$name} {

@@ -1,7 +1,7 @@
 import React from "react";
 
 export function Alert(props){
-    const { type, title, children } = props;
+    const { type, title, withIcon = true, children } = props;
 
     let icon, alert;
     switch (type){
@@ -24,7 +24,7 @@ export function Alert(props){
     }
 
     return <div className={`alert alert-${alert}`}>
-        <span className={`icon-${icon}`} />
+        {withIcon && <span className={`icon-${icon}`} />}
         <p>
             {title && <span className="title">{title}</span>}
             {children}
