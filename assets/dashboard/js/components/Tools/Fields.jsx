@@ -1,5 +1,8 @@
 import React from "react";
 
+/***************************************
+ * INPUT Classique
+ ***************************************/
 export function Input (props) {
     const { type="text", identifiant, valeur, onChange, children, placeholder } = props;
 
@@ -7,6 +10,9 @@ export function Input (props) {
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
+/***************************************
+ * TEXTAREA Classique
+ ***************************************/
 export function TextArea (props) {
     const { identifiant, valeur, onChange, rows="8", children } = props;
 
@@ -14,6 +20,9 @@ export function TextArea (props) {
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
+/***************************************
+ * CHECKBOX Classique
+ ***************************************/
 export function Checkbox (props) {
     const {items, identifant, valeur, onChange, children} = props;
 
@@ -37,6 +46,9 @@ export function Checkbox (props) {
     return (<ClassiqueStructure {...props} content={content} label={children} classForm="form-group-checkbox " />)
 }
 
+/***************************************
+ * RADIOBOX Classique
+ ***************************************/
 export function Radiobox(props) {
     const {items, identifiant, valeur, onChange, children} = props;
 
@@ -58,6 +70,9 @@ export function Radiobox(props) {
     return (<ClassiqueStructure {...props} content={content} label={children} classForm="form-group-radiobox " />)
 }
 
+/***************************************
+ * SELECT Classique
+ ***************************************/
 export function Select({identifiant, valeur, onChange, children, items}) {
     let choices = items.map((item) =>
         <option key={item.value} value={item.value}>{item.libelle}</option>
@@ -67,6 +82,9 @@ export function Select({identifiant, valeur, onChange, children, items}) {
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
+/***************************************
+ * SWITCHER checkbox
+ ***************************************/
 export function Switcher({identifiant, valeur, children, isChecked, onChange}){
     let content = <div className="toggle-wrapper">
         <div className="toggle checkcross">
@@ -80,7 +98,9 @@ export function Switcher({identifiant, valeur, children, isChecked, onChange}){
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
-
+/***************************************
+ * STRUCTURE
+ ***************************************/
 export function ClassiqueStructure({identifiant, content, errors, label, classForm=""}){
 
     let error;
