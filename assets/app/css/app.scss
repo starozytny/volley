@@ -1,5 +1,73 @@
 @import "~normalize.css";
+@import "~toastr";
+
+:root{
+    --primary: #aeb8f6;
+    --danger: #e59595;
+    --warning: #e7d087;
+
+    --primaryShadow: rgba(177,178,232, 0.4);
+    --dangerShadow: rgba(229,149,149, 0.4);
+    --warningShadow: rgba(231,205,135, 0.4);
+
+    --grey: #c7c7c7;
+    --grey2: #929292;
+
+    --greyShadow: rgba(199,199,199, 0.2);
+
+    --overlay: rgba(14, 14, 14, 0.5);
+
+    --alpha: #fff;
+    --beta: #000;
+
+    --txt: #101010;
+    --fond: #e8e8e8;
+    --fondContent: #f6f6f6;
+    --fondMenu: #212121;
+}
+
+@import "vars/fonts";
+@import "vars/vars";
+
+@import "components/loader";
+
+
+html, body{
+    scroll-behavior: smooth;
+}
 
 body {
-    background-color: lightgrey;
+    color: var(--txt);
+    @include fontRegular();
+}
+
+img{
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+h1, h2, h3, h4, p{
+    margin: 0;
+}
+
+h1{
+    @include fontBold();
+}
+
+h2{
+    @include fontSemibold();
+    text-transform: uppercase;
+}
+
+main{
+    background-color: var(--fondContent);
+}
+
+.main-content{
+    min-height: 100vh;
+    padding: 12px;
+    margin-top: 24px;
 }
