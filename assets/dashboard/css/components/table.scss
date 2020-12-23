@@ -13,7 +13,7 @@
 
   .item-content{
     @include flex(column, flex-start, space-between);
-    width: calc(100% - 24px);
+    width: 100%;
   }
 
   .item-body{
@@ -90,7 +90,7 @@
   }
 
   .infos{
-    width: calc(100% - 64px - 12px);
+    width: 100%;
     @include flex(column, flex-start, space-between);
   }
 
@@ -106,6 +106,13 @@
   .sub{
     font-size: 14px;
     opacity: 0.7;
+  }
+
+  .createAt{
+    opacity: 0.7;
+    font-size: 14px;
+    margin-bottom: 8px;
+    margin-top: 4px;
   }
 }
 

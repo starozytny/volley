@@ -69,9 +69,18 @@
   .item-selector{
     transform: translateY(24px);
   }
+
+  .item-content{
+    width: calc(100% - 24px);
+  }
 }
 
 .items-user{
+
+  .infos{
+    width: calc(100% - 64px - 12px);
+  }
+
   .avatar{
     background: var(--fond);
     width: 64px; height: 64px;
