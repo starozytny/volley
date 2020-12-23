@@ -13,14 +13,20 @@
         'icon': 'user',
         'label': 'Utilisateurs',
         'name': 'utilisateurs'
-    },
-    {
-        'path': path('admin_styleguide'),
-        'icon': 'heart',
-        'label': 'Styleguide',
-        'name': 'styleguide'
     }
 ] %}
+
+{% if is_granted("ROLE_DEVELOPER") %}
+    {% set menuDev = [
+        {
+            'path': path('admin_styleguide'),
+            'icon': 'heart',
+            'label': 'Styleguide',
+            'name': 'styleguide'
+        }
+    ] %}
+    {% set menu = menu | merge(menuDev) %}
+{% endif %}
 
 {% set menuBottom = [
     {

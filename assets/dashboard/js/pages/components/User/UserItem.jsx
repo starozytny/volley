@@ -9,6 +9,12 @@ export class UserItem extends Component {
     render () {
         const { elem, onChangeContext, onDelete, onSelectors, selectors } = this.props
 
+        let url = Routing.generate('user_homepage', {'_switch_user' : elem.username})
+
+        if(elem.highRoleCode === 2){
+            url = Routing.generate('admin_homepage', {'_switch_user' : elem.username})
+        }
+
         return <div className="item">
             <Selector id={elem.id} onSelectors={onSelectors} selectors={selectors} />
 
@@ -30,7 +36,7 @@ export class UserItem extends Component {
                             <>
                                 <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
                                 <ButtonIcon icon={"trash"} onClick={() => onDelete(elem)}>Supprimer</ButtonIcon>
-                                <a href={Routing.generate('user_homepage', {'_switch_user' : elem.username})} target="_blank" className="btn-icon">
+                                <a href={url} target="_blank" className="btn-icon">
                                     <span className="icon-share" />
                                     <span className="tooltip">Impersonate</span>
                                 </a>
