@@ -5,7 +5,7 @@ import {Button, ButtonIcon} from "@dashboardComponents/Tools/Button";
 import { Filter }    from "@dashboardComponents/Layout/Filter";
 import { Search }    from "@dashboardComponents/Layout/Search";
 
-import {UserItems}   from "./UserItems";
+import { UserItem }   from "./UserItem";
 
 export class UserList extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ export class UserList extends Component {
     }
 
     render () {
-        const { onChangeContext, onGetFilters, filters, onSearch, onDeleteAll } = this.props;
+        const { data, onChangeContext, onGetFilters, filters, onSearch, onDeleteAll } = this.props;
 
         let itemsFilterLabelArray = ["Utilisateur", "Développeur", "Administrateur"];
         let itemsFilterIdArray = ["f-user", "f-dev", "f-admin"];
@@ -58,7 +58,11 @@ export class UserList extends Component {
                 </div>
 
                 <div className="items-table">
-                    <UserItems {...this.props} />
+                    <div className="items items-default items-user">
+                        {data && data.map(elem => {
+                            return <UserItem {...this.props} elem={elem} key={elem.id}/>
+                        })}
+                    </div>
                 </div>
 
                 <div className="selectors-actions">

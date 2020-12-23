@@ -190,7 +190,7 @@ export class User extends Component {
     }
 
     render () {
-        const { loadPageError, context, loadData, data, currentData, element, filters, selectors } = this.state;
+        const { loadPageError, context, loadData, data, currentData, element, filters } = this.state;
 
         let content = null, havePagination = false;
         switch (context){

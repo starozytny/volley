@@ -6,10 +6,6 @@ import { UserForm }      from "./UserForm";
 import { Button }        from "@dashboardComponents/Tools/Button";
 
 export class UserCreate extends Component {
-    constructor(props) {
-        super();
-    }
-
     render () {
         const { onChangeContext, onUpdateList } = this.props;
 
