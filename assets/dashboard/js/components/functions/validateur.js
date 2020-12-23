@@ -28,23 +28,23 @@ function validatePassword($value, $valueCheck){
 
     return {'code': true};
 
-    // if (/^(?=.{12,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\w).*$/.test($value)){
-    //
-    //     if($value !== $valueCheck){
-    //         return {
-    //             'code': false,
-    //             'isCheckError': true,
-    //             'message': 'Les mots de passes ne sont pas identique.'
-    //         };
-    //     }
-    //
-    //     return {'code': true};
-    // }else{
-    //     return {
-    //         'code': false,
-    //         'message': 'Le mot de passe doit contenir 1 majuscule, 1 minuscule, 1 chiffre, 1 caratère spécial et au moins 12 caractères.'
-    //     };
-    // }
+    if (/^(?=.{12,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\w).*$/.test($value)){
+
+        if($value !== $valueCheck){
+            return {
+                'code': false,
+                'isCheckError': true,
+                'message': 'Les mots de passes ne sont pas identique.'
+            };
+        }
+
+        return {'code': true};
+    }else{
+        return {
+            'code': false,
+            'message': 'Le mot de passe doit contenir 1 majuscule, 1 minuscule, 1 chiffre, 1 caratère spécial et au moins 12 caractères.'
+        };
+    }
 }
 
 function validateArray($value){

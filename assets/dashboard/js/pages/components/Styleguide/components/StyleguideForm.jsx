@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Input }    from "@dashboardComponents/Tools/Fields";
+import {Input, TextArea} from "@dashboardComponents/Tools/Fields";
 import { Button }   from "@dashboardComponents/Tools/Button";
 
 import Validator    from "@dashboardComponents/functions/validateur";
@@ -12,7 +12,8 @@ export class StyleguideForm extends Component {
         this.state = {
             errors: [],
             username: "",
-            email: ""
+            email: "",
+            message: ""
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,11 +27,12 @@ export class StyleguideForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email } = this.state;
+        const { username, email, message } = this.state;
 
         let validate = Validator.validateur([
             {type: "text", id: 'username', value: username},
             {type: "email", id: 'email', value: email},
+            {type: "text", id: 'message', value: message},
         ])
 
         if(!validate.code){
@@ -42,7 +44,7 @@ export class StyleguideForm extends Component {
     }
 
     render () {
-        const { errors, username, email } = this.state;
+        const { errors, username, email, message } = this.state;
 
         return (
             <section>
@@ -52,6 +54,10 @@ export class StyleguideForm extends Component {
                         <div className="line line-2">
                             <Input identifiant="username" valeur={username} errors={errors} onChange={this.handleChange}>Username</Input>
                             <Input identifiant="email" valeur={email} errors={errors} onChange={this.handleChange} type="email">Adresse e-mail</Input>
+                        </div>
+
+                        <div className="line">
+                            <TextArea identifiant="message" valeur={message} errors={errors} onChange={this.handleChange}>Message</TextArea>
                         </div>
 
                         <div className="form-button">
