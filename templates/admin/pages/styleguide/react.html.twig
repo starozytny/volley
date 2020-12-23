@@ -1,13 +1,8 @@
 {% extends 'admin/pages/styleguide/template.html.twig' %}
 
 {% set page_title %}Styleguide React{% endset %}
-{% set submenuActive = "React Jsx" %}
+{% set submenuActive = "React JSX" %}
 
 {% block main_content %}
-    {% set variantes = [ "default", "primary", "danger", "warning" ] %}
-    <div class="main-content">
-        {% include "admin/pages/styleguide/components/form.html.twig" %}
-        {% include "admin/pages/styleguide/components/buttons.html.twig" %}
-        {% include "admin/pages/styleguide/components/alerts.html.twig" %}
-    </div>
+    <div id="styleguide"></div>
 {% endblock %}
