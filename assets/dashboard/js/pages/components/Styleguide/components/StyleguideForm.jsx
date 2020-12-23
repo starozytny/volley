@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import {Checkbox, Input, Radiobox, TextArea} from "@dashboardComponents/Tools/Fields";
+import {Checkbox, Input, Radiobox, Select, TextArea} from "@dashboardComponents/Tools/Fields";
 import { Button }   from "@dashboardComponents/Tools/Button";
 
 import Validator    from "@dashboardComponents/functions/validateur";
@@ -16,6 +16,7 @@ export class StyleguideForm extends Component {
             message: "",
             roles: ["ROLE_USER"], // default : ["ROLE_USER"]
             sexe: "",             // default : 0
+            city: "",             // default : "France"
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -38,7 +39,7 @@ export class StyleguideForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email, message, roles, sexe } = this.state;
+        const { username, email, message, roles, sexe, city } = this.state;
 
         let validate = Validator.validateur([
             {type: "text", id: 'username', value: username},
@@ -46,6 +47,7 @@ export class StyleguideForm extends Component {
             {type: "text", id: 'message', value: message},
             {type: "array", id: 'roles', value: roles},
             {type: "text", id: 'sexe', value: sexe},
+            {type: "text", id: 'city', value: city},
         ])
 
         if(!validate.code){
@@ -57,16 +59,22 @@ export class StyleguideForm extends Component {
     }
 
     render () {
-        const { errors, username, email, message, roles, sexe } = this.state;
+        const { errors, username, email, message, roles, sexe, city } = this.state;
 
         let checkboxItems = [
-            { 'id': 0, 'value': 'ROLE_USER', 'label': 'Utilisateur', 'identifiant': 'utilisateur' },
-            { 'id': 2, 'value': 'ROLE_ADMIN', 'label': 'Admin', 'identifiant': 'admin' }
+            { 'value': 'ROLE_USER', 'label': 'Utilisateur', 'identifiant': 'utilisateur' },
+            { 'value': 'ROLE_ADMIN', 'label': 'Admin', 'identifiant': 'admin' }
         ]
 
         let radioboxItems = [
-            { 'id': 0, 'value': 0, 'label': 'Homme', 'identifiant': 'homme' },
-            { 'id': 1, 'value': 1, 'label': 'Femme', 'identifiant': 'femme' }
+            { 'value': 0, 'label': 'Homme', 'identifiant': 'homme' },
+            { 'value': 1, 'label': 'Femme', 'identifiant': 'femme' }
+        ]
+
+        let selectItems = [
+            { 'value': 0, 'label': 'France', 'identifiant': 'france' },
+            { 'value': 1, 'label': 'Allemagne', 'identifiant': 'allemagne' },
+            { 'value': 2, 'label': 'Japon', 'identifiant': 'japon' },
         ]
 
         return (
@@ -85,8 +93,13 @@ export class StyleguideForm extends Component {
                         </div>
 
                         <div className="line line-2">
-                            <Checkbox items={checkboxItems} identifiant="roles" valeur={roles} errors={errors} onChange={this.handleChange} >Roles</Checkbox>
-                            <Radiobox items={radioboxItems} identifiant="sexe" valeur={sexe} errors={errors} onChange={this.handleChange} >Sexe</Radiobox>
+                            <Checkbox items={checkboxItems} identifiant="roles" valeur={roles} errors={errors} onChange={this.handleChange}>Roles</Checkbox>
+                            <Radiobox items={radioboxItems} identifiant="sexe" valeur={sexe} errors={errors} onChange={this.handleChange}>Sexe</Radiobox>
+                        </div>
+
+
+                        <div className="line">
+                            <Select items={selectItems} identifiant="city" valeur={city} errors={errors} onChange={this.handleChange}>De quel pays viens-tu ?</Select>
                         </div>
 
                         <div className="form-button">

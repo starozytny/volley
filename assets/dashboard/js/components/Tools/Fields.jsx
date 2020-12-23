@@ -26,7 +26,7 @@ export function TextArea (props) {
 export function Checkbox (props) {
     const {items, identifiant, valeur, onChange, children} = props;
 
-    let itemsInputs = items.map(elem => {
+    let itemsInputs = items.map((elem, index) => {
 
         // get checker value
         let isChecked = false
@@ -34,7 +34,7 @@ export function Checkbox (props) {
             if (el === elem.value){ isChecked = true }
         })
 
-        return <div className={"checkbox-item " + (isChecked ? 'checked' : '')} key={elem.id}>
+        return <div className={"checkbox-item " + (isChecked ? 'checked' : '')} key={index}>
             <label htmlFor={elem.identifiant}>
                 {elem.label}
                 <input type="checkbox" name={identifiant} id={elem.identifiant} value={elem.value} checked={isChecked ? 'checked' : ''} onChange={onChange}/>
@@ -52,12 +52,12 @@ export function Checkbox (props) {
 export function Radiobox(props) {
     const {items, identifiant, valeur, onChange, children} = props;
 
-    let itemsInputs = items.map(elem => {
+    let itemsInputs = items.map((elem, index) => {
 
         let isChecked = false
         if (parseInt(valeur) === elem.value){ isChecked = true }
 
-        return <div className={"radiobox-item " + (isChecked ? 'checked' : '')} key={elem.id}>
+        return <div className={"radiobox-item " + (isChecked ? 'checked' : '')} key={index}>
             <label htmlFor={elem.identifiant}>
                 <span>{elem.label}</span>
                 <input type="radio" name={identifiant} id={elem.identifiant} value={elem.value} checked={isChecked ? 'checked' : ''} onChange={onChange}/>
@@ -73,28 +73,17 @@ export function Radiobox(props) {
 /***************************************
  * SELECT Classique
  ***************************************/
-export function Select({identifiant, valeur, onChange, children, items}) {
-    let choices = items.map((item) =>
-        <option key={item.value} value={item.value}>{item.libelle}</option>
+export function Select(props) {
+    const { items, identifiant, valeur, onChange, children } = props;
+
+    let choices = items.map((item, index) =>
+        <option key={index} value={item.value}>{item.label}</option>
     )
 
-    let content = <select value={valeur} id={identifiant} name={identifiant} onChange={onChange}> {choices} </select>
-    return (<ClassiqueStructure {...props} content={content} label={children} />)
-}
-
-/***************************************
- * SWITCHER checkbox
- ***************************************/
-export function Switcher({identifiant, valeur, children, isChecked, onChange}){
-    let content = <div className="toggle-wrapper">
-        <div className="toggle checkcross">
-            <input id={identifiant} name={identifiant} checked={isChecked ? 'checked' : ''} value={valeur} className="input-checkcross" onChange={onChange} type="checkbox"/>
-            <label className="toggle-item" htmlFor={identifiant}>
-                <div className="check"/>
-            </label>
-        </div>
-    </div>
-
+    let content = <select value={valeur} id={identifiant} name={identifiant} onChange={onChange}>
+        <option value="" />
+        {choices}
+    </select>
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
