@@ -1,18 +1,9 @@
 {% extends 'app/layout/layout.html.twig' %}
 
-{% block title %}Hello AppController!{% endblock %}
+{% block title %}Hello !{% endblock %}
 
 {% block main_content %}
 <div class="main-content">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    
-    <p><a href="{{ path('app_login') }}">Se connecter</a></p>
-
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <p>
-            <a href="{{ path('app_logout') }}">Déconnexion</a>
-        </p>
-    {% endif %}
-
+    <h1>Hello ! ✅</h1>
 </div>
 {% endblock %}
