@@ -24,7 +24,7 @@ export function TextArea (props) {
  * CHECKBOX Classique
  ***************************************/
 export function Checkbox (props) {
-    const {items, identifant, valeur, onChange, children} = props;
+    const {items, identifiant, valeur, onChange, children} = props;
 
     let itemsInputs = items.map(elem => {
 
@@ -37,7 +37,7 @@ export function Checkbox (props) {
         return <div className={"checkbox-item " + (isChecked ? 'checked' : '')} key={elem.id}>
             <label htmlFor={elem.identifiant}>
                 {elem.label}
-                <input type="checkbox" name={identifant} id={elem.identifiant} value={elem.value} checked={isChecked ? 'checked' : ''} onChange={onChange}/>
+                <input type="checkbox" name={identifiant} id={elem.identifiant} value={elem.value} checked={isChecked ? 'checked' : ''} onChange={onChange}/>
             </label>
         </div>
     })
