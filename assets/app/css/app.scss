@@ -33,6 +33,9 @@
 @import "components/footer";
 
 @import "components/loader";
+@import "components/form";
+@import "components/button";
+@import "components/alert";
 
 
 html, body{
@@ -58,6 +61,7 @@ h1, h2, h3, h4, p{
 
 h1{
     @include fontBold();
+    margin-bottom: 24px;
 }
 
 h2{

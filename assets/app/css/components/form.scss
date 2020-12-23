@@ -1,0 +1,203 @@
+@import '../vars/vars.scss';
+
+.form{
+  form{
+    & > .alert{
+      margin-bottom: 24px;
+    }
+  }
+}
+
+.form-group{
+  @include flex(column, flex-start, flex-start);
+}
+
+.line{
+  @include flex(column, stretch, flex-start);
+  width: 100%;
+  margin-bottom: 16px;
+
+  .form-group:not(:last-child){
+    margin-bottom: 8px;
+  }
+
+  & > .line:last-child{
+    margin-bottom: 0;
+  }
+}
+
+.line{
+  label{
+    display: inline-block;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--grey2);
+    margin-bottom: 4px;
+  }
+}
+
+input, textarea, select{
+  border: 1px solid var(--grey);
+  padding: 8px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  width: calc(100% - 20px);
+  outline: none;
+
+  &:focus{
+    border: 1px solid var(--grey2);
+  }
+}
+
+select{
+  padding: 6.5px 10px;
+}
+
+.checkbox-items, .radiobox-items{
+  @include flex(row, stretch, flex-start);
+  flex-wrap: wrap;
+
+  & > .checkbox-item:not(:last-child),
+  & > .radiobox-item:not(:last-child),{
+    margin-right: 10px;
+  }
+}
+.checkbox-item, .radiobox-item{
+  margin-top: 4px;
+
+  &.checked > label{
+    border: 1px solid var(--grey2);
+    color: var(--beta);
+    opacity: 1;
+
+    &:hover{
+      background-color: var(--fond);
+    }
+  }
+
+  label{
+    padding: 5px 10px;
+    border: 1px dashed var(--grey);
+    background: var(--alpha);
+    opacity: 0.6;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+
+  input{
+    display: none;
+  }
+}
+
+.radiobox-item{
+  label{
+    border-radius: 20px;
+  }
+}
+
+.form-group-error{
+  label{
+    color: var(--danger);
+  }
+  input, textarea{
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  .error{
+    color: var(--danger);
+    padding: 6px 4px 4px 4px;
+    font-size: 14px;
+
+    [class^="icon-"]{
+      margin-right: 5px;
+    }
+  }
+  .form-files{
+    .dzu-dropzone{
+      border: 1px dashed var(--danger);
+
+      .dzu-inputLabel{
+        color: var(--danger);
+      }
+    }
+  }
+}
+
+.form-button{
+  & > *{
+    width: 100%;
+  }
+  & > *:not(:last-child){
+    margin-bottom: 12px;
+  }
+}
+
+.form-files{
+  @include flex(row, center, flex-start);
+
+  .form-image, .form-logo, .form-avatar{
+    margin-right: 25px;
+  }
+
+  .form-image, .form-logo{
+    img{
+      width: 100px;
+    }
+  }
+
+  .form-avatar{
+    img{
+      border-radius: 100px;
+      width: 64px; height: 64px;
+    }
+  }
+}
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+  .line.line-2{
+    flex-direction: row;
+
+    .form-group:first-child{
+      margin-right: 10px;
+      width: 50%;
+    }
+    .form-group:last-child{
+      margin-left: 10px;
+      width: 50%;
+    }
+  }
+
+  .line.line-3{
+    flex-direction: row;
+
+    .form-group{
+      width: 33%;
+    }
+    .form-group:not(:last-child){
+      margin-right: 12px;
+    }
+  }
+
+  .form-button{
+    @include flex(row, stretch, flex-start);
+
+    & > .btn, & > a.btn{
+      width: auto;
+      margin-bottom: 0;
+    }
+    & > *:not(:last-child){
+      margin-right: 12px;
+      margin-bottom: 0;
+    }
+  }
+}
