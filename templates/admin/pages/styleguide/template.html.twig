@@ -1,0 +1,16 @@
+{% extends 'admin/layout/layout.html.twig' %}
+
+{% set submenu = [
+    { 'label': "Plain HTML", 'path': path('admin_styleguide') },
+    { 'label': "React JSX", 'path': path('admin_styleguide') }
+] %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('dashboard_styleguide') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('dashboard_styleguide') }}
+{% endblock %}

@@ -1,11 +1,7 @@
-{% extends 'admin/layout/layout.html.twig' %}
+{% extends 'admin/pages/styleguide/template.html.twig' %}
 
 {% set page_title %}Styleguide{% endset %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('dashboard_styleguide') }}
-{% endblock %}
+{% set submenuActive = "Plain HTML" %}
 
 {% block main_content %}
     {% set variantes = [ "default", "primary", "danger", "warning" ] %}
