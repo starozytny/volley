@@ -22,11 +22,19 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/styleguide", name="styleguide")
+     * @Route("/styleguide/html", name="styleguide_html")
      */
-    public function styleguide(): Response
+    public function styleguideHtml(): Response
     {
         return $this->render('admin/pages/styleguide/index.html.twig');
+    }
+
+    /**
+     * @Route("/styleguide/react", name="styleguide_react")
+     */
+    public function styleguideReact(): Response
+    {
+        return $this->render('admin/pages/styleguide/react.html.twig');
     }
 
     /**
