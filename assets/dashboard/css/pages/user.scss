@@ -72,29 +72,6 @@
 }
 
 .items-user{
-
-  .item{
-    transition: all 0.2s ease-in-out;
-
-    .item-content{
-      transition: all 0.2s ease-in-out;
-    }
-
-    &:hover {
-      background: var(--alpha);
-
-      & > .item-content{
-        transform: translateX(6px);
-        padding-left: 12px;
-      }
-    }
-  }
-
-  .item-body{
-    flex-direction: row;
-    align-items: stretch;
-  }
-
   .avatar{
     background: var(--fond);
     width: 64px; height: 64px;
@@ -106,27 +83,8 @@
     }
   }
 
-  .infos{
-    width: calc(100% - 64px - 12px);
-    @include flex(column, flex-start, space-between);
-  }
-
-  .username, .email{
-    word-break: break-all;
-  }
-
   .role{
     margin: 4px 0 8px 0;
-  }
-
-  .username{
-    @include flex(column, flex-start, flex-start);
-    @include fontSemibold();
-  }
-
-  .email{
-    font-size: 14px;
-    opacity: 0.7;
   }
 }
 
@@ -177,17 +135,6 @@
   }
 
   .items-user{
-
-    .infos{
-      flex-direction: row;
-      align-items: center;
-    }
-
-    .username{
-      flex-direction: row;
-      align-items: center;
-      margin-bottom: 8px;
-    }
 
     .role{
       margin: 0 0 0 8px;

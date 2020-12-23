@@ -10,7 +10,7 @@ export class UserItems extends Component {
         const { data, onChangeContext, onDelete, onSelectors, selectors } = this.props
 
         return (
-            <div className="items items-user">
+            <div className="items items-default items-user">
                 {data.map(elem => {
                     return <div className="item" key={elem.id}>
 
@@ -23,11 +23,11 @@ export class UserItems extends Component {
                                 </div>
                                 <div className="infos">
                                     <div>
-                                        <div className="username">
+                                        <div className="name">
                                             <span>{elem.username}</span>
                                             {elem.highRoleCode !== 0 && <span className="role">{elem.highRole}</span>}
                                         </div>
-                                        <div className="email">{elem.email}</div>
+                                        <div className="sub">{elem.email}</div>
                                     </div>
                                     <div className="actions">
                                         {elem.highRoleCode !== 1 &&
