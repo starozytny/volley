@@ -106,10 +106,6 @@ export class UserForm extends Component {
         const { errors, success, username, email, password, passwordConfirm, roles } = this.state;
 
         let rolesItems = [
-            // { 'id': 1, 'value': 'ROLE_DEVELOPER',
-            //     'label':        'Développeur',
-            //     'identifiant':  'dev'
-            // },
             { 'id': 2, 'value': 'ROLE_ADMIN',
                 'label':        'Admin',
                 'identifiant':  'admin'
@@ -134,7 +130,7 @@ export class UserForm extends Component {
                 </div>
 
                 <div className="line line-2">
-                    <Checkbox items={rolesItems} name="roles" valeur={roles} errors={errors} onChange={this.handleChange}>Roles</Checkbox>
+                    <Checkbox items={rolesItems} identifiant="roles" valeur={roles} errors={errors} onChange={this.handleChange}>Roles</Checkbox>
 
                     {type === "create" ? <div className="password-rules">
                         <p>Règles de création de mot de passe :</p>
