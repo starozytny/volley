@@ -13,6 +13,22 @@ function sanitizeString(chaine){
     return chaine;
 }
 
+function toFormatTime(date){
+    let ne = date.toLocaleString('fr-FR', { timeZone: 'UTC' })
+    return ne.substr(ne.length - 8,ne.length);
+}
+
+function toFormatDate(date){
+    return date.toLocaleDateString('fr-FR', { timeZone: 'UTC' });
+}
+
+function toFormatDateTime(date){
+    return date.toLocaleString('fr-FR', { timeZone: 'UTC' });
+}
+
 module.exports = {
-    sanitizeString
+    sanitizeString,
+    toFormatTime,
+    toFormatDate,
+    toFormatDateTime
 }
