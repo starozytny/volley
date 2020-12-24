@@ -11,7 +11,7 @@ import { ClassiqueStructure }               from "@dashboardComponents/Tools/Fie
 registerLocale('fr', fr)
 
 export function DatePick(props){
-    const { identifiant, valeur, onChange, format="dd/MM/yyyy", children, minDate="", maxDate="", placeholder="DD/MM/YYYY" } = props
+    const { identifiant, valeur, onChange, format="dd/MM/yyyy", children, minDate="", maxDate="", placeholder="DD/MM/YYYY", excludeDates=[]} = props
 
     let content = <DatePicker
         locale="fr"
@@ -23,6 +23,7 @@ export function DatePick(props){
         showMonthDropdown
         showYearDropdown
         dropdownMode="select"
+        excludeDates={excludeDates}
         placeholderText={placeholder}
         minDate={minDate}
         maxDate={maxDate}
