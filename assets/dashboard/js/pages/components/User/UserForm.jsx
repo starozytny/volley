@@ -8,6 +8,7 @@ import { Alert }               from "@dashboardComponents/Tools/Alert";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
 import Loader                  from "@dashboardComponents/functions/loader";
+import {Button} from "@dashboardComponents/Tools/Button";
 
 export class UserForm extends Component {
     constructor(props) {
@@ -48,7 +49,7 @@ export class UserForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { type, url, messageSuccess } = this.props;
+        const { context, url, messageSuccess } = this.props;
         const { username, password, passwordConfirm, email, roles } = this.state;
 
         this.setState({ success: false})
@@ -59,7 +60,7 @@ export class UserForm extends Component {
             {type: "email", id: 'email', value: email},
             {type: "array", id: 'roles', value: roles}
         ];
-        if(type === "create"){
+        if(context === "create"){
             method = "POST";
             paramsToValidate = [...paramsToValidate,
                 ...[{type: "password", id: 'password', value: password, idCheck: 'passwordConfirm', valueCheck: passwordConfirm}]
@@ -80,7 +81,7 @@ export class UserForm extends Component {
                     let data = response.data;
                     self.props.onUpdateList(data);
                     self.setState({ success: messageSuccess, errors: [] });
-                    if(type === "create"){
+                    if(context === "create"){
                         self.setState( {
                             username: '',
                             email: '',
@@ -102,18 +103,12 @@ export class UserForm extends Component {
     }
 
     render () {
-        const { type } = this.props;
+        const { context } = this.props;
         const { errors, success, username, email, password, passwordConfirm, roles } = this.state;
 
         let rolesItems = [
-            { 'id': 2, 'value': 'ROLE_ADMIN',
-                'label':        'Admin',
-                'identifiant':  'admin'
-            },
-            { 'id': 0, 'value': 'ROLE_USER',
-                'label':        'Utilisateur',
-                'identifiant':  'utilisateur'
-            },
+            { 'value': 'ROLE_ADMIN', 'label': 'Admin', 'identifiant': 'admin' },
+            { 'value': 'ROLE_USER', 'label': 'Utilisateur', 'identifiant': 'utilisateur' },
         ]
 
         return <>
@@ -132,7 +127,7 @@ export class UserForm extends Component {
                 <div className="line line-2">
                     <Checkbox items={rolesItems} identifiant="roles" valeur={roles} errors={errors} onChange={this.handleChange}>Roles</Checkbox>
 
-                    {type === "create" ? <div className="password-rules">
+                    {context === "create" ? <div className="password-rules">
                         <p>Règles de création de mot de passe :</p>
                         <ul>
                             <li>Au moins 12 caractères</li>
@@ -144,14 +139,14 @@ export class UserForm extends Component {
                     </div> : <div />}
                 </div>
 
-                {type === "create" ? <div className="line line-2">
+                {context === "create" ? <div className="line line-2">
                     <Input type="password" valeur={password} identifiant="password" errors={errors} onChange={this.handleChange} >Mot de passe</Input>
                     <Input type="password" valeur={passwordConfirm} identifiant="passwordConfirm" errors={errors} onChange={this.handleChange} >Confirmer le mot de passe</Input>
                 </div> : <Alert type="warning">Le mot de passe est modifiable exclusivement par l'utilisateur lui même grâce au <u>Mot de passe oublié ?</u></Alert>}
 
                 <div className="line">
                     <div className="form-button">
-                        <button type="submit" className="btn btn-primary">Valider la saisie</button>
+                        <Button isSubmit={true}>Valider la saisie</Button>
                     </div>
                 </div>
             </form>

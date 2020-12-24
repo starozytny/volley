@@ -20,7 +20,7 @@ export class UserCreate extends Component {
                 <div className="form">
                     <h2>Ajouter un utilisateur</h2>
                     <UserForm
-                        type="create"
+                        context="create"
                         url={Routing.generate('api_users_create')}
                         username=""
                         email=""

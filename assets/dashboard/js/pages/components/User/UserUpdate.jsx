@@ -19,7 +19,7 @@ export class UserUpdate extends Component {
                 <div className="form">
                     <h2>Modifier {element.username}</h2>
                     <UserForm
-                        type="update"
+                        context="update"
                         url={Routing.generate('api_users_update', {'id': element.id})}
                         username={element.username}
                         email={element.email}

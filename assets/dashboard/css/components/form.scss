@@ -2,9 +2,20 @@
 
 .form{
   form{
+    margin-top: 24px;
+
     & > .alert{
       margin-bottom: 24px;
     }
+  }
+
+  h2{
+    margin-bottom: 8px;
+  }
+
+  .form-infos{
+    opacity: 0.7;
+    max-width: 414px;
   }
 }
 
