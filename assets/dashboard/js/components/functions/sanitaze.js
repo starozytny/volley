@@ -13,17 +13,17 @@ function sanitizeString(chaine){
     return chaine;
 }
 
-function toFormatTime(date){
-    let ne = date.toLocaleString('fr-FR', { timeZone: 'UTC' })
+function toFormatTime(date, timezone="UTC"){
+    let ne = date.toLocaleString('fr-FR', { timeZone: timezone })
     return ne.substr(ne.length - 8,ne.length);
 }
 
-function toFormatDate(date){
-    return date.toLocaleDateString('fr-FR', { timeZone: 'UTC' });
+function toFormatDate(date, timezone="UTC"){
+    return date.toLocaleDateString('fr-FR', { timeZone: timezone });
 }
 
-function toFormatDateTime(date){
-    return date.toLocaleString('fr-FR', { timeZone: 'UTC' });
+function toFormatDateTime(date, timezone="UTC"){
+    return date.toLocaleString('fr-FR', { timeZone: timezone });
 }
 
 module.exports = {
