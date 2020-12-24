@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 import { Checkbox, Input, Radiobox, Select, TextArea } from "@dashboardComponents/Tools/Fields";
-import { Button }   from "@dashboardComponents/Tools/Button";
-import {DatePick, DateTimePick, TimePick} from "@dashboardComponents/Tools/DatePicker";
+import { Button }                                      from "@dashboardComponents/Tools/Button";
+import { DatePick, DateTimePick, TimePick }            from "@dashboardComponents/Tools/DatePicker";
 
 import Validator    from "@dashboardComponents/functions/validateur";
 
