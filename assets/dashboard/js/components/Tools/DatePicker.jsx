@@ -31,7 +31,7 @@ export function DatePick(props){
 }
 
 export function DateTimePick(props){
-    const { identifiant, valeur, onChange, format="dd/MM/yyyy HH:mm",children, minDate="", maxDate="",
+    const { identifiant, valeur, onChange, format="dd/MM/yyyy HH:mm", children, minDate="", maxDate="",
             placeholder="DD/MM/YYYY HH:MM", timeFormat="HH:mm", timeIntervals=15 } = props;
 
     let content = <DatePicker
@@ -50,6 +50,25 @@ export function DateTimePick(props){
         placeholderText={placeholder}
         minDate={minDate}
         maxDate={maxDate}
+    />
+    return (<ClassiqueStructure {...props} content={content} label={children} classForm="form-group-date " />)
+}
+
+export function TimePick(props){
+    const { identifiant, valeur, onChange, format="HH:mm", children, placeholder="HH:MM", timeFormat="HH:mm", timeIntervals=15, caption="Temps" } = props;
+
+    let content = <DatePicker
+        locale="fr"
+        id={identifiant}
+        selected={valeur}
+        onChange={onChange}
+        dateFormat={timeFormat}
+        timeIntervals={timeIntervals}
+        showTimeSelect
+        showTimeSelectOnly
+        timeCaption={caption}
+        dropdownMode="select"
+        placeholderText={placeholder}
     />
     return (<ClassiqueStructure {...props} content={content} label={children} classForm="form-group-date " />)
 }
