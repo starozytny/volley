@@ -22,7 +22,7 @@ function update(context, data, element){
             })
             break;
         default:
-            newData = data;
+            newData = data ? data : [];
             newData.push(element);
             break;
     }
