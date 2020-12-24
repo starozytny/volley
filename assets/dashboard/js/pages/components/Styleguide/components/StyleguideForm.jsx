@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
-import {Checkbox, Input, Radiobox, Select, TextArea} from "@dashboardComponents/Tools/Fields";
+import { Checkbox, Input, Radiobox, Select, TextArea } from "@dashboardComponents/Tools/Fields";
 import { Button }   from "@dashboardComponents/Tools/Button";
+import {DatePick, DateTimePick} from "@dashboardComponents/Tools/DatePicker";
 
 import Validator    from "@dashboardComponents/functions/validateur";
 
@@ -17,9 +18,13 @@ export class StyleguideForm extends Component {
             roles: [], // default : ["ROLE_USER"]
             sexe: "",  // default : 0
             city: "",  // default : "France"
+            birthday: "",
+            createAt: "",
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeDateBirthday = this.handleChangeDateBirthday.bind(this);
+        this.handleChangeDateCreateAt = this.handleChangeDateCreateAt.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -36,10 +41,13 @@ export class StyleguideForm extends Component {
         this.setState({ [name]: value })
     }
 
+    handleChangeDateBirthday = (e) => { this.setState({ birthday: e }) }
+    handleChangeDateCreateAt = (e) => { this.setState({ createAt: e }) }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email, message, roles, sexe, city } = this.state;
+        const { username, email, message, roles, sexe, city, birthday, createAt } = this.state;
 
         let validate = Validator.validateur([
             {type: "text", id: 'username', value: username},
@@ -48,6 +56,8 @@ export class StyleguideForm extends Component {
             {type: "array", id: 'roles', value: roles},
             {type: "text", id: 'sexe', value: sexe},
             {type: "text", id: 'city', value: city},
+            {type: "text", id: 'birthday', value: birthday},
+            {type: "text", id: 'createAt', value: createAt},
         ])
 
         if(!validate.code){
@@ -59,7 +69,7 @@ export class StyleguideForm extends Component {
     }
 
     render () {
-        const { errors, username, email, message, roles, sexe, city } = this.state;
+        const { errors, username, email, message, roles, sexe, city, birthday, createAt } = this.state;
 
         let checkboxItems = [
             { 'value': 'ROLE_USER', 'label': 'Utilisateur', 'identifiant': 'utilisateur' },
@@ -97,9 +107,13 @@ export class StyleguideForm extends Component {
                             <Radiobox items={radioboxItems} identifiant="sexe" valeur={sexe} errors={errors} onChange={this.handleChange}>Sexe</Radiobox>
                         </div>
 
-
                         <div className="line">
                             <Select items={selectItems} identifiant="city" valeur={city} errors={errors} onChange={this.handleChange}>De quel pays viens-tu ?</Select>
+                        </div>
+
+                        <div className="line line-2">
+                            <DatePick identifiant="birthday" valeur={birthday} errors={errors} onChange={this.handleChangeDateBirthday}>Date de naissance</DatePick>
+                            <DateTimePick identifiant="createAt" valeur={createAt} errors={errors} onChange={this.handleChangeDateCreateAt}>Date de création</DateTimePick>
                         </div>
 
                         <div className="form-button">

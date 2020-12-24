@@ -51,6 +51,7 @@ input, textarea, select{
 
 select{
   padding: 6.5px 10px;
+  width: 100%;
 }
 
 .checkbox-items, .radiobox-items{
@@ -125,6 +126,16 @@ select{
         color: var(--danger);
       }
     }
+  }
+}
+
+.react-datepicker-wrapper{
+  width: 100%;
+}
+
+.form-group-date{
+  select{
+    margin-top: 4px;
   }
 }
 
