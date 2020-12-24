@@ -21,6 +21,10 @@
 
 .form-group{
   @include flex(column, flex-start, flex-start);
+
+  .alert{
+    width: calc(100% - 24px);
+  }
 }
 
 .line{
