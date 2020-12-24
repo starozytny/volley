@@ -4,6 +4,8 @@
 namespace App\Service;
 
 
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+
 class SanitizeData
 {
     public function fullSanitize ($value)
@@ -32,5 +34,17 @@ class SanitizeData
         }
 
         return $value;
+    }
+
+    public function createDateFromString($date, $timezone="Europe/Paris"): \DateTime
+    {
+        try {
+            $date = new \DateTime($date);
+        } catch (\Exception $e) {
+            throw new BadRequestException("Erreur dans la création de la date.");
+        }
+        $date->setTimezone(new \DateTimeZone($timezone));
+
+        return $date;
     }
 }
