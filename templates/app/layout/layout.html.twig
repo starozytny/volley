@@ -43,7 +43,23 @@
             </div>
 
             <footer>
-                <div class="copyright">Copyright 2020 - Logilink</div>
+                <div class="footer">
+                    <div class="footer-menu">
+                        <div class="footer-logo">
+                            <a href="{{ path('app_homepage') }}" title="Logilink">
+                                <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo"/>
+                            </a>
+                            <span>Espace Cité de la Musique de Marseille </span>
+                        </div>
+                        <div class="footer-items">
+                            <a rel="nofollow" href="{{ path('app_homepage') }}">Mentions légales</a>
+                            <a rel="nofollow" href="{{ path('app_homepage') }}">Politique de confidentialité</a>
+                            <a rel="nofollow" href="{{ path('app_homepage') }}">Gestion des cookies</a>
+                            <a rel="nofollow" href="{{ path('app_login') }}">Mon espace</a>
+                        </div>
+                    </div>
+                    <div class="copyright">Copyright 2020 - <a href="https://logilink.fr" target="_blank">Logilink</a></div>
+                </div>
             </footer>
         </main>
     </div>
