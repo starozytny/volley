@@ -135,6 +135,12 @@
       align-items: center;
     }
 
+    .infos-3{
+      & > div:not(.actions){
+        width: 25%;
+      }
+    }
+
     .name{
       flex-direction: row;
       align-items: center;
@@ -144,5 +150,6 @@
     .actions{
       width: auto;
     }
+
   }
 }
