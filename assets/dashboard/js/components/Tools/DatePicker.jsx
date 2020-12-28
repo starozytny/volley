@@ -33,7 +33,7 @@ export function DatePick(props){
 
 export function DateTimePick(props){
     const { identifiant, valeur, onChange, format="dd/MM/yyyy HH:mm", children, minDate="", maxDate="",
-            placeholder="DD/MM/YYYY HH:MM", timeFormat="HH:mm", timeIntervals=15, excludeDates=[] } = props;
+            placeholder="DD/MM/YYYY HH:MM", timeFormat="HH:mm", timeIntervals=15, excludeDates=[], excludeTimes=[] } = props;
 
     let content = <DatePicker
         locale="fr"
@@ -49,6 +49,7 @@ export function DateTimePick(props){
         showTimeSelect
         dropdownMode="select"
         excludeDates={excludeDates}
+        excludeTimes={excludeTimes}
         placeholderText={placeholder}
         minDate={minDate}
         maxDate={maxDate}
