@@ -4,9 +4,14 @@ import React from "react";
  * INPUT Classique
  ***************************************/
 export function Input (props) {
-    const { type="text", identifiant, valeur, onChange, children, placeholder } = props;
+    const { type="text", identifiant, valeur, onChange, children, placeholder, min="", max="" } = props;
 
     let content = <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur} onChange={onChange}/>
+
+    if(type === "number"){
+        content = <input type={type} min={min} max={max} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur} onChange={onChange}/>
+    }
+
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 
@@ -95,9 +100,9 @@ export function ClassiqueStructure({identifiant, content, errors, label, classFo
     let error;
     if(errors.length !== 0){
         errors.map(err => {
-          if(err.name === identifiant){
-              error = err.message
-          }
+            if(err.name === identifiant){
+                error = err.message
+            }
         })
     }
 
