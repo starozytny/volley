@@ -57,7 +57,8 @@ export function DateTimePick(props){
 }
 
 export function TimePick(props){
-    const { identifiant, valeur, onChange, format="HH:mm", children, placeholder="HH:MM", timeFormat="HH:mm", timeIntervals=15, caption="Temps" } = props;
+    const { identifiant, valeur, onChange, format="HH:mm", children, placeholder="HH:MM", timeFormat="HH:mm",
+            timeIntervals=15, caption="Temps", excludeTimes=[] } = props;
 
     let content = <DatePicker
         locale="fr"
@@ -70,6 +71,7 @@ export function TimePick(props){
         showTimeSelectOnly
         timeCaption={caption}
         dropdownMode="select"
+        excludeTimes={excludeTimes}
         placeholderText={placeholder}
     />
     return (<ClassiqueStructure {...props} content={content} label={children} classForm="form-group-date " />)
