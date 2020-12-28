@@ -1,3 +1,13 @@
+function validateDate($value) {
+    if($value === "" || $value === null){
+        return {
+            'code': false,
+            'message': 'Ce champ doit être renseigné.'
+        };
+    }
+    return {'code': true};
+}
+
 function validateText($value) {
     if($value === ""){
         return {
@@ -73,6 +83,9 @@ function validateur(values){
                 break;
             case 'password':
                 validate = validatePassword(element.value, element.valueCheck);
+                break;
+            case 'date':
+                validate = validateDate(element.value);
                 break;
         }
         if(!validate.code){
