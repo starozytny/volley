@@ -68,6 +68,10 @@
     background: transparent;
     padding-top: 0;
 
+    .items{
+      @include flex(row, center, flex-start);
+    }
+
     a{
       padding: 24px 12px;
       color: var(--txt);
