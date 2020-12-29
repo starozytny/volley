@@ -10,33 +10,32 @@
     <div class="body">
         <nav>
             <div class="nav-container">
-
-            </div>
-            <div class="nav-header">
-                <div class="nav-header-logo">
-                    <a href="{{ path("app_homepage") }}">
-                        <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo du site">
-                    </a>
+                <div class="nav-header">
+                    <div class="nav-header-logo">
+                        <a href="{{ path("app_homepage") }}">
+                            <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo du site">
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="nav-mobile">
-                <span class="icon-menu"></span>
-            </div>
-            <div class="nav-body">
-                <div class="items">
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <div class="item">
-                            <a href="{{ path('app_logout') }}">
-                                <span>Déconnexion</span>
-                            </a>
-                        </div>
-                    {% else %}
-                        <div class="item">
-                            <a href="{{ path('app_login') }}">
-                                <span>Se connecter</span>
-                            </a>
-                        </div>
-                    {% endif %}
+                <div class="nav-mobile">
+                    <span class="icon-menu"></span>
+                </div>
+                <div class="nav-body">
+                    <div class="items">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <div class="item">
+                                <a href="{{ path('app_logout') }}">
+                                    <span>Déconnexion</span>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="item">
+                                <a href="{{ path('app_login') }}">
+                                    <span>Se connecter</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </nav>
