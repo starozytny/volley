@@ -5,6 +5,21 @@ import { Button }                                      from "@dashboardComponent
 import { DatePick, DateTimePick, TimePick }            from "@dashboardComponents/Tools/DatePicker";
 
 import Validator    from "@dashboardComponents/functions/validateur";
+import axios        from "axios";
+
+function processData(allText) {
+    let allTextLines = allText.split(/\r\n|\n/);
+    let headers = allTextLines[0].split(';');
+    let lines = [];
+
+    for (var i=1; i<allTextLines.length; i++) {
+        let data = allTextLines[i].split(';');
+
+        lines.push({"cp": data[2], "city": data[1]});
+    }
+
+    return lines;
+}
 
 export class StyleguideForm extends Component {
     constructor(props) {
@@ -17,16 +32,29 @@ export class StyleguideForm extends Component {
             message: "",
             roles: [], // default : ["ROLE_USER"]
             sexe: "",  // default : 0
-            city: "",  // default : "France"
+            pays: "",  // default : "France"
             birthday: "",
             createAt: "",
             arrived: "",
+            postalCode: "",
+            arrayPostalCode: [],
+            city: ""
         }
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeDateBirthday = this.handleChangeDateBirthday.bind(this);
+        this.handleChangePostalCodeCity = this.handleChangePostalCodeCity.bind(this);
+        this.handleChangeDateCreateAt = this.handleChangeDateCreateAt.bind(this);
         this.handleChangeDateCreateAt = this.handleChangeDateCreateAt.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount = () => {
+        let self = this;
+
+        axios.get( window.location.origin + "/postalcode.csv", {})
+            .then(function (response) {
+                self.setState({ arrayPostalCode: processData(response.data) })
+            })
     }
 
     handleChange = (e) => {
@@ -42,6 +70,26 @@ export class StyleguideForm extends Component {
         this.setState({ [name]: value })
     }
 
+    handleChangePostalCodeCity = (e) => {
+        const { arrayPostalCode, city } = this.state;
+
+        let name = e.currentTarget.name;
+        let value = e.currentTarget.value;
+
+        if(value.length <= 5){
+            this.setState({ [name]: value })
+
+            let v = ""
+            if(arrayPostalCode.length !== 0){
+                v = arrayPostalCode.filter(el => el.cp === value)
+
+                if(v.length === 1){
+                    this.setState({ city: v[0].city })
+                }
+            }
+        }
+    }
+
     handleChangeDateBirthday = (e) => { this.setState({ birthday: e }) }
     handleChangeDateCreateAt = (e) => { this.setState({ createAt: e }) }
     handleChangeDateArrived = (e) => { this.setState({ arrived: e }) }
@@ -49,7 +97,7 @@ export class StyleguideForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email, message, roles, sexe, city, birthday, createAt, arrived } = this.state;
+        const { username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city } = this.state;
 
         let validate = Validator.validateur([
             {type: "text", id: 'username', value: username},
@@ -57,22 +105,23 @@ export class StyleguideForm extends Component {
             {type: "text", id: 'message', value: message},
             {type: "array", id: 'roles', value: roles},
             {type: "text", id: 'sexe', value: sexe},
-            {type: "text", id: 'city', value: city},
+            {type: "text", id: 'pays', value: pays},
             {type: "text", id: 'birthday', value: birthday},
             {type: "text", id: 'createAt', value: createAt},
             {type: "text", id: 'arrived', value: arrived},
+            {type: "text", id: 'postalCode', value: postalCode},
+            {type: "text", id: 'city', value: city},
         ])
 
         if(!validate.code){
             this.setState({ errors: validate.errors });
         }else{
-            console.log("Axios")
             this.setState({ errors: []});
         }
     }
 
     render () {
-        const { errors, username, email, message, roles, sexe, city, birthday, createAt, arrived } = this.state;
+        const { errors, username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city } = this.state;
 
         let checkboxItems = [
             { 'value': 'ROLE_USER', 'label': 'Utilisateur', 'identifiant': 'utilisateur' },
@@ -111,13 +160,18 @@ export class StyleguideForm extends Component {
                         </div>
 
                         <div className="line">
-                            <Select items={selectItems} identifiant="city" valeur={city} errors={errors} onChange={this.handleChange}>De quel pays viens-tu ?</Select>
+                            <Select items={selectItems} identifiant="pays" valeur={pays} errors={errors} onChange={this.handleChange}>De quel pays viens-tu ?</Select>
                         </div>
 
                         <div className="line line-3">
                             <DatePick identifiant="birthday" valeur={birthday} errors={errors} onChange={this.handleChangeDateBirthday}>Date de naissance</DatePick>
                             <DateTimePick identifiant="createAt" valeur={createAt} errors={errors} onChange={this.handleChangeDateCreateAt}>Date de création</DateTimePick>
                             <TimePick identifiant="arrived" valeur={arrived} errors={errors} onChange={this.handleChangeDateArrived}>Heure d'arrivée</TimePick>
+                        </div>
+
+                        <div className="line line-2">
+                            <Input identifiant="postalCode" valeur={postalCode} errors={errors} onChange={this.handleChangePostalCodeCity} type="number" >Code postal</Input>
+                            <Input identifiant="city" valeur={city} errors={errors} onChange={this.handleChange}>Ville</Input>
                         </div>
 
                         <div className="form-button">
