@@ -16,8 +16,16 @@
   [class^="icon-"] {
     opacity: 0.9;
 
-    & + p{
+    & + p,
+    & + div{
       margin-left: 8px;
+      font-size: 14px;
+    }
+  }
+
+  ul{
+    li{
+      font-size: 14px;
     }
   }
 

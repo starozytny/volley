@@ -8,9 +8,25 @@
   width: 100%;
   margin-bottom: 12px;
 
-  [class^="icon-"] + p{
-    margin-left: 8px;
+  p{
     font-size: 14px;
+    opacity: 0.9;
+  }
+
+  [class^="icon-"] {
+    opacity: 0.9;
+
+    & + p,
+    & + div{
+      margin-left: 8px;
+      font-size: 14px;
+    }
+  }
+
+  ul{
+    li{
+      font-size: 14px;
+    }
   }
 
   .title{
