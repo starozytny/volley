@@ -28,6 +28,25 @@ function validateEmail($value){
     };
 }
 
+function validateEmailConfirm($value, $valueCheck){
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($value)){
+
+        if($value !== $valueCheck){
+            return {
+                'code': false,
+                'isCheckError': true,
+                'message': 'Les adresses e-mail ne sont pas identique.'
+            };
+        }
+
+        return {'code': true};
+    }
+    return {
+        'code': false,
+        'message': 'Cette adresse e-mail est invalide.'
+    };
+}
+
 function validatePassword($value, $valueCheck){
     if($value === ""){
         return {
@@ -77,6 +96,9 @@ function validateur(values){
                 break;
             case 'email':
                 validate = validateEmail(element.value);
+                break;
+            case 'emailConfirm':
+                validate = validateEmailConfirm(element.value, element.valueCheck);
                 break;
             case 'array':
                 validate = validateArray(element.value);
