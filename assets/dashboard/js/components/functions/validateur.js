@@ -86,6 +86,17 @@ function validateArray($value){
     return {'code': true};
 }
 
+function validateAtLeastOne($value, $valueCheck) {
+    if($value === "" && $valueCheck === ""){
+        return {
+            'code': false,
+            'message': 'Au moins un champ doit être renseigné.'
+        };
+    }
+    return {'code': true};
+}
+
+
 function validateur(values){
     let validate; let code = true;
     let errors = [];
@@ -105,6 +116,9 @@ function validateur(values){
                 break;
             case 'password':
                 validate = validatePassword(element.value, element.valueCheck);
+                break;
+            case 'atLeastOne':
+                validate = validateAtLeastOne(element.value, element.valueCheck);
                 break;
             case 'date':
                 validate = validateDate(element.value);
