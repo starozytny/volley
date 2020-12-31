@@ -48,11 +48,15 @@ class SanitizeData
         return $date;
     }
 
-    public function sanitizeString($value): string
+    public function sanitizeString($value): ?string
     {
-        $value = trim($value);
-        $value = htmlspecialchars($value);
+        if($value != "" && $value != null){
+            $value = trim($value);
+            $value = htmlspecialchars($value);
 
-        return $value;
+            return $value;
+        }
+
+        return null;
     }
 }
