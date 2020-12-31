@@ -96,34 +96,40 @@ function validateAtLeastOne($value, $valueCheck) {
     return {'code': true};
 }
 
+function switchCase(element){
+    let validate;
+    switch (element.type) {
+        case 'text':
+            validate = validateText(element.value);
+            break;
+        case 'email':
+            validate = validateEmail(element.value);
+            break;
+        case 'emailConfirm':
+            validate = validateEmailConfirm(element.value, element.valueCheck);
+            break;
+        case 'array':
+            validate = validateArray(element.value);
+            break;
+        case 'password':
+            validate = validatePassword(element.value, element.valueCheck);
+            break;
+        case 'atLeastOne':
+            validate = validateAtLeastOne(element.value, element.valueCheck);
+            break;
+        case 'date':
+            validate = validateDate(element.value);
+            break;
+    }
 
-function validateur(values){
+    return validate;
+}
+
+function validateur(values, valuesIfExistes){
     let validate; let code = true;
     let errors = [];
     values.forEach(element => {
-        switch (element.type) {
-            case 'text':
-                validate = validateText(element.value);
-                break;
-            case 'email':
-                validate = validateEmail(element.value);
-                break;
-            case 'emailConfirm':
-                validate = validateEmailConfirm(element.value, element.valueCheck);
-                break;
-            case 'array':
-                validate = validateArray(element.value);
-                break;
-            case 'password':
-                validate = validatePassword(element.value, element.valueCheck);
-                break;
-            case 'atLeastOne':
-                validate = validateAtLeastOne(element.value, element.valueCheck);
-                break;
-            case 'date':
-                validate = validateDate(element.value);
-                break;
-        }
+        validate = switchCase(element);
         if(!validate.code){
             code = false;
             errors.push({
@@ -132,6 +138,21 @@ function validateur(values){
             })
         }
     });
+
+    if(valuesIfExistes){
+        valuesIfExistes.forEach(element => {
+            if(element.value !== "" && element.value !== null){
+                validate = switchCase(element);
+                if(!validate.code){
+                    code = false;
+                    errors.push({
+                        name: validate.isCheckError ? element.idCheck : element.id,
+                        message: validate.message
+                    })
+                }
+            }
+        });
+    }
 
     return {
         code: code,
