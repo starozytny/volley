@@ -7,7 +7,6 @@ import { Alert }               from "@dashboardComponents/Tools/Alert";
 import { Button }              from "@dashboardComponents/Tools/Button";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
-// import Formulaire              from "@dashboardComponents/functions/formulaire";
 
 export class UserForm extends Component {
     constructor(props) {
@@ -22,6 +21,8 @@ export class UserForm extends Component {
             errors: [],
             success: false
         }
+
+        this.Formulaire = props.formulaire;
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -73,7 +74,7 @@ export class UserForm extends Component {
         if(!validate.code){
             this.setState({ errors: validate.errors });
         }else{
-            // Formulaire.loader(true);
+            this.Formulaire.loader(true);
             let self = this;
             axios({ method: method, url: url, data: self.state })
                 .then(function (response) {
@@ -91,10 +92,10 @@ export class UserForm extends Component {
                     }
                 })
                 .catch(function (error) {
-                    // Formulaire.displayErrors(error, self);
+                    self.Formulaire.displayErrors(error, self);
                 })
                 .then(() => {
-                    // Formulaire.loader(false);
+                    self.Formulaire.loader(false);
                 })
             ;
         }

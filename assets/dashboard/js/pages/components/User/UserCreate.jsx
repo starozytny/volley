@@ -7,7 +7,7 @@ import { Button }        from "@dashboardComponents/Tools/Button";
 
 export class UserCreate extends Component {
     render () {
-        const { onChangeContext, onUpdateList } = this.props;
+        const { formulaire, onChangeContext, onUpdateList } = this.props;
 
         return <>
             <div>
@@ -20,6 +20,7 @@ export class UserCreate extends Component {
                 <div className="form">
                     <h2>Ajouter un utilisateur</h2>
                     <UserForm
+                        formulaire={formulaire}
                         context="create"
                         url={Routing.generate('api_users_create')}
                         username=""

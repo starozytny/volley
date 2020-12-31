@@ -36,39 +36,28 @@ export class User extends Component {
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     }
 
-    componentDidMount() {
-        const self = this;
-        Formulaire.axiosGetDataPagination(self, Routing.generate('api_users_index'))
-    }
-
+    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_users_index')) }
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
     handleUpdateList = (element, newContext=null) => {
         const { data, context } = this.state
-
-        let self = this;
-        Formulaire.updateDataPagination(self, Sort.compareUsername, newContext, context, data, element);
+        Formulaire.updateDataPagination(this, Sort.compareUsername, newContext, context, data, element);
     }
 
     handleChangeContext = (context, element=null) => {
         this.setState({ context, element });
-
         if(context === "list"){
             this.page.current.pagination.current.handleComeback()
         }
     }
 
     handleDelete = (element) => {
-        let self = this;
-        Formulaire.axiosDeleteElement(self, element, Routing.generate('api_users_delete', {'id': element.id}),
+        Formulaire.axiosDeleteElement(this, element, Routing.generate('api_users_delete', {'id': element.id}),
             'Supprimer cet utilisateur ?', 'Cette action est irréversible.');
     }
-
     handleDeleteGroup = () => {
-        let self = this;
         let checked = document.querySelectorAll('.i-selector:checked');
-
-        Formulaire.axiosDeleteGroupElement(self, checked, Routing.generate('api_users_delete_group'), 'Aucun utilisateur sélectionné.')
+        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun utilisateur sélectionné.')
     }
 
     handleGetFilters = (filters) => {
@@ -116,10 +105,10 @@ export class User extends Component {
         let content = null, havePagination = false;
         switch (context){
             case "create":
-                content = <UserCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
+                content = <UserCreate formulaire={Formulaire} onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
                 break;
             case "update":
-                content =<UserUpdate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element} />
+                content =<UserUpdate formulaire={Formulaire} onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element} />
                 break;
             default:
                 havePagination = true;
