@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import {Button, ButtonIcon} from "@dashboardComponents/Tools/Button";
+import { Button, ButtonIcon } from "@dashboardComponents/Tools/Button";
 
-import { Filter }    from "@dashboardComponents/Layout/Filter";
-import { Search }    from "@dashboardComponents/Layout/Search";
+import { Filter }     from "@dashboardComponents/Layout/Filter";
+import { Search }     from "@dashboardComponents/Layout/Search";
 
 import { UserItem }   from "./UserItem";
 
