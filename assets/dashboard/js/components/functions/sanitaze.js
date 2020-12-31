@@ -26,9 +26,33 @@ function toFormatDateTime(date, timezone="UTC"){
     return date.toLocaleString('fr-FR', { timeZone: timezone });
 }
 
+function toFormatPhone(elem){
+    if(elem !== "" && elem !== undefined && elem !== null){
+        let arr = elem.match(/[0-9-+]/g);
+        if(arr != null) {
+            elem = arr.join('');
+            if (!(/^((\+)33|0)[1-9](\d{2}){4}$/.test(elem))) {
+                return elem;
+            } else {
+                let a = elem.substr(0, 2);
+                let b = elem.substr(2, 2);
+                let c = elem.substr(4, 2);
+                let d = elem.substr(6, 2);
+                let e = elem.substr(8, 2);
+
+                return a + " " + b + " " + c + " " + d + " " + e;
+            }
+        }
+        return elem;
+    }else{
+        return "";
+    }
+}
+
 module.exports = {
     sanitizeString,
     toFormatTime,
     toFormatDate,
-    toFormatDateTime
+    toFormatDateTime,
+    toFormatPhone
 }
