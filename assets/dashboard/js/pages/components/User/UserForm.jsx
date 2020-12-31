@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
-import axios             from "axios";
-import toastr            from "toastr";
+import axios                   from "axios";
 
 import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
 import { Alert }               from "@dashboardComponents/Tools/Alert";
+import { Button }              from "@dashboardComponents/Tools/Button";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
-import Loader                  from "@dashboardComponents/functions/loader";
-import {Button} from "@dashboardComponents/Tools/Button";
+// import Formulaire              from "@dashboardComponents/functions/formulaire";
 
 export class UserForm extends Component {
     constructor(props) {
@@ -74,7 +73,7 @@ export class UserForm extends Component {
         if(!validate.code){
             this.setState({ errors: validate.errors });
         }else{
-            Loader.loader(true);
+            // Formulaire.loader(true);
             let self = this;
             axios({ method: method, url: url, data: self.state })
                 .then(function (response) {
@@ -92,11 +91,10 @@ export class UserForm extends Component {
                     }
                 })
                 .catch(function (error) {
-                    self.setState({ errors: error.response.data });
-                    toastr.error("Veuillez vérifier les informations transmises.");
+                    // Formulaire.displayErrors(error, self);
                 })
                 .then(() => {
-                    Loader.loader(false);
+                    // Formulaire.loader(false);
                 })
             ;
         }

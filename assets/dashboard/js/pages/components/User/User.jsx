@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 
-import axios             from "axios";
-import toastr            from "toastr";
-import Swal              from "sweetalert2";
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Page }          from "@dashboardComponents/Layout/Page";
 import { LoaderElement } from "@dashboardComponents/Layout/Loader";
-
-import UpdateList        from "@dashboardComponents/functions/updateList";
 import Sort              from "@dashboardComponents/functions/sort";
-import SwalOptions       from "@dashboardComponents/functions/swalOptions";
-import Loader            from "@dashboardComponents/functions/loader";
+import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
 import { UserList }      from "./UserList";
 import { UserCreate }    from "./UserCreate";
@@ -44,17 +38,7 @@ export class User extends Component {
 
     componentDidMount() {
         const self = this;
-        axios.get(Routing.generate('api_users_index'), {})
-            .then(function (response) {
-                let data = response.data;
-                self.setState({ dataImmuable: data, data: data, currentData: data.slice(0, 10) });
-            })
-            .catch(function (error) {
-                self.setState({ loadPageError: true });
-            })
-            .then(function () {
-                self.setState({ loadData: false });
-            });
+        Formulaire.axiosGetDataPagination(self, Routing.generate('api_users_index'))
     }
 
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
@@ -62,16 +46,8 @@ export class User extends Component {
     handleUpdateList = (element, newContext=null) => {
         const { data, context } = this.state
 
-        let nContext = (newContext !== null) ? newContext : context;
-        let newData = UpdateList.update(nContext, data, element);
-        newData.sort(Sort.compareUsername)
-
-        this.setState({
-            dataImmuable: newData,
-            data: newData,
-            currentData: newData.slice(0,10),
-            element: element
-        })
+        let self = this;
+        Formulaire.updateDataPagination(self, Sort.compareUsername, newContext, context, data, element);
     }
 
     handleChangeContext = (context, element=null) => {
@@ -84,70 +60,15 @@ export class User extends Component {
 
     handleDelete = (element) => {
         let self = this;
-        Swal.fire(SwalOptions.options('Supprimer cet utilisateur ?', 'Cette action est irréversible.'))
-            .then((result) => {
-                if (result.isConfirmed) {
-
-                    Loader.loader(true);
-                    axios.delete(Routing.generate('api_users_delete', {'id': element.id}), {})
-                        .then(function (response) {
-                            Swal.fire(response.data.message, '', 'success');
-                            self.handleUpdateList(element, "delete");
-                        })
-                        .catch(function (error) {
-                            if(error.response.data.message){
-                                toastr.error(error.response.data.message)
-                            }else{
-                                toastr.error("Une erreur est survenue, veuillez contacter le support.")
-                            }
-                        })
-                        .then(() => {
-                            Loader.loader(false);
-                        })
-
-                }
-            })
+        Formulaire.axiosDeleteElement(self, element, Routing.generate('api_users_delete', {'id': element.id}),
+            'Supprimer cet utilisateur ?', 'Cette action est irréversible.');
     }
 
     handleDeleteGroup = () => {
-
+        let self = this;
         let checked = document.querySelectorAll('.i-selector:checked');
 
-        let selectors = []
-        checked.forEach(el => {
-            selectors.push(parseInt(el.value))
-        })
-
-        if(selectors.length === 0){
-            toastr.info("Aucun utilisateur sélectionné.");
-        }else{
-            let self = this;
-            Swal.fire(SwalOptions.options('Supprimer la sélection ?',
-                'Cette action est irréversible.'))
-                .then((result) => {
-                    if (result.isConfirmed) {
-
-                        Loader.loader(true);
-                        axios({ method: "delete", url: Routing.generate('api_users_delete_group'), data: selectors })
-                            .then(function (response) {
-                                Swal.fire(response.data.message, '', 'success');
-                                self.handleUpdateList(selectors, "delete_group");
-                            })
-                            .catch(function (error) {
-                                if(error.response.data.message){
-                                    toastr.error(error.response.data.message)
-                                }else{
-                                    toastr.error("Une erreur est survenue, veuillez contacter le support.")
-                                }
-                            })
-                            .then(() => {
-                                Loader.loader(false);
-                            })
-                        ;
-
-                    }
-                })
-        }
+        Formulaire.axiosDeleteGroupElement(self, checked, Routing.generate('api_users_delete_group'), 'Aucun utilisateur sélectionné.')
     }
 
     handleGetFilters = (filters) => {
