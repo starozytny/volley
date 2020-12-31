@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class SanitizeData
 {
-    public function fullSanitize ($value)
+    public function fullSanitize($value)
     {
         $value = trim($value);
         $value = mb_strtolower($value);
@@ -18,7 +18,7 @@ class SanitizeData
         return $value;
     }
 
-    public function reformatCara ($data)
+    public function reformatCara($data)
     {
 
         $spe = array(' ','é','ê','è','à','ô','ï','ä', 'ö', 'ë', '<','>', '\'');
@@ -27,7 +27,7 @@ class SanitizeData
         return str_replace($spe, $noSpe, $data);
     }
 
-    public function updateValue ($value, $newValue)
+    public function updateValue($value, $newValue)
     {
         if($newValue != "" && $newValue != null){
             return $newValue;
@@ -46,5 +46,13 @@ class SanitizeData
         $date->setTimezone(new \DateTimeZone($timezone));
 
         return $date;
+    }
+
+    public function sanitizeString($value): string
+    {
+        $value = trim($value);
+        $value = htmlspecialchars($value);
+
+        return $value;
     }
 }
