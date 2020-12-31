@@ -105,10 +105,10 @@ export class User extends Component {
         let content = null, havePagination = false;
         switch (context){
             case "create":
-                content = <UserCreate formulaire={Formulaire} onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
+                content = <UserCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
                 break;
             case "update":
-                content =<UserUpdate formulaire={Formulaire} onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element} />
+                content =<UserUpdate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element} />
                 break;
             default:
                 havePagination = true;
