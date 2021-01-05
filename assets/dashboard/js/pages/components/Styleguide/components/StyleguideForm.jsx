@@ -5,21 +5,7 @@ import { Button }                                      from "@dashboardComponent
 import { DatePick, DateTimePick, TimePick }            from "@dashboardComponents/Tools/DatePicker";
 
 import Validator    from "@dashboardComponents/functions/validateur";
-import axios        from "axios";
-
-function processData(allText) {
-    let allTextLines = allText.split(/\r\n|\n/);
-    let headers = allTextLines[0].split(';');
-    let lines = [];
-
-    for (var i=1; i<allTextLines.length; i++) {
-        let data = allTextLines[i].split(';');
-
-        lines.push({"cp": data[2], "city": data[1]});
-    }
-
-    return lines;
-}
+import Sanitaze     from "@dashboardComponents/functions/sanitaze";
 
 export class StyleguideForm extends Component {
     constructor(props) {
@@ -48,14 +34,7 @@ export class StyleguideForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount = () => {
-        let self = this;
-
-        axios.get( window.location.origin + "/postalcode.csv", {})
-            .then(function (response) {
-                self.setState({ arrayPostalCode: processData(response.data) })
-            })
-    }
+    componentDidMount = () => { Sanitaze.getPostalCodes(this); } // fill arrayPostalCode
 
     handleChange = (e) => {
         const { roles } = this.state;
@@ -71,7 +50,7 @@ export class StyleguideForm extends Component {
     }
 
     handleChangePostalCodeCity = (e) => {
-        const { arrayPostalCode, city } = this.state;
+        const { arrayPostalCode } = this.state;
 
         let name = e.currentTarget.name;
         let value = e.currentTarget.value;

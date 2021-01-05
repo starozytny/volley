@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 function sanitizeString(chaine){
     chaine.trim();
 
@@ -49,8 +51,31 @@ function toFormatPhone(elem){
     }
 }
 
+function processData(allText){
+    let allTextLines = allText.split(/\r\n|\n/);
+    let headers = allTextLines[0].split(';');
+    let lines = [];
+
+    for (var i=1; i<allTextLines.length; i++) {
+        let data = allTextLines[i].split(';');
+
+        lines.push({"cp": data[2], "city": data[1]});
+    }
+
+    return lines;
+}
+
+function getPostalCodes(self){
+    axios.get( window.location.origin + "/postalcode.csv", {})
+        .then(function (response) {
+            self.setState({ arrayPostalCode: processData(response.data) })
+        })
+    ;
+}
+
 module.exports = {
     sanitizeString,
+    getPostalCodes,
     toFormatTime,
     toFormatDate,
     toFormatDateTime,
