@@ -25,9 +25,7 @@ export class StyleguideForm extends Component {
             arrived: "",
             postalCode: "",
             arrayPostalCode: [],
-            city: "",
-            avatar: "",
-            files: [],
+            city: ""
         }
 
         this.inputAvatar = React.createRef();
@@ -82,7 +80,10 @@ export class StyleguideForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city, avatar, files } = this.state;
+        const { username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city } = this.state;
+
+        let avatar = this.inputAvatar.current.drop.current.files;
+        let files = this.inputFiles.current.drop.current.files;
 
         let validate = Validator.validateur([
             {type: "text", id: 'username', value: username},
@@ -99,9 +100,6 @@ export class StyleguideForm extends Component {
             {type: "array", id: 'avatar', value: avatar},
             {type: "array", id: 'files', value: files},
         ])
-
-        console.log(this.inputAvatar.current.drop.current.files)
-        console.log(this.inputFiles.current.drop.current.files)
 
         if(!validate.code){
             this.setState({ errors: validate.errors });
