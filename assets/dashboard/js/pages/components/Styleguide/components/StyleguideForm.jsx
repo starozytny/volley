@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 
 import { Checkbox, Input, Radiobox, Select, TextArea } from "@dashboardComponents/Tools/Fields";
-import { Button }                                      from "@dashboardComponents/Tools/Button";
 import { DatePick, DateTimePick, TimePick }            from "@dashboardComponents/Tools/DatePicker";
+import { Drop }                                        from "@dashboardComponents/Tools/Drop"
+import { Button }                                      from "@dashboardComponents/Tools/Button";
 
 import Validator    from "@dashboardComponents/functions/validateur";
-import Sanitaze     from "@dashboardComponents/functions/sanitaze";
+import Sanitaze     from "@dashboardComponents/functions/sanitaze";;
 
 export class StyleguideForm extends Component {
     constructor(props) {
@@ -24,8 +25,13 @@ export class StyleguideForm extends Component {
             arrived: "",
             postalCode: "",
             arrayPostalCode: [],
-            city: ""
+            city: "",
+            avatar: "",
+            files: [],
         }
+
+        this.inputAvatar = React.createRef();
+        this.inputFiles = React.createRef();
 
         this.handleChange = this.handleChange.bind(this);
         this.handleChangePostalCodeCity = this.handleChangePostalCodeCity.bind(this);
@@ -76,7 +82,7 @@ export class StyleguideForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city } = this.state;
+        const { username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city, avatar, files } = this.state;
 
         let validate = Validator.validateur([
             {type: "text", id: 'username', value: username},
@@ -90,7 +96,12 @@ export class StyleguideForm extends Component {
             {type: "text", id: 'arrived', value: arrived},
             {type: "text", id: 'postalCode', value: postalCode},
             {type: "text", id: 'city', value: city},
+            {type: "array", id: 'avatar', value: avatar},
+            {type: "array", id: 'files', value: files},
         ])
+
+        console.log(this.inputAvatar.current.drop.current.files)
+        console.log(this.inputFiles.current.drop.current.files)
 
         if(!validate.code){
             this.setState({ errors: validate.errors });
@@ -151,6 +162,13 @@ export class StyleguideForm extends Component {
                         <div className="line line-2">
                             <Input identifiant="postalCode" valeur={postalCode} errors={errors} onChange={this.handleChangePostalCodeCity} type="number" >Code postal</Input>
                             <Input identifiant="city" valeur={city} errors={errors} onChange={this.handleChange}>Ville</Input>
+                        </div>
+
+                        <div className="line line-2">
+                            <Drop ref={this.inputAvatar} identifiant="avatar" errors={errors} accept={"image/*"} maxFiles={1}
+                                  label="Téléverser un avatar" labelError="Seules les images sont acceptées.">Fichier</Drop>
+                            <Drop ref={this.inputFiles} identifiant="files" errors={errors} accept={"image/*"} maxFiles={3}
+                                  label="Téléverser des fichiers" labelError="Seules les images sont acceptées.">Fichier</Drop>
                         </div>
 
                         <div className="form-button">
