@@ -86,6 +86,7 @@ select{
 
     &:hover{
       background-color: var(--fond);
+      border-color: var(--grey);
     }
   }
 
@@ -93,13 +94,14 @@ select{
     padding: 5px 10px;
     border: 1px dashed var(--grey);
     background: var(--alpha);
-    opacity: 0.6;
     cursor: pointer;
     border-radius: 3px;
     transition: all 0.2s ease-in-out;
 
     &:hover{
       opacity: 1;
+      color: var(--txt);
+      border-color: var(--txt);
     }
   }
 
