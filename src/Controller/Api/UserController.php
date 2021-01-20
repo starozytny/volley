@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use App\Service\ApiResponse;
 use App\Service\MailerService;
 use App\Service\SanitizeData;
+use App\Service\SettingsService;
 use App\Service\ValidatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -300,9 +301,10 @@ class UserController extends AbstractController
      * @param Request $request
      * @param ApiResponse $apiResponse
      * @param MailerService $mailerService
+     * @param SettingsService $settingsService
      * @return JsonResponse
      */
-    public function forget(Request $request, ApiResponse $apiResponse, MailerService $mailerService): JsonResponse
+    public function forget(Request $request, ApiResponse $apiResponse, MailerService $mailerService, SettingsService $settingsService): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
@@ -342,10 +344,10 @@ class UserController extends AbstractController
 
         if($mailerService->sendMail(
                 $user->getEmail(),
-                "Mot de passe oublié pour le site ",
+                "Mot de passe oublié pour le site " . $settingsService->getWebsiteName(),
                 "Lien de réinitialisation de mot de passe.",
                 'app/email/security/forget.html.twig',
-                ['url' => $url, 'user' => $user]) != true)
+                ['url' => $url, 'user' => $user, 'settings' => $settingsService->getSettings()]) != true)
         {
             return $apiResponse->apiJsonResponseValidationFailed([[
                 'name' => 'fUsername',

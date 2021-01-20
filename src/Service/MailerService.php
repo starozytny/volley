@@ -12,14 +12,18 @@ use Symfony\Component\Mime\Address;
 class MailerService
 {
     private $mailer;
+    private $settingsService;
 
-    public function __construct(MailerInterface $mailer)
+    public function __construct(MailerInterface $mailer, SettingsService $settingsService)
     {
         $this->mailer = $mailer;
+        $this->settingsService = $settingsService;
     }
 
-    public function sendMail($to, $subject, $text, $html, $params, $from="contact@tmp.fr")
+    public function sendMail($to, $subject, $text, $html, $params, $from=null)
     {
+        $from = ($from == null) ? $this->settingsService->getEmailExpediteurGlobal() : $from;
+
         $email = (new TemplatedEmail())
             ->from($from)
             ->to(new Address($to))

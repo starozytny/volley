@@ -2,12 +2,6 @@
 
 {% set page_title %}Liste des utilisateurs{% endset %}
 
-{#{% set submenu = [#}
-{#    { 'label': "Test", 'path': path('admin_homepage') },#}
-{#    { 'label': "Test2", 'path': path('admin_homepage') }#}
-{#] %}#}
-{#{% set submenuActive = "Test" %}#}
-
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('dashboard_user') }}
