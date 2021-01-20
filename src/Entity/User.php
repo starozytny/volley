@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -56,9 +57,29 @@ class User implements UserInterface
     private $roles = ['ROLE_USER'];
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $forgetCode;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $forgetAt;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
 
     /**
      * @var string The hashed password
@@ -67,14 +88,14 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $lastLogin;
-
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        try {
+            $this->setToken(bin2hex(random_bytes(32)));
+        } catch (Exception $e) {
+            throw new Exception($e);
+        }
     }
 
     public function getId(): ?int
@@ -242,5 +263,41 @@ class User implements UserInterface
         }
 
         return null;
+    }
+
+    public function getForgetCode(): ?string
+    {
+        return $this->forgetCode;
+    }
+
+    public function setForgetCode(?string $forgetCode): self
+    {
+        $this->forgetCode = $forgetCode;
+
+        return $this;
+    }
+
+    public function getForgetAt(): ?\DateTimeInterface
+    {
+        return $this->forgetAt;
+    }
+
+    public function setForgetAt(?\DateTimeInterface $forgetAt): self
+    {
+        $this->forgetAt = $forgetAt;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
     }
 }
