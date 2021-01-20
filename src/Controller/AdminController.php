@@ -44,4 +44,12 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/pages/user/index.html.twig');
     }
+
+    /**
+     * @Route("/parametres", name="settings_index")
+     */
+    public function settings(): Response
+    {
+        return $this->render('admin/pages/settings/index.html.twig');
+    }
 }
