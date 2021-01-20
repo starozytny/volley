@@ -65,11 +65,32 @@ export class UserList extends Component {
                     </div>
                 </div>
 
-                <div className="selectors-actions">
-                    <div className="item" onClick={onDeleteAll}>
-                        <ButtonIcon icon="trash" text="Supprimer la sélection" />
+                <div className="page-actions">
+                    <div className="selectors-actions">
+                        <div className="item" onClick={onDeleteAll}>
+                            <ButtonIcon icon="trash" text="Supprimer la sélection" />
+                        </div>
+                    </div>
+                    <div className="common-actions">
+                        <div className="item">
+                            <div className="dropdown">
+                                <div className="dropdown-btn">
+                                    <span className="icon-download" />
+                                    <span>Exporter</span>
+                                </div>
+                                <div className="dropdown-items">
+                                    <div className="item">
+                                        <ButtonIcon icon="file" text="Exporter en CSV" />
+                                    </div>
+                                    <div className="item">
+                                        <ButtonIcon icon="file" text="Exporter en Excel" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </>
     }
