@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Routing        from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
+
 import { Button, ButtonIcon } from "@dashboardComponents/Tools/Button";
 
 import { Filter }     from "@dashboardComponents/Layout/Filter";
@@ -79,12 +81,12 @@ export class UserList extends Component {
                                     <span>Exporter</span>
                                 </div>
                                 <div className="dropdown-items">
-                                    <div className="item">
+                                    <a className="item" download="utilisateurs.csv" href={Routing.generate('api_users_export', {'format': 'csv'})}>
                                         <ButtonIcon icon="file" text="Exporter en CSV" />
-                                    </div>
-                                    <div className="item">
+                                    </a>
+                                    <a className="item" download="utilisateurs.xlsx" href={Routing.generate('api_users_export', {'format': 'excel'})}>
                                         <ButtonIcon icon="file" text="Exporter en Excel" />
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

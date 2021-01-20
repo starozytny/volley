@@ -5,12 +5,14 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\ApiResponse;
+use App\Service\Export;
 use App\Service\MailerService;
 use App\Service\SanitizeData;
 use App\Service\SettingsService;
 use App\Service\ValidatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -363,8 +365,7 @@ class UserController extends AbstractController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Returns a new user object",
-     *     @Model(type=User::class, groups={"admin:write"})
+     *     description="Returns a message",
      * )
      *
      * @OA\Tag(name="Users")
@@ -398,5 +399,52 @@ class UserController extends AbstractController
 
         $em->flush();
         return $apiResponse->apiJsonResponseSuccessful("Modification réalisée avec success ! La page va se rafraichir automatiquement dans 5 secondes.");
+    }
+
+    /**
+     * Update password
+     *
+     * @Route("/export/{format}", name="export", options={"expose"=true}, methods={"GET"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a new user object",
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param Export $export
+     * @param $format
+     * @return BinaryFileResponse
+     */
+    public function export(Export $export, $format)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository(User::class)->findBy(array(), array('username' => 'ASC'));
+        $data = array();
+
+        foreach ($users as $user) {
+            $tmp = array(
+                $user->getId(),
+                $user->getUsername(),
+                $user->getHighRole(),
+                $user->getEmail(),
+                date_format($user->getCreatedAt(), 'd/m/Y'),
+            );
+            if(!in_array($tmp, $data)){
+                array_push($data, $tmp);
+            }
+        }
+
+        if($format == 'excel'){
+            $fileName = 'utilisateurs.xlsx';
+            $header = array(array('ID', 'Nom utilisateur', 'Role', 'Email', 'Date de creation'));
+        }else{
+            $fileName = 'utilisateurs.csv';
+            $header = array(array('id', 'username', 'role', 'email', 'createAt'));
+        }
+
+        $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5);
+        return new BinaryFileResponse($this->getParameter('private_directory'). 'export/' . $fileName);
     }
 }
