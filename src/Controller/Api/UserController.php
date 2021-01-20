@@ -333,15 +333,13 @@ class UserController extends AbstractController
             }
         }
 
-        $now = new \DateTime();
+
         $code = uniqid($user->getId());
 
-        $user->setForgetAt($now);
-        $now->setTimezone(new \DateTimeZone("Europe/Paris"));
+        $user->setForgetAt(new \DateTime());
         $user->setForgetCode($code);
 
-        $url = $this->generateUrl('api_users_password_reinit', ['token' => $user->getToken(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
-
+        $url = $this->generateUrl('app_password_reinit', ['token' => $user->getToken(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
         if($mailerService->sendMail(
                 $user->getEmail(),
                 "Mot de passe oublié pour le site " . $settingsService->getWebsiteName(),
@@ -357,25 +355,5 @@ class UserController extends AbstractController
 
         $em->flush();
         return $apiResponse->apiJsonResponseSuccessful(sprintf("Le lien de réinitialisation de votre mot de passe a été envoyé à : %s", $user->getHiddenEmail()));
-    }
-
-    /**
-     * Réinit password
-     *
-     * @Route("/mot-de-passe/reinitialisation/{token}-{code}", name="password_reinit", options={"expose"=true}, methods={"GET"})
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="Return message successful",
-     * )
-     *
-     * @OA\Tag(name="Users")
-     *
-     * @param ApiResponse $apiResponse
-     * @return JsonResponse
-     */
-    public function reinit(ApiResponse $apiResponse): JsonResponse
-    {
-        return $apiResponse->apiJsonResponseSuccessful("ok");
     }
 }

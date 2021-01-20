@@ -39,8 +39,8 @@ security:
         ROLE_ADMIN: ROLE_USER
 
     access_control:
-         - { path: ^/api/login_check,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/users/forget, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api,              roles: ROLE_USER }
-         - { path: ^/admin,            roles: ROLE_ADMIN }
+         - { path: ^/api/login_check,        roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/users/mot-de-passe, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api,                    roles: ROLE_USER }
+         - { path: ^/admin,                  roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

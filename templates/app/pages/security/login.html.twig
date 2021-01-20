@@ -1,11 +1,6 @@
-{% extends 'app/layout/layout.html.twig' %}
+{% extends 'app/pages/security/template.html.twig' %}
 
 {% block title %}Connexion à son espace{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('security') }}
-{% endblock %}
 
 {% block main_content %}
     <div class="main-content">
@@ -40,9 +35,4 @@
             </div>
         </form>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('security') }}
 {% endblock %}
