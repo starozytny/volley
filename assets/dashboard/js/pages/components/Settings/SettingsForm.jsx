@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
+import axios from "axios";
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input }        from "@dashboardComponents/Tools/Fields";
 import { Button }       from "@dashboardComponents/Tools/Button";
+import { Alert }        from "@dashboardComponents/Tools/Alert";
+import { Input }        from "@dashboardComponents/Tools/Fields";
 import { Drop }         from "@dashboardComponents/Tools/Drop";
 import Formulaire       from "@dashboardComponents/functions/Formulaire";
-import Validateur from "@dashboardComponents/functions/validateur";
-import axios from "axios";
-import {Alert} from "@dashboardComponents/Tools/Alert";
+import Validateur       from "@dashboardComponents/functions/validateur";
 
 function getBase64(file, self) {
     var reader = new FileReader();
@@ -65,22 +65,21 @@ export class SettingsForm extends Component {
         if(!validate.code){
             this.setState({ errors: validate.errors });
         }else{
-            console.log(this.state)
-            // Formulaire.loader(true);
-            // let self = this;
-            // axios({ method: "POST", url: Routing.generate('api_settings_update'), data: self.state })
-            //     .then(function (response) {
-            //         let data = response.data;
-            //         self.props.onUpdateList(data);
-            //         self.setState({ success: "Paramètres mis à jours", errors: [] });
-            //     })
-            //     .catch(function (error) {
-            //         Formulaire.displayErrors(self, error);
-            //     })
-            //     .then(() => {
-            //         Formulaire.loader(false);
-            //     })
-            // ;
+            Formulaire.loader(true);
+            let self = this;
+            axios({ method: "POST", url: Routing.generate('api_settings_update'), data: self.state })
+                .then(function (response) {
+                    let data = response.data;
+                    self.props.onUpdateList(data);
+                    self.setState({ success: "Paramètres mis à jours", errors: [] });
+                })
+                .catch(function (error) {
+                    Formulaire.displayErrors(self, error);
+                })
+                .then(() => {
+                    Formulaire.loader(false);
+                })
+            ;
         }
     }
 
