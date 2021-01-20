@@ -39,11 +39,13 @@ export class SettingsForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleGetFile  = this.handleGetFile .bind(this);
+        this.handleRemoveFile  = this.handleRemoveFile .bind(this);
         this.handleSubmit   = this.handleSubmit  .bind(this);
     }
 
     handleChange = (e) => { this.setState({[ e.currentTarget.name]: e.currentTarget.value})  }
     handleGetFile = (e) => { getBase64(e.file, this) }
+    handleRemoveFile = (e) => { this.setState({ logoMail: this.props.data ? this.props.data.logoMail : "" }) }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -69,11 +71,10 @@ export class SettingsForm extends Component {
             let self = this;
             axios({ method: "POST", url: Routing.generate('api_settings_update'), data: self.state })
                 .then(function (response) {
-                    let data = response.data;
-                    self.props.onUpdateList(data);
                     self.setState({ success: "Paramètres mis à jours", errors: [] });
                 })
                 .catch(function (error) {
+                    console.log(error)
                     Formulaire.displayErrors(self, error);
                 })
                 .then(() => {
@@ -106,7 +107,8 @@ export class SettingsForm extends Component {
                         <div className="form-files">
                             {logoMail === "" ? null : <div className="form-logo"><img src={logoMail} alt="logo actuel du site internet"/></div>}
                             <Drop ref={this.inputLogoMail} identifiant="logoMail" errors={errors} accept={"image/*"} maxFiles={1}
-                                  label="Téléverser votre logo" labelError="Seules les images sont acceptées." onGetFile={this.handleGetFile}>Logo</Drop>
+                                  label="Téléverser votre logo" labelError="Seules les images sont acceptées."
+                                  onGetFile={this.handleGetFile} onRemoveFile={this.handleRemoveFile}>Logo</Drop>
                         </div>
                     </div>
 

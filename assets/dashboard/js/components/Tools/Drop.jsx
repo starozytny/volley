@@ -15,6 +15,8 @@ export class Drop extends Component {
 
         this.drop = React.createRef();
 
+        console.log(this.drop)
+
         this.handleChangeStatus = this.handleChangeStatus.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.getUploadParams = this.getUploadParams.bind(this)
@@ -50,6 +52,10 @@ export class Drop extends Component {
         } else if (status === 'error_file_size') {
             toastr.error("Le fichier est trop volumineux.");
             Formulaire.loader(false);
+        } else if (status === 'removed') {
+            if(this.props.onRemoveFile){
+                this.props.onRemoveFile();
+            }
         }
     }
 
