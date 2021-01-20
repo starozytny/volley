@@ -10,7 +10,6 @@ import { Alert }        from "@dashboardComponents/Tools/Alert";
 import Validateur       from "@dashboardComponents/functions/validateur";
 import Formulaire       from "@dashboardComponents/functions/Formulaire";
 
-
 export class Forget extends Component {
     constructor(props) {
         super(props);

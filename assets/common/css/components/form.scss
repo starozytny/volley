@@ -32,7 +32,7 @@
   width: 100%;
   margin-bottom: 16px;
 
-  .form-group:not(:last-child){
+  & > .form-group:not(:last-child){
     margin-bottom: 8px;
   }
 
@@ -255,6 +255,13 @@ select{
   }
 }
 
+.form{
+  .password-rules{
+    font-size: 14px;
+    opacity: 0.7;
+  }
+}
+
 //                      __   _____ __    ___    __
 //                     | _| |___  / /_  ( _ )  |_ |
 //    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
@@ -265,11 +272,11 @@ select{
   .line.line-2{
     flex-direction: row;
 
-    .form-group:first-child{
+    & > .form-group:first-child{
       margin-right: 10px;
       width: 50%;
     }
-    .form-group:last-child{
+    & > .form-group:last-child{
       margin-left: 10px;
       width: 50%;
     }
@@ -278,10 +285,10 @@ select{
   .line.line-3{
     flex-direction: row;
 
-    .form-group{
+    & > .form-group{
       width: 33%;
     }
-    .form-group:not(:last-child){
+    & > .form-group:not(:last-child){
       margin-right: 12px;
     }
   }

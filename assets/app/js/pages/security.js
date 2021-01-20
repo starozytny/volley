@@ -6,13 +6,16 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min';
 import React from 'react';
 import { render } from 'react-dom';
 import { Forget } from './components/Security/Forget';
+import { Reinit } from './components/Security/Reinit';
 
 Routing.setRoutingData(routes);
 
-const el = document.getElementById("forget");
+let el = document.getElementById("forget");
 if(el){
-    render(
-        <Forget />, el
-    )
+    render(<Forget />, el)
+}
 
+el = document.getElementById("reinit");
+if(el){
+    render(<Reinit {...el.dataset} />, el)
 }

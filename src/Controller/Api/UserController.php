@@ -289,7 +289,7 @@ class UserController extends AbstractController
     /**
      * Forget password
      *
-     * @Route("/mot-de-passe/forget", name="password_forget", options={"expose"=true}, methods={"POST"})
+     * @Route("/password/forget", name="password_forget", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,
@@ -304,7 +304,7 @@ class UserController extends AbstractController
      * @param SettingsService $settingsService
      * @return JsonResponse
      */
-    public function forget(Request $request, ApiResponse $apiResponse, MailerService $mailerService, SettingsService $settingsService): JsonResponse
+    public function passwordForget(Request $request, ApiResponse $apiResponse, MailerService $mailerService, SettingsService $settingsService): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
@@ -354,5 +354,49 @@ class UserController extends AbstractController
 
         $em->flush();
         return $apiResponse->apiJsonResponseSuccessful(sprintf("Le lien de réinitialisation de votre mot de passe a été envoyé à : %s", $user->getHiddenEmail()));
+    }
+
+    /**
+     * Update password
+     *
+     * @Route("/password/update/{token}", name="password_update", options={"expose"=true}, methods={"POST"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a new user object",
+     *     @Model(type=User::class, groups={"admin:write"})
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param $token
+     * @param ValidatorService $validator
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param ApiResponse $apiResponse
+     * @return JsonResponse
+     */
+    public function passwordUpdate(Request $request, $token, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder,
+                           ApiResponse $apiResponse): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent());
+
+        if ($data === null) {
+            return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
+        }
+
+        $user = $em->getRepository(User::class)->findOneBy(['token' => $token]);
+        $user->setPassword($passwordEncoder->encodePassword($user, $data->password));
+        $user->setForgetAt(null);
+        $user->setForgetCode(null);
+
+        $noErrors = $validator->validate($user);
+        if ($noErrors !== true) {
+            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+        }
+
+        $em->flush();
+        return $apiResponse->apiJsonResponseSuccessful("Modification réalisée avec success ! La page va se rafraichir automatiquement dans 5 secondes.");
     }
 }

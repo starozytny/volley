@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +12,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/login", options={"expose"=true}, name="app_login")
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
@@ -46,6 +45,9 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reinitialisation/mot-de-passe/{token}-{code}", name="app_password_reinit")
+     * @param $token
+     * @param $code
+     * @return Response
      */
     public function reinit($token, $code): Response
     {
@@ -67,6 +69,6 @@ class SecurityController extends AbstractController
             }
         }
 
-        return $this->render('app/pages/security/reinit.html.twig');
+        return $this->render('app/pages/security/reinit.html.twig', ['token' => $token]);
     }
 }
