@@ -318,8 +318,22 @@ class UserController extends AbstractController
             ]]);
         }
 
-        dump($username);
+        if($user->getForgetAt()){
+            $interval = date_diff($user->getForgetAt(), new \DateTime());
+            if($interval->i < 30){
+                return $apiResponse->apiJsonResponseValidationFailed([[
+                    'name' => 'fUsername',
+                    'message' => "Un lien a déjà été envoyé. Veuillez réessayer ultérieurement."
+                ]]);
+            }
+        }
 
-        return $apiResponse->apiJsonResponseSuccessful("Envoi réussi !");
+        $now = new \DateTime();
+        $user->setForgetAt($now);
+        $now->setTimezone(new \DateTimeZone("Europe/Paris"));
+        $user->setForgetCode(uniqid($user->getId()));
+
+        $em->flush();
+        return $apiResponse->apiJsonResponseSuccessful(sprintf("Le lien pour réinitialiser son mot de passe a été envoyé à : %s", $user->getHiddenEmail()));
     }
 }

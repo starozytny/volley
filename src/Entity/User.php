@@ -300,4 +300,17 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getHiddenEmail(): string
+    {
+        $email = $this->getEmail();
+        $at = strpos($email, "@");
+        $domain = substr($email, $at, strlen($email));
+        $firstLetter = substr($email, 0, 1);
+        $etoiles = "";
+        for($i=1 ; $i < $at ; $i++){
+            $etoiles .= "*";
+        }
+        return $firstLetter . $etoiles . $domain;
+    }
 }
