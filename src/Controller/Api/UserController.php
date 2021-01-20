@@ -282,4 +282,44 @@ class UserController extends AbstractController
         $em->flush();
         return $apiResponse->apiJsonResponseSuccessful("Supression de la sélection réussie !");
     }
+
+    /**
+     * Forget password
+     *
+     * @Route("/forget", name="forget", options={"expose"=true}, methods={"POST"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return message successful",
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param ApiResponse $apiResponse
+     * @return JsonResponse
+     */
+    public function forget(Request $request, ApiResponse $apiResponse): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent());
+
+        if($data === null){
+            return $apiResponse->apiJsonResponseBadRequest("Il manque des données.");
+        }
+
+        $username = $data->fUsername;
+
+        $user = $em->getRepository(User::class)->findOneBy(['username' => $username]);
+        if(!$user){
+            return $apiResponse->apiJsonResponseValidationFailed([[
+                'name' => 'fUsername',
+                'message' => "Cet utilisateur n'existe pas."
+            ]]);
+        }
+
+        dump($username);
+
+        return $apiResponse->apiJsonResponseSuccessful("Envoi réussi !");
+    }
 }

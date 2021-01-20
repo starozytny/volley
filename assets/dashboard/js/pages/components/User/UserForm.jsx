@@ -91,7 +91,7 @@ export class UserForm extends Component {
                     }
                 })
                 .catch(function (error) {
-                    Formulaire.displayErrors(error, self);
+                    Formulaire.displayErrors(self, error);
                 })
                 .then(() => {
                     Formulaire.loader(false);

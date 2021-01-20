@@ -16,7 +16,7 @@ export class Forget extends Component {
         super(props);
 
         this.state = {
-            username: "",
+            fUsername: "",
             errors: [],
             success: false
         }
@@ -35,12 +35,12 @@ export class Forget extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username } = this.state;
+        const { fUsername } = this.state;
 
         this.setState({ success: false})
 
         // validate global
-        let validate = Validateur.validateur([{type: "text", id: 'username', value: username}])
+        let validate = Validateur.validateur([{type: "text", id: 'fUsername', value: fUsername}])
 
         // check validate success
         if(!validate.code){
@@ -50,13 +50,11 @@ export class Forget extends Component {
             let self = this;
             axios({ method: "POST", url: Routing.generate("api_users_forget"), data: self.state })
                 .then(function (response) {
-                    self.setState({ success: response.data, errors: [] });
-                    if(context === "create"){
-                        self.setState( { username: '' })
-                    }
+                    self.setState({ success: response.data.message, errors: [] });
+                    self.setState( { fUsername: '' });
                 })
                 .catch(function (error) {
-                    Formulaire.displayErrors(error, self);
+                    Formulaire.displayErrors(self, error);
                 })
                 .then(() => {
                     Formulaire.loader(false);
@@ -66,7 +64,7 @@ export class Forget extends Component {
     }
 
     render () {
-        const { errors, success, username } = this.state;
+        const { errors, success, fUsername } = this.state;
 
         let aside = <div className="form">
             <p className="form-infos">
@@ -79,7 +77,7 @@ export class Forget extends Component {
                 {success !== false && <Alert type="info">{success}</Alert>}
 
                 <div className="line">
-                    <Input valeur={username} identifiant="username" errors={errors} onChange={this.handleChange}>Nom utilisateur</Input>
+                    <Input valeur={fUsername} identifiant="fUsername" errors={errors} onChange={this.handleChange}>Nom utilisateur</Input>
                 </div>
                 <div className="line">
                     <div className="form-button">
@@ -90,7 +88,7 @@ export class Forget extends Component {
         </div>
 
         return <>
-            <span onClick={this.handleOpen}>Mot de passe oublié ?</span>
+            <span className="btn-forget" onClick={this.handleOpen}>Mot de passe oublié ?</span>
             <Aside ref={this.aside} content={aside}/>
         </>
     }
