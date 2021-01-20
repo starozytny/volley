@@ -29,6 +29,15 @@ Encore
         to: 'dashboard/images/[path][name].[ext]',
     })
 
+    .copyFiles({
+        from: './assets/app/fonts',
+        to: 'app/fonts/[path][name].[ext]',
+    })
+    .copyFiles({
+        from: './assets/app/images',
+        to: 'app/images/[path][name].[ext]',
+    })
+
     .configureFilenames({
         css: 'css/[name].css',
         js: 'js/[name].js'
