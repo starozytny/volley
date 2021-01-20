@@ -48,7 +48,7 @@ export class Forget extends Component {
         }else{
             Formulaire.loader(true);
             let self = this;
-            axios({ method: "POST", url: Routing.generate("api_users_forget"), data: self.state })
+            axios({ method: "POST", url: Routing.generate("api_users_password_forget"), data: self.state })
                 .then(function (response) {
                     self.setState({ success: response.data.message, errors: [] });
                     self.setState( { fUsername: '' });

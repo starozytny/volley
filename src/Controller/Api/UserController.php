@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\ApiResponse;
+use App\Service\MailerService;
 use App\Service\SanitizeData;
 use App\Service\ValidatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -85,11 +87,11 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
-        if($data === null){
+        if ($data === null) {
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-        if(!isset($data->username) || !isset($data->email) || !isset($data->password)){
+        if (!isset($data->username) || !isset($data->email) || !isset($data->password)) {
             return $apiResponse->apiJsonResponseBadRequest('Il manque des données.');
         }
 
@@ -98,13 +100,13 @@ class UserController extends AbstractController
         $user->setEmail($data->email);
         $user->setPassword($passwordEncoder->encodePassword($user, $data->password));
 
-        if(isset($data->roles)){
+        if (isset($data->roles)) {
             $user->setRoles($data->roles);
         }
 
         $noErrors = $validator->validate($user);
 
-        if($noErrors !== true){
+        if ($noErrors !== true) {
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
 
@@ -151,24 +153,24 @@ class UserController extends AbstractController
     public function update(Request $request, ValidatorService $validator,
                            ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user): JsonResponse
     {
-        if($this->getUser() != $user && !$this->isGranted("ROLE_ADMIN") ){
+        if ($this->getUser() != $user && !$this->isGranted("ROLE_ADMIN")) {
             return $apiResponse->apiJsonResponseForbidden();
         }
 
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
-        if(isset($data->username)){
+        if (isset($data->username)) {
             $user->setUsername($sanitizeData->fullSanitize($data->username));
         }
 
-        if(isset($data->email)){
+        if (isset($data->email)) {
             $user->setEmail($data->email);
         }
 
         $groups = User::USER_READ;
-        if($this->isGranted("ROLE_ADMIN")){
-            if(isset($data->roles)){
+        if ($this->isGranted("ROLE_ADMIN")) {
+            if (isset($data->roles)) {
                 $user->setRoles($data->roles);
             }
             $groups = User::ADMIN_READ;
@@ -176,7 +178,7 @@ class UserController extends AbstractController
 
         $noErrors = $validator->validate($user);
 
-        if($noErrors !== true){
+        if ($noErrors !== true) {
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
 
@@ -217,11 +219,11 @@ class UserController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        if($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER){
+        if ($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER) {
             return $apiResponse->apiJsonResponseForbidden();
         }
 
-        if($user === $this->getUser()){
+        if ($user === $this->getUser()) {
             return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
         }
 
@@ -265,13 +267,13 @@ class UserController extends AbstractController
 
         $users = $em->getRepository(User::class)->findBy(['id' => $data]);
 
-        if($users){
-            foreach($users as $user){
-                if($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER){
+        if ($users) {
+            foreach ($users as $user) {
+                if ($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER) {
                     return $apiResponse->apiJsonResponseForbidden();
                 }
 
-                if($user === $this->getUser()){
+                if ($user === $this->getUser()) {
                     return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
                 }
 
@@ -286,7 +288,7 @@ class UserController extends AbstractController
     /**
      * Forget password
      *
-     * @Route("/forget", name="forget", options={"expose"=true}, methods={"POST"})
+     * @Route("/mot-de-passe/forget", name="password_forget", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,
@@ -297,30 +299,31 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param ApiResponse $apiResponse
+     * @param MailerService $mailerService
      * @return JsonResponse
      */
-    public function forget(Request $request, ApiResponse $apiResponse): JsonResponse
+    public function forget(Request $request, ApiResponse $apiResponse, MailerService $mailerService): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
-        if($data === null){
+        if ($data === null) {
             return $apiResponse->apiJsonResponseBadRequest("Il manque des données.");
         }
 
         $username = $data->fUsername;
 
         $user = $em->getRepository(User::class)->findOneBy(['username' => $username]);
-        if(!$user){
+        if (!$user) {
             return $apiResponse->apiJsonResponseValidationFailed([[
                 'name' => 'fUsername',
                 'message' => "Cet utilisateur n'existe pas."
             ]]);
         }
 
-        if($user->getForgetAt()){
+        if ($user->getForgetAt()) {
             $interval = date_diff($user->getForgetAt(), new \DateTime());
-            if($interval->i < 30){
+            if ($interval->i < 30) {
                 return $apiResponse->apiJsonResponseValidationFailed([[
                     'name' => 'fUsername',
                     'message' => "Un lien a déjà été envoyé. Veuillez réessayer ultérieurement."
@@ -329,11 +332,48 @@ class UserController extends AbstractController
         }
 
         $now = new \DateTime();
+        $code = uniqid($user->getId());
+
         $user->setForgetAt($now);
         $now->setTimezone(new \DateTimeZone("Europe/Paris"));
-        $user->setForgetCode(uniqid($user->getId()));
+        $user->setForgetCode($code);
+
+        $url = $this->generateUrl('api_users_password_reinit', ['token' => $user->getToken(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        if($mailerService->sendMail(
+                $user->getEmail(),
+                "Mot de passe oublié pour le site ",
+                "Lien de réinitialisation de mot de passe.",
+                'app/email/security/forget.html.twig',
+                ['url' => $url, 'user' => $user]) != true)
+        {
+            return $apiResponse->apiJsonResponseValidationFailed([[
+                'name' => 'fUsername',
+                'message' => "Le message n\'a pas pu être délivré. Veuillez contacter le support."
+            ]]);
+        }
 
         $em->flush();
-        return $apiResponse->apiJsonResponseSuccessful(sprintf("Le lien pour réinitialiser son mot de passe a été envoyé à : %s", $user->getHiddenEmail()));
+        return $apiResponse->apiJsonResponseSuccessful(sprintf("Le lien de réinitialisation de votre mot de passe a été envoyé à : %s", $user->getHiddenEmail()));
+    }
+
+    /**
+     * Réinit password
+     *
+     * @Route("/mot-de-passe/reinitialisation/{token}-{code}", name="password_reinit", options={"expose"=true}, methods={"GET"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return message successful",
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param ApiResponse $apiResponse
+     * @return JsonResponse
+     */
+    public function reinit(ApiResponse $apiResponse): JsonResponse
+    {
+        return $apiResponse->apiJsonResponseSuccessful("ok");
     }
 }
