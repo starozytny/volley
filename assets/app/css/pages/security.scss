@@ -1,0 +1,7 @@
+@import "../vars/vars";
+
+.form-login{
+  max-width: 414px;
+  margin: 0 auto;
+  @include flex(column, center, center);
+}

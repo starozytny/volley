@@ -2,11 +2,16 @@
 
 {% block title %}Connexion à son espace{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('security') }}
+{% endblock %}
+
 {% block main_content %}
     <div class="main-content">
         <h1>Se connecter</h1>
 
-        <form method="post">
+        <form method="post" class="form-login">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -31,4 +36,9 @@
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('security') }}
 {% endblock %}
