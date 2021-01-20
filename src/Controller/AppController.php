@@ -15,4 +15,36 @@ class AppController extends AbstractController
     {
         return $this->render('app/pages/index.html.twig');
     }
+
+    /**
+     * @Route("/legales/mentions-legales", name="app_mentions")
+     */
+    public function mentions(): Response
+    {
+        return $this->render('app/pages/legales/mentions.html.twig');
+    }
+
+    /**
+     * @Route("/legales/politique-confidentialite", name="app_politique")
+     */
+    public function politique(): Response
+    {
+        return $this->render('app/pages/legales/politique.html.twig');
+    }
+
+    /**
+     * @Route("/legales/cookies", name="app_cookies")
+     */
+    public function cookies(): Response
+    {
+        return $this->render('app/pages/legales/cookies.html.twig');
+    }
+
+    /**
+     * @Route("/legales/rgpd", name="app_rgpd")
+     */
+    public function rgpd(): Response
+    {
+        return $this->render('app/pages/legales/rgpd.html.twig');
+    }
 }
