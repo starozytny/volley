@@ -7,6 +7,17 @@ import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 import Sort              from "@dashboardComponents/functions/sort";
 import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
+function getBase64(file, self) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        self.setState({logo: {value: reader.result} })
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+
 export class Settings extends Component {
     constructor(props) {
         super();
@@ -19,8 +30,14 @@ export class Settings extends Component {
         }
     }
 
+    componentDidMount = () => {
+        Formulaire.axiosGetData(this, Routing.generate('api_settings_index'))
+    }
+
     render () {
         const { loadPageError, context, loadData, data } = this.state;
+
+        console.log(data)
 
         let content = null, havePagination = false;
         switch (context){

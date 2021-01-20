@@ -4,6 +4,21 @@ const Swal        = require("sweetalert2");
 const SwalOptions = require("@dashboardComponents/functions/swalOptions");
 const UpdateList  = require("@dashboardComponents/functions/updateList");
 
+function axiosGetData(self, url){
+    axios.get(url, {})
+        .then(function (response) {
+            let data = response.data;
+            self.setState({ data: data });
+        })
+        .catch(function (error) {
+            self.setState({ loadPageError: true });
+        })
+        .then(function () {
+            self.setState({ loadData: false });
+        })
+    ;
+}
+
 function axiosGetDataPagination(self, url){
     axios.get(url, {})
         .then(function (response) {
@@ -115,6 +130,7 @@ function loader(status){
 module.exports = {
     loader,
     displayErrors,
+    axiosGetData,
     axiosGetDataPagination,
     axiosDeleteElement,
     axiosDeleteGroupElement,

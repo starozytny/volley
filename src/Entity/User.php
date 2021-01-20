@@ -21,6 +21,7 @@ class User implements UserInterface
 {
     const ADMIN_READ = ['admin:read'];
     const USER_READ = ['user:read'];
+    const VISITOR_READ = ['visitor:read'];
 
     const CODE_ROLE_USER = 0;
     const CODE_ROLE_DEVELOPER = 1;
