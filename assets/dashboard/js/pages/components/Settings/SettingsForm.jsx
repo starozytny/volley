@@ -84,7 +84,7 @@ export class SettingsForm extends Component {
     }
 
     render () {
-        const { errors, success, websiteName, emailGlobal, emailContact, emailRgpd } = this.state;
+        const { errors, success, websiteName, emailGlobal, emailContact, emailRgpd, logoMail } = this.state;
 
         return <>
             <div className="form">
@@ -103,6 +103,7 @@ export class SettingsForm extends Component {
                     </div>
 
                     <div className="line">
+                        {logoMail === "" ? null : <div className="form-logo"><img src={logoMail} alt="logo actuel du site internet"/></div>}
                         <Drop ref={this.inputLogoMail} identifiant="logoMail" errors={errors} accept={"image/*"} maxFiles={1}
                               label="Téléverser votre logo" labelError="Seules les images sont acceptées." onGetFile={this.handleGetFile}>Logo</Drop>
                     </div>

@@ -51,7 +51,7 @@ class SettingsController extends AbstractController
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @Route("/update", name="update", options={"expose"=true}, methods={"GET"})
+     * @Route("/update", name="update", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,
