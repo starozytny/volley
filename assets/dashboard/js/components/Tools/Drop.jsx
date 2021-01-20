@@ -21,7 +21,10 @@ export class Drop extends Component {
     }
 
     getUploadParams = (e) => {
-        Formulaire.loader(true)
+        Formulaire.loader(true);
+        if(this.props.onGetFile){
+            this.props.onGetFile(e);
+        }
         return { url: 'https://httpbin.org/post' }
     }
 

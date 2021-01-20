@@ -6,12 +6,15 @@ import { Input }        from "@dashboardComponents/Tools/Fields";
 import { Button }       from "@dashboardComponents/Tools/Button";
 import { Drop }         from "@dashboardComponents/Tools/Drop";
 import Formulaire       from "@dashboardComponents/functions/Formulaire";
+import Validateur from "@dashboardComponents/functions/validateur";
+import axios from "axios";
+import {Alert} from "@dashboardComponents/Tools/Alert";
 
 function getBase64(file, self) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
-        self.setState({logo: {value: reader.result} })
+        self.setState({logoMail: reader.result })
     };
     reader.onerror = function (error) {
         console.log('Error: ', error);
@@ -39,19 +42,57 @@ export class SettingsForm extends Component {
         this.handleSubmit   = this.handleSubmit  .bind(this);
     }
 
-    handleChange = (e) => { this.setState({[ e.currentTarget.name]: {value: e.currentTarget.value}})  }
+    handleChange = (e) => { this.setState({[ e.currentTarget.name]: e.currentTarget.value})  }
     handleGetFile = (e) => { getBase64(e.file, this) }
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+        const { websiteName, emailGlobal, emailContact, emailRgpd, logoMail } = this.state;
+
+        this.setState({ success: false})
+
+        // validate global
+        let validate = Validateur.validateur([
+            {type: "text", id: 'websiteName', value: websiteName},
+            {type: "email", id: 'emailGlobal', value: emailGlobal},
+            {type: "email", id: 'emailContact', value: emailContact},
+            {type: "email", id: 'emailRgpd', value: emailRgpd},
+            {type: "text", id: 'logoMail', value: logoMail},
+        ])
+
+        // check validate success
+        if(!validate.code){
+            this.setState({ errors: validate.errors });
+        }else{
+            console.log(this.state)
+            // Formulaire.loader(true);
+            // let self = this;
+            // axios({ method: "POST", url: Routing.generate('api_settings_update'), data: self.state })
+            //     .then(function (response) {
+            //         let data = response.data;
+            //         self.props.onUpdateList(data);
+            //         self.setState({ success: "Paramètres mis à jours", errors: [] });
+            //     })
+            //     .catch(function (error) {
+            //         Formulaire.displayErrors(self, error);
+            //     })
+            //     .then(() => {
+            //         Formulaire.loader(false);
+            //     })
+            // ;
+        }
     }
 
     render () {
-        const { errors, success, websiteName, emailGlobal, emailContact, emailRgpd, logoMail } = this.state;
+        const { errors, success, websiteName, emailGlobal, emailContact, emailRgpd } = this.state;
 
         return <>
             <div className="form">
-                <form>
+                <form onSubmit={this.handleSubmit}>
+
+                    {success !== false && <Alert type="info">{success}</Alert>}
+
                     <div className="line line-2">
                         <Input valeur={websiteName} identifiant="websiteName" errors={errors} onChange={this.handleChange}>Nom du site</Input>
                         <Input valeur={emailGlobal} identifiant="emailGlobal" errors={errors} onChange={this.handleChange} type="email">E-mail expéditeur global</Input>
@@ -63,13 +104,13 @@ export class SettingsForm extends Component {
                     </div>
 
                     <div className="line">
-                        <Drop ref={this.inputLogoMail} identifiant="inputLogoMail" errors={errors} accept={"image/*"} maxFiles={1}
-                              label="Téléverser votre logo" labelError="Seules les images sont acceptées.">Logo</Drop>
+                        <Drop ref={this.inputLogoMail} identifiant="logoMail" errors={errors} accept={"image/*"} maxFiles={1}
+                              label="Téléverser votre logo" labelError="Seules les images sont acceptées." onGetFile={this.handleGetFile}>Logo</Drop>
                     </div>
 
                     <div className="line">
                         <div className="form-button">
-                            <Button isSubmit={true}>Valider les paramètres</Button>
+                            <Button isSubmit={true}>Mettre à jour</Button>
                         </div>
                     </div>
                 </form>
