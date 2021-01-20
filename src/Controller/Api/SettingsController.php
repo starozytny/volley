@@ -39,6 +39,6 @@ class SettingsController extends AbstractController
         if($settings){
             $settings = $settings[0];
         }
-        return $apiResponse->apiJsonResponse($settings ?: [], User::VISITOR_READ);
+        return $apiResponse->apiJsonResponse($settings, User::VISITOR_READ);
     }
 }

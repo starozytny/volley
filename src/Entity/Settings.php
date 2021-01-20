@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SettingsRepository::class)
@@ -14,11 +15,13 @@ class Settings
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"visitor:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"visitor:read"})
      */
     private $websiteName;
 
@@ -29,21 +32,25 @@ class Settings
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"visitor:read"})
      */
     private $emailGlobal;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"visitor:read"})
      */
     private $emailContact;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"visitor:read"})
      */
     private $emailRgpd;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"visitor:read"})
      */
     private $logoMail;
 
