@@ -333,7 +333,6 @@ class UserController extends AbstractController
             }
         }
 
-
         $code = uniqid($user->getId());
 
         $user->setForgetAt(new \DateTime());

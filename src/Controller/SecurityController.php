@@ -55,11 +55,17 @@ class SecurityController extends AbstractController
             throw new NotFoundHttpException("Cet utilisateur n'existe pas.");
         }
 
-        if($user->getForgetCode() != $code){
+        if((!$user->getForgetAt() || !$user->getForgetCode())
+            || ($user->getForgetCode() && $user->getForgetCode() != $code)){
             return $this->render('app/pages/security/reinit.html.twig', ['error' => true]);
         }
 
-
+        if($user->getForgetAt()){
+            $interval = date_diff($user->getForgetAt(), new \DateTime());
+            if ($interval->i > 30) {
+                return $this->render('app/pages/security/reinit.html.twig', ['error' => true]);
+            }
+        }
 
         return $this->render('app/pages/security/reinit.html.twig');
     }
