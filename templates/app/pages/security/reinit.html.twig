@@ -3,7 +3,21 @@
 {% block title %}Réinitialisation de mot de passe{% endblock %}
 
 {% block main_content %}
-    <div class="main-content">
-        <h1>Rénitialiser son mot de passe</h1>
-    </div>
+    {% if error is defined %}
+        <div class="main-content">
+            <h1>Lien expiré</h1>
+            <p>
+                Ce lien de réinitialisation de mot de passe a expiré. Veuillez recommencer la procédure. <br><br>
+            </p>
+            <div class="exceptions-actions">
+                <a href="{{ path('app_login') }}" class="btn btn-primary">Recommencer</a>
+                <a href="{{ path('app_homepage') }}" class="btn btn-default">Revenir à la page d'accueil</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="main-content">
+            <h1>Rénitialiser son mot de passe</h1>
+        </div>
+    {% endif %}
+
 {% endblock %}

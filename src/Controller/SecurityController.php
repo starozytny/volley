@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -45,8 +47,20 @@ class SecurityController extends AbstractController
     /**
      * @Route("/reinitialisation/mot-de-passe/{token}-{code}", name="app_password_reinit")
      */
-    public function reinit(): Response
+    public function reinit($token, $code): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findOneBy(['token' => $token]);
+        if(!$user){
+            throw new NotFoundHttpException("Cet utilisateur n'existe pas.");
+        }
+
+        if($user->getForgetCode() != $code){
+            return $this->render('app/pages/security/reinit.html.twig', ['error' => true]);
+        }
+
+
+
         return $this->render('app/pages/security/reinit.html.twig');
     }
 }
