@@ -93,7 +93,13 @@ export class User extends Component {
         }else{
             let newData = [];
             newData = dataSearch.filter(function(v) {
-                if(v.username.toLowerCase().includes(search) || v.email.toLowerCase().includes(search)){ return v; }
+                if(v.username.toLowerCase().includes(search)
+                    || v.email.toLowerCase().includes(search)
+                    || v.firstname.toLowerCase().includes(search)
+                    || v.lastname.toLowerCase().includes(search)
+                ){
+                    return v;
+                }
             })
             this.setState({ data: newData, currentData: newData.slice(0, 10) });
         }
