@@ -41,7 +41,7 @@ export class User extends Component {
 
     handleUpdateList = (element, newContext=null) => {
         const { data, context } = this.state
-        Formulaire.updateDataPagination(this, Sort.compareUsername, newContext, context, data, element);
+        Formulaire.updateDataPagination(this, Sort.compareLastname, newContext, context, data, element);
     }
 
     handleChangeContext = (context, element=null) => {
