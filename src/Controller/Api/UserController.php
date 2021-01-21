@@ -47,8 +47,8 @@ class UserController extends AbstractController
      */
     public function index(Request $request, UserRepository $userRepository, ApiResponse $apiResponse): JsonResponse
     {
-        $orderUsername = $request->query->get('orderUsername') ?: 'ASC';
-        $users = $userRepository->findBy([], ['username' => $orderUsername]);
+        $order = $request->query->get('order') ?: 'ASC';
+        $users = $userRepository->findBy([], ['lastname' => $order]);
         return $apiResponse->apiJsonResponse($users, User::ADMIN_READ);
     }
 

@@ -59,11 +59,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"admin:read", "admin:write", "update", "user:read"})
      */
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"admin:read", "admin:write", "update", "user:read"})
      */
     private $firstname;
 
@@ -330,7 +332,7 @@ class User implements UserInterface
         return $this->firstname;
     }
 
-    public function setFirstname(?string $firstname): self
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
 

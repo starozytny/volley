@@ -77,8 +77,8 @@ class AdminUsersCreateCommand extends Command
                 ->setUsername($user['username'])
                 ->setEmail($user['email'])
                 ->setRoles($user['roles'])
-                ->setFirstname($user['firstname'])
-                ->setLastname($user['lastname'])
+                ->setFirstname(ucfirst($user['firstname']))
+                ->setLastname(mb_strtoupper($user['lastname']))
                 ->setPassword($password)
             ;
 
@@ -94,8 +94,8 @@ class AdminUsersCreateCommand extends Command
                     ->setUsername($fake->userName)
                     ->setEmail($fake->freeEmail)
                     ->setRoles(['ROLE_USER'])
-                    ->setFirstname($fake->firstName)
-                    ->setLastname($fake->lastName)
+                    ->setFirstname(ucfirst($fake->firstName))
+                    ->setLastname(mb_strtoupper($fake->lastName))
                     ->setPassword($password)
                 ;
 
