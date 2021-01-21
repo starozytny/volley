@@ -94,14 +94,15 @@ class UserController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-        if (!isset($data->username) || !isset($data->email) || !isset($data->password)) {
+        if (!isset($data->username) || !isset($data->email)) {
             return $apiResponse->apiJsonResponseBadRequest('Il manque des données.');
         }
 
         $user = new User();
         $user->setUsername($sanitizeData->fullSanitize($data->username));
         $user->setEmail($data->email);
-        $user->setPassword($passwordEncoder->encodePassword($user, $data->password));
+        $pass = (isset($data->password) && $data->password != "") ? $data->password : uniqid();
+        $user->setPassword($passwordEncoder->encodePassword($user, $pass));
 
         if (isset($data->roles)) {
             $user->setRoles($data->roles);
