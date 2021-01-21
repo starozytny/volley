@@ -30,7 +30,8 @@ export class UserItem extends Component {
                                 {elem.highRoleCode !== 0 && <span className="role">{elem.highRole}</span>}
                             </div>
                             <div className="sub">{elem.username}</div>
-                            <div className="sub">{elem.email}</div>
+                            {elem.email !== "undefined@undefined.fr" ? <div className="sub">{elem.email}</div> : <div className="sub txt-danger">{elem.email} <span className="icon-warning" /></div>}
+
                         </div>
                         <div className="actions">
                             {elem.highRoleCode !== 1 &&

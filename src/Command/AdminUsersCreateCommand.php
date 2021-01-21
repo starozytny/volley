@@ -93,6 +93,7 @@ class AdminUsersCreateCommand extends Command
                 $new = (new User())
                     ->setUsername($fake->userName)
                     ->setEmail($fake->freeEmail)
+//                    ->setEmail("undefined@undefined.fr")
                     ->setRoles(['ROLE_USER'])
                     ->setFirstname(ucfirst($fake->firstName))
                     ->setLastname(mb_strtoupper($fake->lastName))
