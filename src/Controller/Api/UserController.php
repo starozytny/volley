@@ -94,12 +94,14 @@ class UserController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-        if (!isset($data->username) || !isset($data->email)) {
+        if (!isset($data->username) || !isset($data->email) || !isset($data->firstname) || !isset($data->lastname)) {
             return $apiResponse->apiJsonResponseBadRequest('Il manque des données.');
         }
 
         $user = new User();
         $user->setUsername($sanitizeData->fullSanitize($data->username));
+        $user->setFirstname(ucfirst($sanitizeData->sanitizeString($data->firstname)));
+        $user->setLastname(mb_strtoupper($sanitizeData->sanitizeString($data->lastname)));
         $user->setEmail($data->email);
         $pass = (isset($data->password) && $data->password != "") ? $data->password : uniqid();
         $user->setPassword($passwordEncoder->encodePassword($user, $pass));
@@ -172,6 +174,14 @@ class UserController extends AbstractController
             $user->setEmail($data->email);
         }
 
+        if (isset($data->firstname)) {
+            $user->setFirstname(ucfirst($sanitizeData->sanitizeString($data->firstname)));
+        }
+
+        if (isset($data->lastname)) {
+            $user->setLastname(mb_strtoupper($sanitizeData->sanitizeString($data->lastname)));
+        }
+
         $groups = User::USER_READ;
         if ($this->isGranted("ROLE_ADMIN")) {
             if (isset($data->roles)) {
@@ -181,7 +191,6 @@ class UserController extends AbstractController
         }
 
         $noErrors = $validator->validate($user);
-
         if ($noErrors !== true) {
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
