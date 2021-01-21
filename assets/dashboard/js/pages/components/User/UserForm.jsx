@@ -15,6 +15,8 @@ export class UserForm extends Component {
 
         this.state = {
             username: props.username,
+            firstname: props.firstname,
+            lastname: props.lastname,
             email: props.email,
             roles: props.roles,
             password: '',
@@ -49,13 +51,15 @@ export class UserForm extends Component {
         e.preventDefault();
 
         const { context, url, messageSuccess } = this.props;
-        const { username, password, passwordConfirm, email, roles } = this.state;
+        const { username, firstname, lastname, password, passwordConfirm, email, roles } = this.state;
 
         this.setState({ success: false})
 
         let method = "PUT";
         let paramsToValidate = [
             {type: "text", id: 'username', value: username},
+            {type: "text", id: 'firstname', value: firstname},
+            {type: "text", id: 'lastname', value: lastname},
             {type: "email", id: 'email', value: email},
             {type: "array", id: 'roles', value: roles}
         ];
@@ -85,6 +89,8 @@ export class UserForm extends Component {
                     if(context === "create"){
                         self.setState( {
                             username: '',
+                            firstname: '',
+                            lastname: '',
                             email: '',
                             roles: [],
                             password: '',
@@ -104,7 +110,7 @@ export class UserForm extends Component {
 
     render () {
         const { context } = this.props;
-        const { errors, success, username, email, password, passwordConfirm, roles } = this.state;
+        const { errors, success, username, firstname, lastname, email, password, passwordConfirm, roles } = this.state;
 
         let rolesItems = [
             { 'value': 'ROLE_ADMIN', 'label': 'Admin', 'identifiant': 'admin' },
@@ -122,6 +128,11 @@ export class UserForm extends Component {
                 <div className="line line-2">
                     <Input valeur={username} identifiant="username" errors={errors} onChange={this.handleChange} >Nom utilisateur</Input>
                     <Input valeur={email} identifiant="email" errors={errors} onChange={this.handleChange} type="email" >Adresse e-mail</Input>
+                </div>
+
+                <div className="line line-2">
+                    <Input valeur={firstname} identifiant="firstname" errors={errors} onChange={this.handleChange} >Prénom</Input>
+                    <Input valeur={lastname} identifiant="lastname" errors={errors} onChange={this.handleChange} >Nom</Input>
                 </div>
 
                 <div className="line line-2">

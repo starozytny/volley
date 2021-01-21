@@ -22,6 +22,8 @@ export class UserUpdate extends Component {
                         context="update"
                         url={Routing.generate('api_users_update', {'id': element.id})}
                         username={element.username}
+                        firstname={element.firstname}
+                        lastname={element.lastname}
                         email={element.email}
                         roles={element.roles}
                         onUpdateList={onUpdateList}

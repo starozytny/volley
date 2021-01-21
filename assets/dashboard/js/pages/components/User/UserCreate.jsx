@@ -23,6 +23,8 @@ export class UserCreate extends Component {
                         context="create"
                         url={Routing.generate('api_users_create')}
                         username=""
+                        firstname=""
+                        lastname=""
                         email=""
                         roles={[]}
                         onUpdateList={onUpdateList}
