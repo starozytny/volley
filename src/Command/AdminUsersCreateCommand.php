@@ -48,16 +48,22 @@ class AdminUsersCreateCommand extends Command
         $users = array(
             [
                 'username' => 'shanbo',
+                'firstname' => 'Dev',
+                'lastname' => 'Shanbora',
                 'email' => 'chanbora.chhun@outlook.fr',
                 'roles' => ['ROLE_USER','ROLE_ADMIN', 'ROLE_DEVELOPER']
             ],
             [
                 'username' => 'staro',
+                'firstname' => 'Admin',
+                'lastname' => 'Starozytny',
                 'email' => 'starozytny@hotmail.fr',
                 'roles' => ['ROLE_USER','ROLE_ADMIN']
             ],
             [
                 'username' => 'shanks',
+                'firstname' => 'User',
+                'lastname' => 'Shanks',
                 'email' => 'shanks@hotmail.fr',
                 'roles' => ['ROLE_USER']
             ]
@@ -71,6 +77,8 @@ class AdminUsersCreateCommand extends Command
                 ->setUsername($user['username'])
                 ->setEmail($user['email'])
                 ->setRoles($user['roles'])
+                ->setFirstname($user['firstname'])
+                ->setLastname($user['lastname'])
                 ->setPassword($password)
             ;
 
@@ -86,6 +94,8 @@ class AdminUsersCreateCommand extends Command
                     ->setUsername($fake->userName)
                     ->setEmail($fake->freeEmail)
                     ->setRoles(['ROLE_USER'])
+                    ->setFirstname($fake->firstName)
+                    ->setLastname($fake->lastName)
                     ->setPassword($password)
                 ;
 
