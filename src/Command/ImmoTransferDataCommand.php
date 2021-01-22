@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Manager\Image\ImageManager;
 use App\Service\DatabaseService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,14 +25,16 @@ class ImmoTransferDataCommand extends Command
     private $folderThumbs;
 
     private $databaseService;
+    private $imageManager;
     private $params;
     private $io;
 
-    public function __construct(DatabaseService $databaseService, ParameterBagInterface $params)
+    public function __construct(DatabaseService $databaseService, ParameterBagInterface $params, ImageManager $imageManager)
     {
         parent::__construct();
 
         $this->databaseService = $databaseService;
+        $this->imageManager = $imageManager;
         $this->params = $params;
 
         $folderPublic = $this->params->get('kernel.project_dir') . '/public/';
@@ -93,7 +96,7 @@ class ImmoTransferDataCommand extends Command
             $this->deleteFolder($this->folderThumbs . $folder);
 
             $this->io->title('Transfert des images');
-//            $this->imageManager->moveImages($folder);
+            $this->imageManager->moveImages($this->io, $this->folderExtracted, $this->folderImages, $this->folderImages, $folder);
 
             // --------------  TRANSFERT DES DATA  -----------------------
             $this->io->title('Traitement du dossier');
