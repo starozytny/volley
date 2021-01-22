@@ -22,6 +22,11 @@ class ImAgency
      */
     private ?string $name;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private ?string $dirname;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class ImAgency
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDirname(): ?string
+    {
+        return $this->dirname;
+    }
+
+    public function setDirname(string $dirname): self
+    {
+        $this->dirname = $dirname;
 
         return $this;
     }
