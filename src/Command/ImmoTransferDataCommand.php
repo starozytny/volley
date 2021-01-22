@@ -47,12 +47,20 @@ class ImmoTransferDataCommand extends Command
     {
         $this->io = new SymfonyStyle($input, $output);
 
-        // --------------  INITIALISATION DES DOSSIERS  -----------------------
-        $this->io->title('Initialisation des dossiers');
-        $this->initFolders();
+        // --------------  RECHERCHE DES ZIP  -----------------------
+        $this->io->title('Recherche et décompression des zips');
+        $archives = scandir($this->folderDepot);
+        $folders = $this->extractZIP($archives); // exit auto if return false
 
-        $this->io->title('Reset des tables');
-        $this->databaseService->resetTable($this->io, ['im_agency']);
+        if($folders !== false){
+            // --------------  INITIALISATION DES DOSSIERS  -----------------------
+            $this->io->title('Initialisation des dossiers');
+            $this->initFolders();
+
+            // --------------  RESET DES TABLES  -----------------------
+            $this->io->title('Reset des tables');
+            $this->databaseService->resetTable($this->io, ['im_agency']);
+        }
 
         $this->io->newLine();
         $this->io->comment('--- [FIN DE LA COMMANDE] ---');
@@ -72,5 +80,47 @@ class ImmoTransferDataCommand extends Command
         }
 
         $this->io->text('Initialisation des dossiers [OK]');
+    }
+
+    protected function getDirname($item){
+        $nameFolder = strtolower(substr($item,0, (strlen($item)-4)));
+        $nameFolder = str_replace(" ", "_", $nameFolder);
+        return $nameFolder;
+    }
+
+    /**
+     * Fonction permettant de décompresser les zip dans le dossier extract
+     * @param $archives
+     * @return array|false
+     */
+    protected function extractZIP($archives){
+        $isEmpty = true;
+        $isOpen = false;
+        $folders = array();
+        foreach ($archives as $item) {
+            $archive = new \ZipArchive();
+            if(preg_match('/([^\s]+(\.(?i)(zip))$)/i', $item, $matches)){
+                $isEmpty = false;
+                if($archive->open($this->folderDepot . $item) == true){
+                    $nameFolder = $this->getDirname($item);
+                    if($isOpen == false){
+                        $archive->extractTo($this->folderExtracted . $nameFolder);
+                        $archive->close(); unset($archive);
+                        $this->io->text("Archive " . $nameFolder . " [OK]");
+
+                        array_push($folders, $nameFolder);
+                        $isOpen = true;
+                    }
+                }else{
+                    $this->io->error("Erreur archive");
+                    return false;
+                }
+            }
+        }
+        if($isEmpty){
+            $this->io->comment("Aucun zip dans le dossier dépot.");
+            return false;
+        }
+        return $folders;
     }
 }
