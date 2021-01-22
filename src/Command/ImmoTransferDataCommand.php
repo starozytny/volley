@@ -15,6 +15,9 @@ class ImmoTransferDataCommand extends Command
 {
     protected static $defaultName = 'immo:transfer:data';
 
+    private $filenameData = 'annonces.csv';
+    private $filenameDataMaj = 'Annonces.csv';
+
     private $folderData;
     private $folderDepot;
     private $folderExtracted;
@@ -101,7 +104,7 @@ class ImmoTransferDataCommand extends Command
 
             // --------------  TRANSFERT DES DATA  -----------------------
             $this->io->title('Traitement du dossier');
-            $this->transfertData($folder, $output);
+            $this->transferData($folder, $output);
         }
 
         $this->io->newLine();
@@ -211,18 +214,18 @@ class ImmoTransferDataCommand extends Command
      * @param $folder
      * @param $output
      */
-    protected function transfertData($folder, OutputInterface $output){
-//        $tabPathImg = [
-//            'images' => $this->PATH_IMAGES,
-//            'thumbs' => $this->PATH_THUMBS
-//        ];
-//
-//        $io->comment('------- Dossier : ' . $folder);
-//
-//        $file = $this->PATH_EXTRACT . $folder . '/' . $this->filenameData;
-//        $fileMaj = $this->PATH_EXTRACT . $folder . '/' . $this->filenameDataMaj;
-//
-//        if (file_exists($file) || file_exists($fileMaj)) {
+    protected function transferData($folder, OutputInterface $output){
+        $tabPathImg = [
+            'images' => $this->folderImages,
+            'thumbs' => $this->folderThumbs
+        ];
+
+        $file = $this->folderExtracted . $folder . '/' . $this->filenameData;
+        $fileMaj = $this->folderExtracted . $folder . '/' . $this->filenameDataMaj;
+
+        if (file_exists($file) || file_exists($fileMaj)) {
+
+
 //            $reader = file_exists($file) ? Reader::createFromPath($file) : Reader::createFromPath($fileMaj);
 //            $reader->setDelimiter('#');
 //
@@ -230,8 +233,8 @@ class ImmoTransferDataCommand extends Command
 //            $count = count($reader); // Nombre de records
 //
 //            $this->traitement(self::ANNONCE_CSV, $io, $output, $folder, $count, $records, $tabPathImg);
-//
-//        } else { // XML --- PERICLES
+
+        } else { // XML --- PERICLES
 //            $files = scandir($this->PATH_EXTRACT . $folder);
 //            $isFind = false;
 //            foreach ($files as $file) {
@@ -250,6 +253,6 @@ class ImmoTransferDataCommand extends Command
 //            } else {
 //                $io->error('Aucun fichier annonce trouvé dans le dossier : ' . $folder);
 //            }
-//        }
+        }
     }
 }
