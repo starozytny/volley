@@ -44,9 +44,7 @@ class ImageManager
             }
         }
 
-        $io->comment('Config Photo : ' . $folder);
         $isEmpty = true;
-
         if (!$findConfig) {
             $io->text('Fichier config introuvable -> so default FULL MODE');
         }
@@ -82,6 +80,7 @@ class ImageManager
         if ($isEmpty) {
             $io->comment("Dossier " . $folder . " vide ou fichiers non conforme ou config erroné.");
         } else {
+            $io->newLine();
             $io->text("Transfert images [OK]");
         }
         unset($dir);

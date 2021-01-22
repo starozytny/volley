@@ -91,12 +91,13 @@ class ImmoTransferDataCommand extends Command
             $archive = $archives[0]; // get first archive
 
             // -------------- REINITIALISATION DES DOSSIERS IMG
-            $this->io->comment('Suppression des images de ' . $folder);
+            $this->io->title('Suppression des anciennes images');
             $this->deleteFolder($this->folderImages . $folder);
             $this->deleteFolder($this->folderThumbs . $folder);
+            $this->io->text('Suppression des images [OK]');
 
             $this->io->title('Transfert des images');
-            $this->imageManager->moveImages($this->io, $this->folderExtracted, $this->folderImages, $this->folderImages, $folder);
+            $this->imageManager->moveImages($this->io, $this->folderExtracted, $this->folderImages, $this->folderThumbs, $folder);
 
             // --------------  TRANSFERT DES DATA  -----------------------
             $this->io->title('Traitement du dossier');
