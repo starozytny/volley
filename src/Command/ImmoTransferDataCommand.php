@@ -162,6 +162,13 @@ class ImmoTransferDataCommand extends Command
                 }
             }
 
+            // --------------  API IMMO JSON = ADE IMMO  -----------------------
+            if($firstCall){
+                if($haveApiImmo){
+                    $this->apiImmoProcess($output);
+                }
+            }
+
             $this->io->success('SUIVANT');
             $this->processByFolder($output, false, $haveApiImmo);
         }else{
@@ -399,5 +406,25 @@ class ImmoTransferDataCommand extends Command
         }
 
         $this->io->text('Suppresion du zip [OK]');
+    }
+
+    protected function apiImmoProcess($output)
+    {
+        $this->io->title("[APIMO JSON]");
+        $folder = 'agenadeguilles';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.apimo.pro/agencies/'.$_ENV['APIMMO_AGENCY'].'/properties');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERPWD, $_ENV['APIMMO_PROVIDER'] .':' . $_ENV['APIMMO_TOKEN']);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        $outputJSON = curl_exec($ch);
+        curl_close($ch);
+        $values = json_decode($outputJSON, true);
+
+        if($values){
+            $this->process(self::ANNONCE_JSON, $output, $values['properties'], $folder);
+        }else{
+            $this->io->error('Aucune données pour APIMMO : ADE Immobiliere');
+        }
     }
 }

@@ -46,7 +46,8 @@
         "symfony/webpack-encore-bundle": "^1.8",
         "symfony/yaml": "5.2.*",
         "ext-simplexml": "*",
-        "ext-libxml": "*"
+        "ext-libxml": "*",
+        "ext-curl": "*"
     },
     "config": {
         "optimize-autoloader": true,
