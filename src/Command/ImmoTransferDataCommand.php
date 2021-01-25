@@ -80,17 +80,23 @@ class ImmoTransferDataCommand extends Command
         $firstCall = $input->getArgument('firstCall') == 1;
         $haveApiImmo = $input->getArgument('apiImmo') ? true : false;
 
+        $this->processByFolder($output, $firstCall, $haveApiImmo);
+
+        $this->io->newLine();
+        $this->io->comment('--- [FIN DE LA COMMANDE] ---');
+        return Command::SUCCESS;
+    }
+
+    protected function processByFolder($output, $firstCall, $haveApiImmo)
+    {
         // --------------  RECHERCHE DES ZIP  -----------------------
         $this->io->title('Recherche et décompression des zips');
         $archives = scandir($this->folderDepot);
-        $folders = $this->extractZIP($archives); // exit auto if return false
+        $folders = $this->extractZIP($firstCall, $archives); // exit auto if return false
 
         if($folders !== false){
             // -------------- SI CEST LE PREMIER APPEL  -----------------------
             if($firstCall){
-                // --------------  SAVE ID DATA ALREADY EXISTED -----------------------
-                // //---------------- TODO
-
                 // --------------  RESET DES TABLES  -----------------------
                 $this->io->title('Reset des tables');
                 $this->databaseService->resetTable($this->io, ['im_agency']);
@@ -113,11 +119,40 @@ class ImmoTransferDataCommand extends Command
             // --------------  TRANSFERT DES DATA  -----------------------
             $this->io->title('Traitement du dossier');
             $this->transferData($folder, $output);
+
+            // --------------  CREATION ARCHIVE  -----------------------
+            $this->io->title('Création archive');
+            $this->createArchive($archive);
+            $this->io->text('Archives terminées [OK]');
+
+            // --------------  SUPPRESSION DU ZIP  -----------------------
+            $this->io->title('Suppresion du ZIP');
+            if (preg_match('/([^\s]+(\.(?i)(zip))$)/i', $archive, $matches)) {
+                $this->deleteZip($archive);
+            }
+
+            // --------------  SUPPRESSION DES EXTRACTS  -----------------------
+            $this->io->title('Suppresion des dossiers de extracted');
+            $folders = scandir($this->folderExtracted);
+            foreach ($folders as $item) {
+                if ($item != "." && $item != "..") {
+                    $this->deleteFolder($this->folderExtracted . $item);
+                    $this->io->text('Suppression du dossier extracted ' . $item . ' [OK]');
+                }
+            }
+
+            $this->io->success('SUIVANT');
+            $this->processByFolder($output, false, $haveApiImmo);
+        }else{
+            if(!$firstCall){
+                // --------------  SAVE ID DATA ALREADY EXISTED -----------------------
+                // //---------------- TODO
+
+                return false;
+            }
         }
 
-        $this->io->newLine();
-        $this->io->comment('--- [FIN DE LA COMMANDE] ---');
-        return Command::SUCCESS;
+        return true;
     }
 
     /**
@@ -152,10 +187,11 @@ class ImmoTransferDataCommand extends Command
 
     /**
      * Fonction permettant de décompresser les zip dans le dossier extract
+     * @param $firstcall
      * @param $archives
      * @return array|false
      */
-    protected function extractZIP($archives){
+    protected function extractZIP($firstcall, $archives){
         $isEmpty = true;
         $isOpen = false;
         $folders = array();
@@ -180,7 +216,11 @@ class ImmoTransferDataCommand extends Command
             }
         }
         if($isEmpty){
-            $this->io->comment("Aucun zip dans le dossier dépot.");
+            if($firstcall){
+                $this->io->comment("Aucun zip dans le dossier dépot.");
+            }else{
+                $this->io->text("Il ne reste plus de zip à traiter.");
+            }
             return false;
         }
         return $folders;
@@ -295,5 +335,48 @@ class ImmoTransferDataCommand extends Command
             $this->io->warning("Aucune ligne contenu dans le fichier.");
         }
         $this->io->newLine(1);
+    }
+
+    /**
+     * Create archive max 2
+     * @param $archive
+     */
+    protected function createArchive($archive)
+    {
+        $pathArchive = $this->folderArchived;
+
+        if(preg_match('/([^\s]+(\.(?i)(zip))$)/i', $archive, $matches)){
+
+            $nameFolder = $this->getDirname($archive);
+            $fileOri = $this->folderDepot . $archive;
+            $fileOld1 =  $pathArchive . $nameFolder . '_1.zip';
+            $fileOld2 =  $pathArchive . $nameFolder . '_2.zip';
+
+            if(file_exists($fileOld2)){
+                unlink($fileOld2);
+                copy($fileOld1, $fileOld2);
+                unlink($fileOld1);
+            }
+
+            if(file_exists($fileOld1)){
+                copy($fileOld1, $fileOld2);
+                unlink($fileOld1);
+                copy($fileOri, $fileOld1);
+            }else{
+                copy($fileOri, $fileOld1);
+            }
+        }
+    }
+
+    /**
+     * Fonction permettant de supprimer les zip dans le dossier depot
+     * @param $archive
+     */
+    protected function deleteZip($archive){
+        if(file_exists($this->folderDepot . $archive)){
+            unlink($this->folderDepot . $archive);
+        }
+
+        $this->io->text('Suppresion du zip [OK]');
     }
 }
