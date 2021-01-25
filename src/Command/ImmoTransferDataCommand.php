@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Manager\Image\ImageManager;
+use App\Manager\Import\Import;
 use App\Service\DatabaseService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -35,15 +36,17 @@ class ImmoTransferDataCommand extends Command
     private $databaseService;
     private $imageManager;
     private $params;
+    private $import;
     private $io;
 
-    public function __construct(DatabaseService $databaseService, ParameterBagInterface $params, ImageManager $imageManager)
+    public function __construct(DatabaseService $databaseService, ParameterBagInterface $params, ImageManager $imageManager, Import $import)
     {
         parent::__construct();
 
         $this->databaseService = $databaseService;
         $this->imageManager = $imageManager;
         $this->params = $params;
+        $this->import = $import;
 
         $folderPublic = $this->params->get('kernel.project_dir') . '/public/';
         $this->folderData = $folderPublic .'data/';
@@ -281,8 +284,7 @@ class ImmoTransferDataCommand extends Command
 
             // Insertion des datas csv dans la DBB
             foreach ($data as $record) {
-//                $this->import->import($type, $folder, $record, $tabPathImg);
-                dump($record);
+                $this->import->import($type, $folder, $record, $tabPathImg);
                 $progressBar->advance();
             }
 
