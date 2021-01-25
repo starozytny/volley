@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Manager\Image\ImageManager;
 use App\Service\DatabaseService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,6 +15,10 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class ImmoTransferDataCommand extends Command
 {
     protected static $defaultName = 'immo:transfer:data';
+
+    const ANNONCE_CSV = 0;
+    const ANNONCE_XML = 1;
+    const ANNONCE_JSON = 2;
 
     private $filenameData = 'annonces.csv';
     private $filenameDataMaj = 'Annonces.csv';
@@ -214,25 +219,22 @@ class ImmoTransferDataCommand extends Command
      * @param $folder
      * @param $output
      */
-    protected function transferData($folder, OutputInterface $output){
-        $tabPathImg = [
-            'images' => $this->folderImages,
-            'thumbs' => $this->folderThumbs
-        ];
+    protected function transferData($folder, OutputInterface $output)
+    {
+        $filename = $this->folderExtracted . $folder . '/' . $this->filenameData;
+        $filenameMaj = $this->folderExtracted . $folder . '/' . $this->filenameDataMaj;
 
-        $file = $this->folderExtracted . $folder . '/' . $this->filenameData;
-        $fileMaj = $this->folderExtracted . $folder . '/' . $this->filenameDataMaj;
+        if (file_exists($filename) || file_exists($filenameMaj)) {
 
-        if (file_exists($file) || file_exists($fileMaj)) {
+            $nameFile = file_exists($filename) ? $filename : $filenameMaj;
 
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            $reader->setDelimiter('#');
 
-//            $reader = file_exists($file) ? Reader::createFromPath($file) : Reader::createFromPath($fileMaj);
-//            $reader->setDelimiter('#');
-//
-//            $records = $reader->getRecords(); // récupération de toutes les lignes
-//            $count = count($reader); // Nombre de records
-//
-//            $this->traitement(self::ANNONCE_CSV, $io, $output, $folder, $count, $records, $tabPathImg);
+            $spreadsheet = $reader->load($nameFile);
+            $data = $spreadsheet->getActiveSheet()->toArray();
+
+            $this->process(self::ANNONCE_CSV, $output, $data, $folder);
 
         } else { // XML --- PERICLES
 //            $files = scandir($this->PATH_EXTRACT . $folder);
@@ -254,5 +256,42 @@ class ImmoTransferDataCommand extends Command
 //                $io->error('Aucun fichier annonce trouvé dans le dossier : ' . $folder);
 //            }
         }
+    }
+
+    /**
+     * Lance le traitement de du transfert de data
+     * @param $type
+     * @param $output
+     * @param $data
+     * @param $folder
+     */
+    protected function process($type, $output, $data, $folder)
+    {
+        $tabPathImg = [
+            'images' => $this->folderImages,
+            'thumbs' => $this->folderThumbs
+        ];
+        $count = count($data);
+
+        if ($count != 0) {
+            $progressBar = new ProgressBar($output, $count);
+            $progressBar->setFormat("%current%/%max% [%bar%] %percent:3s%%  🏁");
+            $progressBar->setOverwrite(true);
+            $progressBar->start();
+
+            // Insertion des datas csv dans la DBB
+            foreach ($data as $record) {
+//                $this->import->import($type, $folder, $record, $tabPathImg);
+                dump($record);
+                $progressBar->advance();
+            }
+
+            $progressBar->finish();
+            $this->io->text('------- Completed !');
+            $reader = null;unset($reader);unset($records);
+        } else {
+            $this->io->warning("Aucune ligne contenu dans le fichier.");
+        }
+        $this->io->newLine(1);
     }
 }
