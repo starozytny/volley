@@ -8,6 +8,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "ext-zip": "*",
+        "ext-gd": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
@@ -42,7 +44,10 @@
         "symfony/var-dumper": "5.2.*",
         "symfony/web-profiler-bundle": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.8",
-        "symfony/yaml": "5.2.*"
+        "symfony/yaml": "5.2.*",
+        "ext-simplexml": "*",
+        "ext-libxml": "*",
+        "ext-curl": "*"
     },
     "config": {
         "optimize-autoloader": true,

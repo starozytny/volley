@@ -454,7 +454,7 @@ class UserController extends AbstractController
             $header = array(array('id', 'username', 'role', 'email', 'createAt'));
         }
 
-        $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5);
+        $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5, 'export/');
         return new BinaryFileResponse($this->getParameter('private_directory'). 'export/' . $fileName);
     }
 }
