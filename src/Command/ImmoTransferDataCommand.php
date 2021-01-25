@@ -301,24 +301,22 @@ class ImmoTransferDataCommand extends Command
             $this->process(self::ANNONCE_CSV, $output, $data, $folder);
 
         } else { // XML --- PERICLES
-//            $files = scandir($this->PATH_EXTRACT . $folder);
-//            $isFind = false;
-//            foreach ($files as $file) {
-//                if (preg_match('/([^\s]+(\.(?i)(xml))$)/i', $file, $matches)) {
-//                    $annonces = $file;
-//                    $isFind = true;
-//                }
-//            }
-//
-//            if ($isFind) {
-//                $parseFile = simplexml_load_file($this->PATH_EXTRACT . $folder . "/" . $annonces, 'SimpleXMLElement', LIBXML_NOCDATA);
-//                $count = count($parseFile); // Nombre de records
-//
-//                $this->traitement(self::ANNONCE_XML, $io, $output, $folder, $count, $parseFile, $tabPathImg);
-//
-//            } else {
-//                $io->error('Aucun fichier annonce trouvé dans le dossier : ' . $folder);
-//            }
+            $files = scandir($this->folderExtracted . $folder);
+            $isFind = false;
+            foreach ($files as $file) {
+                if (preg_match('/([^\s]+(\.(?i)(xml))$)/i', $file, $matches)) {
+                    $annonces = $file;
+                    $isFind = true;
+                }
+            }
+
+            if ($isFind) {
+                $parseFile = simplexml_load_file($this->folderExtracted . $folder . "/" . $annonces, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+                $this->process(self::ANNONCE_XML, $output, $parseFile, $folder);
+            } else {
+                $this->io->error('Aucun fichier annonce trouvé dans le dossier : ' . $folder);
+            }
         }
     }
 
