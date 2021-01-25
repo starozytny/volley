@@ -16,13 +16,13 @@ use Symfony\Component\Routing\RouterInterface;
 
 class Export
 {
-    protected $exportDirectory;
+    protected $privateDirectory;
     protected $router;
     protected $em;
 
     public function __construct($privateDirectory, RouterInterface $router, EntityManagerInterface $em)
     {
-        $this->exportDirectory = $privateDirectory;
+        $this->privateDirectory = $privateDirectory;
 
         $this->router = $router;
         $this->em = $em;
@@ -39,14 +39,14 @@ class Export
     {
         $spreadsheet = new Spreadsheet();
 
-        $exportDirectory = $this->getExportDirectory() . '/export/';
-        $this->createFolderIfNotExist($exportDirectory);
+        $privateDirectory = $this->getPrivateDirectory();
+        $this->createFolderIfNotExist($privateDirectory);
         if($folder != ""){
-            $exportDirectory = $this->getExportDirectory() . '/export/' . $folder;
-            $this->createFolderIfNotExist($exportDirectory);
+            $privateDirectory = $this->getPrivateDirectory() . '/' . $folder;
+            $this->createFolderIfNotExist($privateDirectory);
         }
 
-        $file = $exportDirectory . $filename;
+        $file = $privateDirectory . $filename;
         if (file_exists($file)) {
             unlink($file);
         }
@@ -182,8 +182,8 @@ class Export
     /**
      * @return mixed
      */
-    public function getExportDirectory()
+    public function getPrivateDirectory()
     {
-        return $this->exportDirectory;
+        return $this->privateDirectory;
     }
 }

@@ -74,9 +74,10 @@ class Import extends DataSanitize
 
             $reader = new Csv();
             $oldId = null;
-            if(file_exists($this->getExportDirectory() . '/biens.csv')){
+            if(file_exists($this->getExportDirectory() . '/export/save_biens.csv')){
+                dump("in");
                 try {
-                    $spreadsheet = $reader->load($this->getExportDirectory() . '/biens.csv');
+                    $spreadsheet = $reader->load($this->getExportDirectory() . '/export/save_biens.csv');
                     $sheetData = $spreadsheet->getActiveSheet()->toArray();
                     foreach ($sheetData as $item) {
 

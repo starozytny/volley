@@ -7,6 +7,7 @@ use App\Manager\Import\Import;
 use App\Service\DatabaseService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -97,9 +98,29 @@ class ImmoTransferDataCommand extends Command
         if($folders !== false){
             // -------------- SI CEST LE PREMIER APPEL  -----------------------
             if($firstCall){
+                // --------------  SAVE OLD DATA  -----------------------
+                $this->io->title('Sauvegarde des anciens identifiants des biens');
+                $command = $this->getApplication()->find('immo:save:data');
+                $arguments = [ 'command' => 'immo:save:data' ];
+                $greetInput = new ArrayInput($arguments);
+                try {
+                    $command->run($greetInput, $output);
+                } catch (\Exception $e) {
+                    $this->io->error('Erreur run cmd immo:save:data : ' . $e);
+                }
+
                 // --------------  RESET DES TABLES  -----------------------
                 $this->io->title('Reset des tables');
-                $this->databaseService->resetTable($this->io, ['im_agency']);
+                $this->databaseService->resetTable($this->io, [
+                    'im_bien',
+                    'im_financier',
+                    'im_copro',
+                    'im_diagnostic',
+                    'im_responsable',
+                    'im_caracteristique',
+                    'im_commodite',
+                    'im_image'
+                ]);
             }
 
             // --------------  VARIABLES PROCESS FOLDER  -----------------------
@@ -365,6 +386,8 @@ class ImmoTransferDataCommand extends Command
             }else{
                 copy($fileOri, $fileOld1);
             }
+
+            $this->io->text('Création des archives [OK]');
         }
     }
 
