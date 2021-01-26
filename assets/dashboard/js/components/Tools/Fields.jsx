@@ -1,4 +1,5 @@
 import React from "react";
+import { SimpleSelect } from 'react-selectize';
 
 /***************************************
  * INPUT Classique
@@ -89,6 +90,26 @@ export function Select(props) {
         <option value="" />
         {choices}
     </select>
+    return (<ClassiqueStructure {...props} content={content} label={children} />)
+}
+
+/***************************************
+ * SELECT React selectize
+ ***************************************/
+export function SelectReactSelectize(props) {
+    const { items, identifiant, valeur, onChange, children, placeholder } = props;
+
+    let choices = items.map((item, index) =>
+        <option key={index} value={item.value}>{item.label}</option>
+    )
+
+    let content = <>
+        <SimpleSelect placeholder={placeholder} onValueChange={onChange}>
+            {choices}
+        </SimpleSelect>
+        <input type="hidden" name={identifiant} value={valeur}/>
+    </>
+
     return (<ClassiqueStructure {...props} content={content} label={children} />)
 }
 

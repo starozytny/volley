@@ -15,8 +15,6 @@ export class Drop extends Component {
 
         this.drop = React.createRef();
 
-        console.log(this.drop)
-
         this.handleChangeStatus = this.handleChangeStatus.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.getUploadParams = this.getUploadParams.bind(this)
