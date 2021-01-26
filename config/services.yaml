@@ -32,7 +32,3 @@ services:
     App\Service\Export:
         arguments:
             $privateDirectory: '%private_directory%'
-
-    App\Manager\Import\Import:
-        arguments:
-            $privateDirectory: '%private_directory%'
