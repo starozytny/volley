@@ -20,6 +20,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@types/react-transition-group": "^4.4.0",
         "axios": "^0.21.0",
         "date-fns": "^2.16.1",
         "node-sass": "4.14.1",
@@ -28,8 +29,11 @@
         "react": "^17.0.1",
         "react-datepicker": "^3.3.0",
         "react-dom": "^17.0.1",
+        "react-dom-factories": "^1.0.2",
         "react-dropzone-uploader": "^2.11.0",
         "react-paginate": "^6.5.0",
+        "react-selectize": "^3.0.1",
+        "react-transition-group": "1.x",
         "sweetalert2": "^10.12.4",
         "toastr": "^2.1.4"
     },

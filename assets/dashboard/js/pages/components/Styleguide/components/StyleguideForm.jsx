@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 
-import { Checkbox, Input, Radiobox, Select, TextArea } from "@dashboardComponents/Tools/Fields";
+import { Checkbox, Input, Radiobox, Select, TextArea,
+         SelectReactSelectize }                        from "@dashboardComponents/Tools/Fields";
 import { DatePick, DateTimePick, TimePick }            from "@dashboardComponents/Tools/DatePicker";
 import { Drop }                                        from "@dashboardComponents/Tools/Drop"
 import { Button }                                      from "@dashboardComponents/Tools/Button";
 
 import Validator    from "@dashboardComponents/functions/validateur";
-import Sanitaze     from "@dashboardComponents/functions/sanitaze";;
+import Sanitaze     from "@dashboardComponents/functions/sanitaze";
+import {SimpleSelect} from "react-selectize";
 
 export class StyleguideForm extends Component {
     constructor(props) {
@@ -25,7 +27,8 @@ export class StyleguideForm extends Component {
             arrived: "",
             postalCode: "",
             arrayPostalCode: [],
-            city: ""
+            city: "",
+            fruit: ""
         }
 
         this.inputAvatar = React.createRef();
@@ -35,6 +38,7 @@ export class StyleguideForm extends Component {
         this.handleChangePostalCodeCity = this.handleChangePostalCodeCity.bind(this);
         this.handleChangeDateCreateAt = this.handleChangeDateCreateAt.bind(this);
         this.handleChangeDateCreateAt = this.handleChangeDateCreateAt.bind(this);
+        this.handleChangeSelect = this.handleChangeSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -52,6 +56,8 @@ export class StyleguideForm extends Component {
 
         this.setState({ [name]: value })
     }
+
+    handleChangeSelect = (e) => { this.setState({ fruit: e !== undefined ? e.value : "" }) }
 
     handleChangePostalCodeCity = (e) => {
         const { arrayPostalCode } = this.state;
@@ -80,7 +86,8 @@ export class StyleguideForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city } = this.state;
+        const { username, email, message, roles, sexe, pays, birthday,
+                createAt, arrived, postalCode, city, fruit } = this.state;
 
         let avatar = this.inputAvatar.current.drop.current.files;
         let files = this.inputFiles.current.drop.current.files;
@@ -99,6 +106,7 @@ export class StyleguideForm extends Component {
             {type: "text", id: 'city', value: city},
             {type: "array", id: 'avatar', value: avatar},
             {type: "array", id: 'files', value: files},
+            {type: "text", id: 'fruit', value: fruit},
         ])
 
         if(!validate.code){
@@ -109,7 +117,8 @@ export class StyleguideForm extends Component {
     }
 
     render () {
-        const { errors, username, email, message, roles, sexe, pays, birthday, createAt, arrived, postalCode, city } = this.state;
+        const { errors, username, email, message, roles, sexe, pays, birthday,
+                createAt, arrived, postalCode, city, fruit } = this.state;
 
         let checkboxItems = [
             { 'value': 'ROLE_USER', 'label': 'Utilisateur', 'identifiant': 'utilisateur' },
@@ -125,6 +134,12 @@ export class StyleguideForm extends Component {
             { 'value': 0, 'label': 'France', 'identifiant': 'france' },
             { 'value': 1, 'label': 'Allemagne', 'identifiant': 'allemagne' },
             { 'value': 2, 'label': 'Japon', 'identifiant': 'japon' },
+        ]
+
+        let selectFruitItems = [
+            { 'value': 0, 'label': 'Orange', 'identifiant': 'orange' },
+            { 'value': 1, 'label': 'Pomme', 'identifiant': 'pomme' },
+            { 'value': 2, 'label': 'Mangue', 'identifiant': 'mangue' },
         ]
 
         return (
@@ -149,6 +164,10 @@ export class StyleguideForm extends Component {
 
                         <div className="line">
                             <Select items={selectItems} identifiant="pays" valeur={pays} errors={errors} onChange={this.handleChange}>De quel pays viens-tu ?</Select>
+                        </div>
+
+                        <div className="line">
+                            <SelectReactSelectize items={selectFruitItems} identifiant="fruit" valeur={fruit} errors={errors} onChange={this.handleChangeSelect}>Votre fruit</SelectReactSelectize>
                         </div>
 
                         <div className="line line-3">
