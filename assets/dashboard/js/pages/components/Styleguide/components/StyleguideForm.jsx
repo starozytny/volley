@@ -167,7 +167,7 @@ export class StyleguideForm extends Component {
                         </div>
 
                         <div className="line">
-                            <SelectReactSelectize items={selectFruitItems} identifiant="fruit" valeur={fruit} errors={errors} onChange={this.handleChangeSelect}>Votre fruit</SelectReactSelectize>
+                            <SelectReactSelectize items={selectFruitItems} identifiant="fruit" placeholder={"Sélectionner votre fruit"} valeur={fruit} errors={errors} onChange={this.handleChangeSelect}>Votre fruit préféré ?</SelectReactSelectize>
                         </div>
 
                         <div className="line line-3">
