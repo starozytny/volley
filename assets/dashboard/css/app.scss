@@ -3,13 +3,16 @@
 @import "~react-selectize/dist/index.min.css";
 
 :root{
-    --primary: #9397ff;
-    --danger: #e59595;
+    --color0: #a9aac9;
+    --primary: #00a8e8;
+    --danger: #d57d7d;
     --warning: #e7d087;
 
-    --primaryShadow: rgba(147,151,255, 0.4);
-    --dangerShadow: rgba(229,149,149, 0.4);
-    --warningShadow: rgba(231,205,135, 0.4);
+    --color0Shadow: rgba(169, 170, 201, 0.4);
+    --primaryShadow: rgba(0,168,232, 0.4);
+    --dangerShadow: rgba(213,125,125, 0.4);
+    --dangerShadow2: rgba(213,125,125, 0.1);
+    --warningShadow: rgba(231,208,135, 0.4);
 
     --grey: #c7c7c7;
     --grey2: #929292;
