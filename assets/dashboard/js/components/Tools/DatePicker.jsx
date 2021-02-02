@@ -15,6 +15,7 @@ export function DatePick(props){
 
     let content = <DatePicker
         locale="fr"
+        autoComplete="off"
         id={identifiant}
         selected={valeur}
         onChange={onChange}
@@ -37,6 +38,7 @@ export function DateTimePick(props){
 
     let content = <DatePicker
         locale="fr"
+        autoComplete="off"
         id={identifiant}
         selected={valeur}
         onChange={onChange}
@@ -63,6 +65,7 @@ export function TimePick(props){
 
     let content = <DatePicker
         locale="fr"
+        autoComplete="off"
         id={identifiant}
         selected={valeur}
         onChange={onChange}
