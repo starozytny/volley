@@ -49,6 +49,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-male:before {
+  content: "\e910";
+}
 .icon-clock:before {
   content: "\e902";
 }
@@ -345,4 +348,7 @@
 }
 .icon-zoom-out:before {
   content: "\e964";
+}
+.icon-female:before {
+  content: "\e939";
 }
