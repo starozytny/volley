@@ -4,7 +4,7 @@ import Routing        from '@publicFolder/bundles/fosjsrouting/js/router.min.js'
 
 import { Button, ButtonIcon } from "@dashboardComponents/Tools/Button";
 
-import { Filter }     from "@dashboardComponents/Layout/Filter";
+import { Filter, FilterSelected } from "@dashboardComponents/Layout/Filter";
 import { Search }     from "@dashboardComponents/Layout/Search";
 
 import { UserItem }   from "./UserItem";
@@ -25,13 +25,13 @@ export class UserList extends Component {
     render () {
         const { data, onChangeContext, onGetFilters, filters, onSearch, onDeleteAll } = this.props;
 
-        let itemsFilterLabelArray = ["Utilisateur", "Développeur", "Administrateur"];
-        let itemsFilterIdArray = ["f-user", "f-dev", "f-admin"];
+        let itemsFiltersLabelArray = ["Utilisateur", "Développeur", "Administrateur"];
+        let itemsFiltersIdArray = ["f-user", "f-dev", "f-admin"];
 
         let itemsFilter = [
-            { value: 0, id: itemsFilterIdArray[0], label: itemsFilterLabelArray[0]},
-            { value: 1, id: itemsFilterIdArray[1], label: itemsFilterLabelArray[1] },
-            { value: 2, id: itemsFilterIdArray[2], label: itemsFilterLabelArray[2]}
+            { value: 0, id: itemsFiltersIdArray[0], label: itemsFiltersLabelArray[0]},
+            { value: 1, id: itemsFiltersIdArray[1], label: itemsFiltersLabelArray[1] },
+            { value: 2, id: itemsFiltersIdArray[2], label: itemsFiltersLabelArray[2]}
         ]
 
         return <>
@@ -43,19 +43,7 @@ export class UserList extends Component {
                     <div className="item filter-search">
                         <Filter ref={this.filter} items={itemsFilter} onGetFilters={onGetFilters} />
                         <Search onSearch={onSearch} />
-                        <div className="filters-items-checked">
-                            {filters && filters.map(el => {
-                                return <div className="item" key={el}>
-                                    <div className="role">
-                                        <input type="checkbox" name="filters-checked" id={`fcheck-${el}`} data-id={itemsFilterIdArray[el]} value={el} onChange={this.handleFilter}/>
-                                        <label htmlFor={`fcheck-${el}`}>
-                                            {itemsFilterLabelArray[el]}
-                                            <span className="icon-cancel" />
-                                        </label>
-                                    </div>
-                                </div>
-                            })}
-                        </div>
+                        <FilterSelected filters={filters} itemsFiltersLabel={itemsFiltersLabelArray} itemsFiltersId={itemsFiltersIdArray} onChange={this.handleFilter}/>
                     </div>
                 </div>
 
