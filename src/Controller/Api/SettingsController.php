@@ -6,6 +6,7 @@ use App\Entity\Settings;
 use App\Entity\User;
 use App\Repository\SettingsRepository;
 use App\Service\ApiResponse;
+use App\Service\FileUploader;
 use App\Service\ValidatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,5 +92,35 @@ class SettingsController extends AbstractController
         $em->persist($settings); $em->flush();
 
         return $apiResponse->apiJsonResponse($settings, User::VISITOR_READ);
+    }
+
+    /**
+     * Test upload
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/upload", name="test_upload", options={"expose"=true}, methods={"POST"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns settings",
+     * )
+     * @OA\Tag(name="Settings")
+     *
+     * @param Request $request
+     * @param ApiResponse $apiResponse
+     * @param FileUploader $fileUploader
+     * @return JsonResponse
+     */
+    public function testUpload(Request $request, ApiResponse $apiResponse, FileUploader $fileUploader): JsonResponse
+    {
+        $file = $request->files->get('avatar');
+
+        if ($file) {
+            $fileName = $fileUploader->upload($file, "uploads");
+            dump($fileName);
+        }
+
+        return $apiResponse->apiJsonResponseSuccessful("uploaded");
     }
 }

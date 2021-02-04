@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import axios       from "axios";
+import Routing     from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
+
 import { Checkbox, Input, Radiobox, Select, TextArea,
          SelectReactSelectize }                        from "@dashboardComponents/Tools/Fields";
 import { DatePick, DateTimePick, TimePick }            from "@dashboardComponents/Tools/DatePicker";
@@ -8,7 +11,7 @@ import { Button }                                      from "@dashboardComponent
 
 import Validator    from "@dashboardComponents/functions/validateur";
 import Sanitaze     from "@dashboardComponents/functions/sanitaze";
-import {SimpleSelect} from "react-selectize";
+import Formulaire     from "@dashboardComponents/functions/Formulaire";
 
 export class StyleguideForm extends Component {
     constructor(props) {
@@ -108,6 +111,26 @@ export class StyleguideForm extends Component {
             {type: "array", id: 'files', value: files},
             {type: "text", id: 'fruit', value: fruit},
         ])
+
+        if(avatar !== ""){
+            let formData = new FormData();
+            formData.append('avatar', avatar[0].file);
+
+            const self = this;
+            Formulaire.loader(true);
+            axios.post(Routing.generate('api_settings_test_upload'), formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                .then(function (response) {
+                    let data = response.data;
+                    console.log(data)
+                })
+                .catch(function (error) {
+                    Formulaire.displayErrors(self, error);
+                })
+                .then(function () {
+                    Formulaire.loader(false);
+                })
+            ;
+        }
 
         if(!validate.code){
             this.setState({ errors: validate.errors });

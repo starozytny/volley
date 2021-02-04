@@ -32,3 +32,8 @@ services:
     App\Service\Export:
         arguments:
             $privateDirectory: '%private_directory%'
+
+    App\Service\FileUploader:
+        arguments:
+            $publicDirectory: '%public_directory%'
+            $privateDirectory: '%private_directory%'
