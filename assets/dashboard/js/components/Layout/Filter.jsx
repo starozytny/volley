@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Alert } from "@dashboardComponents/Tools/Alert";
-
 export class Filter extends Component {
     constructor() {
         super();
@@ -50,6 +48,26 @@ export class Filter extends Component {
                     })}
                 </div>
             </div>
+        </div>
+    }
+}
+
+export class FilterSelected extends Component {
+    render () {
+        const { filters, itemsFiltersLabel, itemsFiltersId, onChange } = this.props;
+
+        return <div className="filters-items-checked">
+            {filters && filters.map(el => {
+                return <div className="item" key={el}>
+                    <div className="role">
+                        <input type="checkbox" name="filters-checked" id={`fcheck-${el}`} data-id={itemsFiltersLabel[el]} value={el} onChange={onChange}/>
+                        <label htmlFor={`fcheck-${el}`}>
+                            {itemsFiltersId[el]}
+                            <span className="icon-cancel" />
+                        </label>
+                    </div>
+                </div>
+            })}
         </div>
     }
 }

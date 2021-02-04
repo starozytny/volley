@@ -19,11 +19,11 @@ function axiosGetData(self, url){
     ;
 }
 
-function axiosGetDataPagination(self, url){
+function axiosGetDataPagination(self, url, perPage=10){
     axios.get(url, {})
         .then(function (response) {
             let data = response.data;
-            self.setState({ dataImmuable: data, data: data, currentData: data.slice(0, 10) });
+            self.setState({ dataImmuable: data, data: data, currentData: data.slice(0, perPage) });
         })
         .catch(function (error) {
             self.setState({ loadPageError: true });
@@ -34,7 +34,7 @@ function axiosGetDataPagination(self, url){
     ;
 }
 
-function updateDataPagination(self, sorter, newContext, context, data, element){
+function updateDataPagination(self, sorter, newContext, context, data, element, perPage=10){
     let nContext = (newContext !== null) ? newContext : context;
     let newData = UpdateList.update(nContext, data, element);
     newData.sort(sorter)
@@ -42,7 +42,7 @@ function updateDataPagination(self, sorter, newContext, context, data, element){
     self.setState({
         dataImmuable: newData,
         data: newData,
-        currentData: newData.slice(0,10),
+        currentData: newData.slice(0,perPage),
         element: element
     })
 }
