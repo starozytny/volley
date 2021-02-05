@@ -412,7 +412,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * Update password
+     * Export list users
      *
      * @Route("/export/{format}", name="export", options={"expose"=true}, methods={"GET"})
      *
@@ -427,7 +427,7 @@ class UserController extends AbstractController
      * @param $format
      * @return BinaryFileResponse
      */
-    public function export(Export $export, $format)
+    public function export(Export $export, $format): BinaryFileResponse
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository(User::class)->findBy(array(), array('username' => 'ASC'));
@@ -452,6 +452,9 @@ class UserController extends AbstractController
         }else{
             $fileName = 'utilisateurs.csv';
             $header = array(array('id', 'username', 'role', 'email', 'createAt'));
+
+            header('Content-Type: application/csv');
+            header('Content-Disposition: attachment; filename="'.$fileName.'"');
         }
 
         $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5, 'export/');

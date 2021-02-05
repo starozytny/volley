@@ -1,7 +1,7 @@
 import React from "react";
 
 export function ButtonIcon(props){
-    const { icon, children, text, onClick, element="button" } = props;
+    const { icon, children, text, onClick, element="button", target="_self" } = props;
 
     if(element === "button"){
         return <button className="btn-icon" onClick={onClick}>
@@ -10,7 +10,7 @@ export function ButtonIcon(props){
             {children && <span className="tooltip">{children}</span>}
         </button>
     }else{
-        return <a className="btn-icon" href={onClick}>
+        return <a className="btn-icon" target={target} href={onClick}>
             <span className={`icon-${icon}`} />
             {text && <span>{text}</span>}
             {children && <span className="tooltip">{children}</span>}
@@ -19,7 +19,7 @@ export function ButtonIcon(props){
 }
 
 export function Button(props){
-    const { icon, type="primary", isSubmit=false, children, onClick, element="button" } = props;
+    const { icon, type="primary", isSubmit=false, children, onClick, element="button", target="_self" } = props;
 
     if(element === "button"){
         return <button className={`btn btn-${type}`} type={isSubmit ? "submit" : ""} onClick={onClick}>
@@ -27,7 +27,7 @@ export function Button(props){
             {children}
         </button>
     }else{
-        return  <a className={`btn btn-${type}`} href={onClick}>
+        return <a className={`btn btn-${type}`} target={target} href={onClick}>
             {icon && <span className={`icon-${icon}`} />}
             {children}
         </a>
