@@ -3,8 +3,10 @@ const axios = require("axios");
 function sanitizeString(chaine){
     chaine.trim();
 
-    let spe = [' ','é','ê','è','à','ô','ï','ä', 'ö', 'ë', '<','>', '\''];
-    let changer = ['-','e','e','e','a','o','i','a', 'o', 'e', '-','-', ''];
+    let spe = [' ', '<', '>', '\'', 'é', 'è', 'ê', 'ë', 'á', 'ä', 'à', 'â', 'î', 'ï', 'ö', 'ô', 'ù', 'û',
+        'É', 'È', 'Ê', 'Ë', 'À', 'Â', 'Á', 'Î', 'Ï', 'Ô', 'Ù', 'Û', 'ç','Ç'];
+    let changer = ['-', '-', '-', '', 'e','e','e','e','á','a','a','a','i','i','o','o','u','u',
+        'E','E','E','E','A','A','A','I','I','O','U','U','c','C'];
 
     spe.forEach((elem, index) => {
         chaine = chaine.replace(elem, changer[index]);
