@@ -60,9 +60,9 @@ export class FilterSelected extends Component {
             {filters && filters.map(el => {
                 return <div className="item" key={el}>
                     <div className="role">
-                        <input type="checkbox" name="filters-checked" id={`fcheck-${el}`} data-id={itemsFiltersLabel[el]} value={el} onChange={onChange}/>
+                        <input type="checkbox" name="filters-checked" id={`fcheck-${el}`} data-id={itemsFiltersId[el]} value={el} onChange={onChange}/>
                         <label htmlFor={`fcheck-${el}`}>
-                            {itemsFiltersId[el]}
+                            {itemsFiltersLabel[el]}
                             <span className="icon-cancel" />
                         </label>
                     </div>
