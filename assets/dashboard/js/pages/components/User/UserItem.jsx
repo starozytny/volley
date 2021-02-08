@@ -40,7 +40,7 @@ export class UserItem extends Component {
                                 <ButtonIcon icon={"trash"} onClick={() => onDelete(elem)}>Supprimer</ButtonIcon>
                                 <a href={url} target="_blank" className="btn-icon">
                                     <span className="icon-share" />
-                                    <span className="tooltip">Impersonate</span>
+                                    <span className="tooltip">Imiter</span>
                                 </a>
                             </>
                             }
