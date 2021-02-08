@@ -38,9 +38,9 @@
 
 $icons:
         "default" var(--alpha) var(--txt) var(--greyShadow),
-        "primary" var(--primaryShadow) var(--txt) var(--primaryShadow),
-        "danger" var(--dangerShadow) var(--txt) var(--dangerShadow),
-        "warning" var(--warningShadow) var(--txt) var(--warningShadow);
+        "primary" var(--primaryShadow) var(--txt) var(--primaryShadow2),
+        "danger" var(--dangerShadow) var(--txt) var(--dangerShadow2),
+        "warning" var(--warningShadow) var(--txt) var(--warningShadow2);
 
 @each $name, $bg, $txt, $shadow in $icons {
   .alert-#{$name} {
