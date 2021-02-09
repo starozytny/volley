@@ -10,6 +10,7 @@ use App\Service\MailerService;
 use App\Service\SanitizeData;
 use App\Service\SettingsService;
 use App\Service\ValidatorService;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -336,7 +337,7 @@ class UserController extends AbstractController
         }
 
         if ($user->getForgetAt()) {
-            $interval = date_diff($user->getForgetAt(), new \DateTime());
+            $interval = date_diff($user->getForgetAt(), new DateTime());
             if ($interval->i < 30) {
                 return $apiResponse->apiJsonResponseValidationFailed([[
                     'name' => 'fUsername',
@@ -347,7 +348,7 @@ class UserController extends AbstractController
 
         $code = uniqid($user->getId());
 
-        $user->setForgetAt(new \DateTime());
+        $user->setForgetAt(new DateTime());
         $user->setForgetCode($code);
 
         $url = $this->generateUrl('app_password_reinit', ['token' => $user->getToken(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -457,7 +458,7 @@ class UserController extends AbstractController
             header('Content-Disposition: attachment; filename="'.$fileName.'"');
         }
 
-        $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5, 'export/');
+        $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5, 'export/');
         return new BinaryFileResponse($this->getParameter('private_directory'). 'export/' . $fileName);
     }
 }

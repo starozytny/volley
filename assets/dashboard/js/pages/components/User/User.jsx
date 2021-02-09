@@ -13,7 +13,7 @@ import { UserUpdate }    from "./UserUpdate";
 
 export class User extends Component {
     constructor(props) {
-        super();
+        super(props);
 
         this.state = {
             context: "list",

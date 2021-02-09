@@ -10,7 +10,7 @@ function axiosGetData(self, url){
             let data = response.data;
             self.setState({ data: data });
         })
-        .catch(function (error) {
+        .catch(function () {
             self.setState({ loadPageError: true });
         })
         .then(function () {
@@ -25,7 +25,7 @@ function axiosGetDataPagination(self, url, perPage=10){
             let data = response.data;
             self.setState({ dataImmuable: data, data: data, currentData: data.slice(0, perPage) });
         })
-        .catch(function (error) {
+        .catch(function () {
             self.setState({ loadPageError: true });
         })
         .then(function () {
