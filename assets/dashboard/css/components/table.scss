@@ -12,6 +12,10 @@
     & > .item{
       @include flex(row, center, flex-start);
       padding: 12px;
+
+      &:hover{
+        background-color: var(--primaryNuance0);
+      }
     }
 
     & > .item:not(:last-child){

@@ -7,7 +7,7 @@ import { Selector }     from "@dashboardComponents/Layout/Selector";
 
 export class UserItem extends Component {
     render () {
-        const { elem, onChangeContext, onDelete, onSelectors, selectors } = this.props
+        const { elem, onChangeContext, onDelete, onSelectors } = this.props
 
         let url = Routing.generate('user_homepage', {'_switch_user' : elem.username})
 
@@ -16,7 +16,7 @@ export class UserItem extends Component {
         }
 
         return <div className="item">
-            <Selector id={elem.id} onSelectors={onSelectors} selectors={selectors} />
+            <Selector id={elem.id} onSelectors={onSelectors} />
 
             <div className="item-content">
                 <div className="item-body">

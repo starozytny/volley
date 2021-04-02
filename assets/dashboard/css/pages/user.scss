@@ -62,6 +62,9 @@
 }
 
 .items-table {
+  padding-top: 0;
+  padding-bottom: 0;
+
   & > .items > .item{
     align-items: flex-start;
     padding-top: 24px;
@@ -77,7 +80,6 @@
 }
 
 .items-user{
-
   .infos{
     width: calc(100% - 42px - 12px);
   }
@@ -133,6 +135,12 @@
     }
     .filter-search{
       width: calc(100% - 24px - 195px);
+    }
+  }
+
+  .items-table {
+    & > .items > .item {
+      padding-bottom: 24px;
     }
   }
 
