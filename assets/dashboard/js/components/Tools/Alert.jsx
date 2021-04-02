@@ -1,25 +1,29 @@
 import React from "react";
 
 export function Alert(props){
-    const { type, title, withIcon = true, content=null, children } = props;
+    const { type, title, withIcon = true, iconCustom=null, content=null, children } = props;
 
     let icon, alert;
     switch (type){
         case "danger":
             alert = "danger";
-            icon = "warning";
+            icon = iconCustom ? iconCustom : "warning";
             break;
         case "warning":
             alert = "warning";
-            icon = "warning";
+            icon = iconCustom ? iconCustom : "warning";
             break;
         case "info":
             alert = "primary";
-            icon = "information";
+            icon = iconCustom ? iconCustom : "information";
+            break;
+        case "reverse":
+            alert = "default-reverse";
+            icon = iconCustom ? iconCustom : "information";
             break;
         default:
             alert = "default";
-            icon = "question";
+            icon = iconCustom ? iconCustom : "question";
             break;
     }
 

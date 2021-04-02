@@ -138,7 +138,7 @@ export class UserForm extends Component {
                 <div className="line line-2">
                     <Checkbox items={rolesItems} identifiant="roles" valeur={roles} errors={errors} onChange={this.handleChange}>Roles</Checkbox>
 
-                    {context === "create" ? <div className="password-rules">
+                    {context === "create" && <div className="password-rules">
                         <p>Règles de création de mot de passe :</p>
                         <ul>
                             <li>Au moins 12 caractères</li>
@@ -147,11 +147,11 @@ export class UserForm extends Component {
                             <li>Au moins 1 chiffre</li>
                             <li>Au moins 1 caractère spécial</li>
                         </ul>
-                    </div> : <div />}
+                    </div>}
                 </div>
 
                 {context === "create" ? <>
-                    <Alert>
+                    <Alert type="reverse">
                         Laisser le champs vide génére un mot de passe aléatoire. L'utilisateur pourra utilise la
                         fonction <u>Mot de passe oublié ?</u> pour créer son mot de passe.
                     </Alert>
