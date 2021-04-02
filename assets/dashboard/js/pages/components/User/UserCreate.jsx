@@ -13,7 +13,7 @@ export class UserCreate extends Component {
             <div>
                 <div className="toolbar">
                     <div className="item">
-                        <Button icon="left-arrow" type="default" onClick={() => onChangeContext("list")}>Retour à la liste</Button>
+                        <Button outline={true} icon="left-arrow" type="primary" onClick={() => onChangeContext("list")}>Retour à la liste</Button>
                     </div>
                 </div>
 

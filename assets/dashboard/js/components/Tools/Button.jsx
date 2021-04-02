@@ -19,17 +19,18 @@ export function ButtonIcon(props){
 }
 
 export function Button(props){
-    const { icon, type="primary", isSubmit=false, children, onClick, element="button", target="_self" } = props;
+    const { icon, type="primary", isSubmit=false, outline=false, children, onClick, element="button", target="_self" } = props;
 
     if(element === "button"){
-        return <button className={`btn btn-${type}`} type={isSubmit ? "submit" : ""} onClick={onClick}>
+        return <button className={`btn btn-${outline ? "outline-" : ""}${type}`} type={isSubmit ? "submit" : ""} onClick={onClick}>
             {icon && <span className={`icon-${icon}`} />}
             <span>{children}</span>
         </button>
     }else{
-        return <a className={`btn btn-${type}`} target={target} href={onClick}>
+        return <a className={`btn btn-${outline ? "outline-" : ""}${type}`} target={target} href={onClick}>
             {icon && <span className={`icon-${icon}`} />}
             <span>{children}</span>
         </a>
     }
 }
+

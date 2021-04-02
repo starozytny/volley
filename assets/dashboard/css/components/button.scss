@@ -22,11 +22,11 @@ button.swal2-cancel.swal2-styled{
   }
 
   &:hover{
-    opacity: .9;
+    opacity: .8;
   }
 
   &.active{
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
 
@@ -58,7 +58,14 @@ $icons:
   .btn-#{$name} {
     background: $bg;
     color: $txt;
-    border: 1px slod $bg;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 12px $shadow;
+  }
+
+  .btn-outline-#{$name} {
+    background-color: var(--alpha);
+    color: $bg;
+    border: 1px solid $bg;
     box-shadow: 0 4px 12px $shadow;
   }
 }
@@ -72,7 +79,7 @@ $icons:
   button.swal2-#{$name}.swal2-styled {
     background: $bg;
     color: $txt;
-    border: 1px slod $bg;
+    border: 1px slod transparent;
     box-shadow: 0 5px 10px $shadow;
 
     &:hover{
@@ -87,5 +94,10 @@ $icons:
 }
 
 .btn-default{
-  border-color: 1px solid var(--grey);
+  border-color: var(--greyShadow);
+}
+
+.btn-outline-default{
+  color: var(--txt);
+  border-color: var(--grey);
 }

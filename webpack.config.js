@@ -39,8 +39,8 @@ Encore
     })
 
     .configureFilenames({
-        css: 'css/[name].[hash:8].css',
-        js: 'js/[name].[hash:8].js'
+        css: !Encore.isProduction() ? 'css/[name].css' : 'css/[name].[hash:8].css',
+        js: !Encore.isProduction() ? 'js/[name].js' : 'js/[name].[hash:8].js'
     })
 
     /*

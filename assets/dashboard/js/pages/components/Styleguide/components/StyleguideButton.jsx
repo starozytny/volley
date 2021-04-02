@@ -19,6 +19,16 @@ export function StyleguideButton () {
                 <ButtonIcon icon="pencil" text="Default" />
 
             </div>
+
+            <div className="buttons-items">
+
+                <Button outline={true} type="default">Default</Button>
+                <Button outline={true}>Primary</Button>
+                <Button outline={true} type="danger">Danger</Button>
+                <Button outline={true} type="warning">Warning</Button>
+                <Button outline={true} type="success">Success</Button>
+                <Button outline={true} type="default" icon="padlock">Default</Button>
+            </div>
         </section>
     )
 }
