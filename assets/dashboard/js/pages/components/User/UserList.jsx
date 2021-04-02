@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-import Routing        from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
+import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Button, ButtonIcon } from "@dashboardComponents/Tools/Button";
 
 import { Filter, FilterSelected } from "@dashboardComponents/Layout/Filter";
 import { Search }     from "@dashboardComponents/Layout/Search";
+import { Alert }      from "@dashboardComponents/Tools/Alert";
 
 import { UserItem }   from "./UserItem";
 
@@ -49,9 +50,9 @@ export class UserList extends Component {
 
                 <div className="items-table">
                     <div className="items items-default items-user">
-                        {data && data.map(elem => {
+                        {data && data.length !== 0 ? data.map(elem => {
                             return <UserItem {...this.props} elem={elem} key={elem.id}/>
-                        })}
+                        }) : <Alert type="info">Aucun résultat</Alert>}
                     </div>
                 </div>
 
