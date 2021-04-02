@@ -8,7 +8,7 @@ button.swal2-cancel.swal2-styled{
   background: none;
   border: none;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 1;
   transition: all 0.2s ease-in-out;
   text-align: center;
   color: var(--txt);
@@ -20,12 +20,16 @@ button.swal2-cancel.swal2-styled{
 
   &:hover{
     transform: translateY(-2px);
-    opacity: 1;
+    opacity: .9;
+  }
+
+  &.active{
+    opacity: 0.8;
   }
 }
 
 .btn{
-  padding: 12px 24px;
+  padding: 12px 28px;
 }
 
 .btn-icon{
@@ -43,26 +47,23 @@ button.swal2-cancel.swal2-styled{
 
 $icons:
   "default" var(--alpha) var(--txt) var(--greyShadow),
-  "primary" var(--primary) var(--txt) var(--primaryShadow),
-  "danger" var(--danger) var(--txt) var(--dangerShadow),
-  "warning" var(--warning) var(--txt) var(--warningShadow);
+  "primary" var(--primary) var(--alpha) var(--primaryShadow),
+  "danger" var(--danger) var(--alpha) var(--dangerShadow),
+  "success" var(--success) var(--alpha) var(--successShadow),
+  "warning" var(--warning) var(--alpha) var(--warningShadow);
 
 @each $name, $bg, $txt, $shadow in $icons {
   .btn-#{$name} {
     background: $bg;
     color: $txt;
     border: 1px slod $bg;
-    box-shadow: 0 5px 10px $shadow;
-
-    &:hover{
-      box-shadow: 0 8px 10px $shadow;
-    }
+    box-shadow: 0 4px 12px $shadow;
   }
 }
 
 $icons:
-        "confirm" var(--primary) var(--txt) var(--primaryShadow),
-        "cancel" var(--danger) var(--txt) var(--dangerShadow)
+  "confirm" var(--primary) var(--alpha) var(--primaryShadow),
+  "cancel" var(--danger) var(--alpha) var(--dangerShadow)
 ;
 
 @each $name, $bg, $txt, $shadow in $icons {

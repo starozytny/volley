@@ -3,22 +3,21 @@
 @import "~react-selectize/dist/index.min.css";
 
 :root{
-    --color0: #a9aac9;
-    --primary: #00a8e8;
-    --danger: #d57d7d;
-    --warning: #e7d087;
-
-    --color0Shadow: rgba(169, 170, 201, 0.4);
-    --primaryShadow: rgba(0,168,232, 0.4);
-    --primaryShadow2: rgba(0,168,232, 0.1);
-    --dangerShadow: rgba(213,125,125, 0.4);
-    --dangerShadow2: rgba(213,125,125, 0.1);
-    --warningShadow: rgba(231,208,135, 0.4);
-    --warningShadow2: rgba(231,208,135, 0.1);
-
+    --primary: #109cf1;
+    --danger: #f7685b;
+    --warning: #fdad2d;
+    --success: #2ed47a;
     --grey: #c7c7c7;
     --grey2: #929292;
 
+    --primaryShadow: rgba(16, 156, 241, 0.4);
+    --primaryShadow2: rgba(16, 156, 241, 0.1);
+    --dangerShadow: rgba(247, 104, 91, 0.4);
+    --dangerShadow2: rgba(247, 104, 91, 0.1);
+    --warningShadow: rgba(255, 185, 70, 0.4);
+    --warningShadow2: rgba(255, 185, 70, 0.1);
+    --successShadow: rgba(46, 212, 122, 0.4);
+    --successShadow2: rgba(46, 212, 122, 0.1);
     --greyShadow: rgba(199,199,199, 0.2);
 
     --overlay: rgba(14, 14, 14, 0.5);
@@ -26,7 +25,12 @@
     --alpha: #fff;
     --beta: #000;
 
+    --tableBlack: #323C47;
+    --tableGray: #707683;
+
+    --txtBlue: #334D6E;
     --txt: #101010;
+
     --fond: #e8e8e8;
     --fondContent: #f6f6f6;
     --fondMenu: #212121;

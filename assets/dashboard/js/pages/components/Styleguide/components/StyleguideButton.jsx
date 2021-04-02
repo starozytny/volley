@@ -12,6 +12,7 @@ export function StyleguideButton () {
                 <Button>Primary</Button>
                 <Button type="danger">Danger</Button>
                 <Button type="warning">Warning</Button>
+                <Button type="success">Success</Button>
                 <Button type="default" icon="padlock">Default</Button>
 
                 <ButtonIcon icon="pencil">Modifier</ButtonIcon>
