@@ -19,6 +19,7 @@
         background: transparent;
         border: none;
         padding: 8px;
+        justify-content: flex-start;
       }
     }
   }
@@ -33,6 +34,14 @@
 @media (min-width:768px) {
   .page-actions{
     @include flex(row, flex-start, space-between);
+
+    .common-actions{
+      .dropdown{
+        .dropdown-btn{
+          justify-content: centre;
+        }
+      }
+    }
   }
 }
 

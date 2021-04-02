@@ -19,6 +19,7 @@
     --successShadow: rgba(46, 212, 122, 0.4);
     --successShadow2: rgba(46, 212, 122, 0.1);
     --greyShadow: rgba(199,199,199, 0.2);
+    --greyShadow2: rgba(199,199,199, 0.1);
 
     --overlay: rgba(14, 14, 14, 0.5);
 
@@ -101,7 +102,7 @@ main{
 .main-content{
     min-height: 100vh;
     padding: 12px;
-    margin-top: 24px;
+    margin-top: 12px;
 }
 
 //                      __   _  ___ ____  _  _     __

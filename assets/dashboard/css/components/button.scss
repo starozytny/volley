@@ -15,7 +15,10 @@ button.swal2-cancel.swal2-styled{
 
   [class^="icon-"]{
     font-size: 14px;
-    margin-right: 8px;
+
+    & + span:not(.tooltip){
+      margin-left: 8px;
+    }
   }
 
   &:hover{

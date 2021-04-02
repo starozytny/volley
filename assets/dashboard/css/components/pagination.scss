@@ -15,6 +15,7 @@
 
     &:hover{
       background-color: transparent;
+      color: var(--grey);
     }
   }
 }
@@ -28,6 +29,7 @@
   &.active{
     border-radius: 3px;
     background-color: var(--primary);
+    color: var(--alpha);
   }
 }
 
@@ -41,5 +43,6 @@
 
   &:hover{
     background-color: var(--primaryShadow);
+    color: var(--alpha);
   }
 }

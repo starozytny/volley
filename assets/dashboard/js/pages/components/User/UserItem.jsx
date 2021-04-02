@@ -29,8 +29,8 @@ export class UserItem extends Component {
                                 <span>{elem.lastname.toUpperCase()} {elem.firstname}</span>
                                 {elem.highRoleCode !== 0 && <span className="role">{elem.highRole}</span>}
                             </div>
-                            <div className="sub">{elem.username}</div>
-                            {elem.email !== "undefined@undefined.fr" ? <div className="sub">{elem.email}</div> : <div className="sub txt-danger">{elem.email} <span className="icon-warning" /></div>}
+                            <div className="sub sub-username">{elem.username}</div>
+                            {elem.email !== "undefined@undefined.fr" ? <div className="sub">{elem.email}</div> : <div className="sub txt-danger"><span className="icon-warning" /> {elem.email}</div>}
 
                         </div>
                         <div className="actions">

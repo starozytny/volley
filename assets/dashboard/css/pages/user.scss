@@ -64,6 +64,7 @@
 .items-table {
   & > .items > .item{
     align-items: flex-start;
+    padding-top: 24px;
   }
 
   .item-selector{
@@ -78,18 +79,23 @@
 .items-user{
 
   .infos{
-    width: calc(100% - 64px - 12px);
+    width: calc(100% - 42px - 12px);
   }
 
   .avatar{
     background: var(--fond);
-    width: 64px; height: 64px;
+    width: 42px; height: 42px;
+    border-radius: 4px;
     overflow: hidden;
     margin-right: 12px;
 
     img{
-      width: 64px; height: 64px;
+      width: 42px; height: 42px;
     }
+  }
+
+  .sub-username{
+    margin-bottom: 4px;
   }
 
   .role{
@@ -98,6 +104,10 @@
 
   .sub.txt-danger{
     opacity: 1;
+  }
+
+  .actions{
+    margin-top: 8px;
   }
 }
 
@@ -127,6 +137,14 @@
   }
 
   .items-user{
+    .infos{
+      width: calc(100% - 64px - 12px);
+    }
+
+    .avatar , .avatar > img{
+      width: 64px;
+      height: 64px;
+    }
     .role{
       margin: 0 0 0 8px;
     }

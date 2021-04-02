@@ -1,13 +1,21 @@
 @import "../vars/vars";
 
 .items-table{
-  padding-bottom: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: var(--alpha);
+  border-radius: 4px;
+  box-shadow: 0 0 10px var(--greyShadow2);
+  margin-bottom: 24px;
 
   & > .items{
     & > .item{
       @include flex(row, center, flex-start);
+      padding: 12px;
+    }
+
+    & > .item:not(:last-child){
       border-bottom: 1px solid var(--fond);
-      padding: 12px 0;
     }
 
     & > .item-header{
@@ -76,15 +84,6 @@
 
     .item-content{
       transition: all 0.2s ease-in-out;
-    }
-
-    &:hover {
-      background: var(--alpha);
-
-      & > .item-content{
-        transform: translateX(6px);
-        padding-left: 12px;
-      }
     }
   }
 
