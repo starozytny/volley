@@ -119,7 +119,7 @@ export class UserForm extends Component {
 
         return <>
             <p className="form-infos">
-                Le nom d'utilisateur est automatiquement formaté pour supprimer les espaces et les accents sont supprimés ou remplacés.
+                Le nom d'utilisateur est automatiquement formaté, les espaces et les accents sont supprimés ou remplacés.
             </p>
             <form onSubmit={this.handleSubmit}>
 
@@ -151,16 +151,19 @@ export class UserForm extends Component {
                 </div>
 
                 {context === "create" ? <>
+                    <Alert>
+                        Laisser le champs vide génére un mot de passe aléatoire. L'utilisateur pourra utilise la
+                        fonction <u>Mot de passe oublié ?</u> pour créer son mot de passe.
+                    </Alert>
                     <div className="line line-2">
                         <Input type="password" valeur={password} identifiant="password" errors={errors} onChange={this.handleChange} >Mot de passe (facultatif)</Input>
                         <Input type="password" valeur={passwordConfirm} identifiant="passwordConfirm" errors={errors} onChange={this.handleChange} >Confirmer le mot de passe</Input>
                     </div>
-                    <Alert>Laisser le champs vide génére un mot de passe aléatoire. L'utilisateur pourra utilise la fontion <u>Mot de passe oublié ?</u> pour créer son mot de passe.</Alert>
-                </> : <Alert type="warning">Le mot de passe est modifiable exclusivement par l'utilisateur lui même grâce au <u>Mot de passe oublié ?</u></Alert>}
+                </> : <Alert type="warning">Le mot de passe est modifiable exclusivement par l'utilisateur lui même grâce à la fonction <u>Mot de passe oublié ?</u></Alert>}
 
                 <div className="line">
                     <div className="form-button">
-                        <Button isSubmit={true}>Valider la saisie</Button>
+                        <Button isSubmit={true}>{context === "create" ? "Ajouter l'utilisateur" : 'Modifier l\'utilisateur'}</Button>
                     </div>
                 </div>
             </form>

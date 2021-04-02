@@ -24,12 +24,12 @@ export function Button(props){
     if(element === "button"){
         return <button className={`btn btn-${type}`} type={isSubmit ? "submit" : ""} onClick={onClick}>
             {icon && <span className={`icon-${icon}`} />}
-            {children}
+            <span>{children}</span>
         </button>
     }else{
         return <a className={`btn btn-${type}`} target={target} href={onClick}>
             {icon && <span className={`icon-${icon}`} />}
-            {children}
+            <span>{children}</span>
         </a>
     }
 }

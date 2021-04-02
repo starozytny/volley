@@ -114,7 +114,9 @@ export class StyleguideForm extends Component {
 
         if(avatar !== ""){
             let formData = new FormData();
-            formData.append('avatar', avatar[0].file);
+            if(avatar[0]){
+                formData.append('avatar', avatar[0].file);
+            }
 
             const self = this;
             Formulaire.loader(true);
@@ -166,7 +168,7 @@ export class StyleguideForm extends Component {
         ]
 
         return (
-            <section>
+            <section className="form">
                 <h2>Formulaire</h2>
                 <div className="form-items">
                     <form onSubmit={this.handleSubmit}>

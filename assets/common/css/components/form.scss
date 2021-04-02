@@ -1,6 +1,10 @@
 @import '~react-dropzone-uploader/dist/styles.css';
 
 .form{
+  background-color: var(--alpha);
+  border-radius: 4px;
+  padding: 12px;
+
   form{
     margin-top: 24px;
 
@@ -244,6 +248,15 @@ select{
       }
     }
   }
+
+  .checkbox-items, .radiobox-items{
+    label{
+      border-color: var(--danger);
+    }
+    .checked > label {
+      border-color: var(--grey2);
+    }
+  }
 }
 
 .form-files{
@@ -321,5 +334,16 @@ select{
       margin-right: 12px;
       margin-bottom: 0;
     }
+  }
+}
+//                      __   _ ____  ___   ___    __
+//                     | _| / |___ \( _ ) / _ \  |_ |
+//    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |/ __/ (_) | |_| |  | |_____|_____|_____|
+//                     | |  |_|_____\___/ \___/   | |
+//                     |__|                      |__|
+@media (min-width:1280px) {
+  .form {
+    padding: 24px;
   }
 }
