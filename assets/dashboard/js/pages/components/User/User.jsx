@@ -23,6 +23,7 @@ export class User extends Component {
             currentData: null,
             element: null,
             filters: [],
+            perPage: 10
         }
 
         this.page = React.createRef();
@@ -36,12 +37,13 @@ export class User extends Component {
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     }
 
-    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_users_index')) }
+    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_users_index'), this.state.perPage) }
+
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
     handleUpdateList = (element, newContext=null) => {
-        const { data, context } = this.state
-        Formulaire.updateDataPagination(this, Sort.compareLastname, newContext, context, data, element);
+        const { data, context, perPage } = this.state
+        Formulaire.updateDataPagination(this, Sort.compareLastname, newContext, context, data, element, perPage);
     }
 
     handleChangeContext = (context, element=null) => {
@@ -61,7 +63,7 @@ export class User extends Component {
     }
 
     handleGetFilters = (filters) => {
-        const { dataImmuable } = this.state;
+        const { dataImmuable, perPage } = this.state;
 
         let newData = [];
         if(filters.length === 0) {
@@ -79,12 +81,12 @@ export class User extends Component {
 
         localStorage.setItem("user.pagination", "0")
         this.page.current.pagination.current.handlePageOne();
-        this.setState({ data: newData, currentData: newData.slice(0, 10), filters: filters });
+        this.setState({ data: newData, currentData: newData.slice(0, perPage), filters: filters });
         return newData;
     }
 
     handleSearch = (search) => {
-        const { filters } = this.state;
+        const { filters, perPage } = this.state;
 
         let dataSearch = this.handleGetFilters(filters);
 
@@ -101,14 +103,14 @@ export class User extends Component {
                     return v;
                 }
             })
-            this.setState({ data: newData, currentData: newData.slice(0, 10) });
+            this.setState({ data: newData, currentData: newData.slice(0, perPage) });
         }
     }
 
     render () {
         const { loadPageError, context, loadData, data, currentData, element, filters } = this.state;
 
-        let content = null, havePagination = false;
+        let content, havePagination = false;
         switch (context){
             case "create":
                 content = <UserCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
