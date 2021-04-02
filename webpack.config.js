@@ -39,8 +39,8 @@ Encore
     })
 
     .configureFilenames({
-        css: 'css/[name].css',
-        js: 'js/[name].js'
+        css: 'css/[name].[hash:8].css',
+        js: 'js/[name].[hash:8].js'
     })
 
     /*
