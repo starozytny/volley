@@ -34,7 +34,6 @@
         display: block;
         top: 12px; left: 12px;
         opacity: 0.7;
-        transform: scale(1);
         transition: all 0.2s ease-in-out;
       }
 
@@ -49,18 +48,21 @@
       padding: 11px 12px;
       border-radius: 3px 0 0 3px;
       justify-content: space-between;
+      border-right: none;
     }
 
     input[type="search"]{
       padding: 12px 10px 12px 40px;
       width: 100%;
       border-radius: 0 3px 3px 0;
-      border-left: none;
+
+      &:focus{
+        border-color: var(--grey);
+      }
 
       &:hover + [class^="icon-"],
       &:focus + [class^="icon-"]{
-        transform: scale(0.9);
-        color: var(--primary)
+        color: var(--primary);
       }
     }
   }

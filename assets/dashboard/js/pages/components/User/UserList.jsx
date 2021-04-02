@@ -52,7 +52,7 @@ export class UserList extends Component {
                     <div className="items items-default items-user">
                         {data && data.length !== 0 ? data.map(elem => {
                             return <UserItem {...this.props} elem={elem} key={elem.id}/>
-                        }) : <Alert type="info">Aucun résultat</Alert>}
+                        }) : <Alert>Aucun résultat</Alert>}
                     </div>
                 </div>
 

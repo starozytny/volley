@@ -19,7 +19,6 @@ button.swal2-cancel.swal2-styled{
   }
 
   &:hover{
-    transform: translateY(-2px);
     opacity: .9;
   }
 
@@ -29,7 +28,7 @@ button.swal2-cancel.swal2-styled{
 }
 
 .btn{
-  padding: 12px 28px;
+  padding: 12px 24px;
 }
 
 .btn-icon{
@@ -47,10 +46,10 @@ button.swal2-cancel.swal2-styled{
 
 $icons:
   "default" var(--alpha) var(--txt) var(--greyShadow),
-  "primary" var(--primary) var(--alpha) var(--primaryShadow),
-  "danger" var(--danger) var(--alpha) var(--dangerShadow),
-  "success" var(--success) var(--alpha) var(--successShadow),
-  "warning" var(--warning) var(--alpha) var(--warningShadow);
+  "primary" var(--primary) var(--alpha) var(--primaryShadow2),
+  "danger" var(--danger) var(--alpha) var(--dangerShadow2),
+  "success" var(--success) var(--alpha) var(--successShadow2),
+  "warning" var(--warning) var(--alpha) var(--warningShadow2);
 
 @each $name, $bg, $txt, $shadow in $icons {
   .btn-#{$name} {
