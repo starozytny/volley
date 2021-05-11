@@ -6,6 +6,7 @@ use App\Entity\Blog\BoArticle;
 use App\Entity\User;
 use App\Repository\Blog\BoArticleRepository;
 use App\Service\ApiResponse;
+use App\Service\FileUploader;
 use App\Service\SanitizeData;
 use App\Service\ValidatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -73,25 +74,24 @@ class ArticleController extends AbstractController
      * @param Request $request
      * @param ValidatorService $validator
      * @param ApiResponse $apiResponse
+     * @param FileUploader $fileUploader
      * @return JsonResponse
      */
-    public function create(Request $request, ValidatorService $validator, ApiResponse $apiResponse): JsonResponse
+    public function create(Request $request, ValidatorService $validator, ApiResponse $apiResponse, FileUploader $fileUploader): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $data = json_decode($request->getContent());
+        $file = $request->files->get('file');
 
-        if ($data === null) {
-            return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
-        }
-
-        if (!isset($data->title)) {
-            return $apiResponse->apiJsonResponseBadRequest('Il manque des données.');
-        }
+        $fileName = ($file) ? $fileUploader->upload($file, "articles", true) : null;
+        $title = $request->get('title');
+        $introduction = $request->get('introduction');
+        $content = $request->get('content');
 
         $article = new BoArticle();
-        $article->setTitle(trim($data->title));
-        $article->setIntroduction($data->introduction->html ?: null);
-        $article->setContent($data->content->html ?: null);
+        $article->setTitle(trim($title));
+        $article->setIntroduction($introduction ?: null);
+        $article->setContent($content ?: null);
+        $article->setFile($fileName);
 
         $noErrors = $validator->validate($article);
 
@@ -110,7 +110,7 @@ class ArticleController extends AbstractController
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @Route("/{id}", name="update", options={"expose"=true}, methods={"PUT"})
+     * @Route("/{id}", name="update", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,
@@ -137,25 +137,30 @@ class ArticleController extends AbstractController
      * @param ValidatorService $validator
      * @param ApiResponse $apiResponse
      * @param BoArticle $article
+     * @param FileUploader $fileUploader
      * @return JsonResponse
      */
-    public function update(Request $request, ValidatorService $validator, ApiResponse $apiResponse, BoArticle $article): JsonResponse
+    public function update(Request $request, ValidatorService $validator, ApiResponse $apiResponse, BoArticle $article, FileUploader $fileUploader): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $data = json_decode($request->getContent());
+        $file = $request->files->get('file');
 
-        if (isset($data->title)) {
-            $article->setTitle(trim($data->title));
+        if($file){
+            $oldFile = $this->getParameter('public_directory'). 'articles/' . $article->getFile();
+            if($article->getFile() && file_exists($oldFile)){
+                unlink($oldFile);
+            }
+
+            $fileName = $fileUploader->upload($file, "articles", true);
+            $article->setFile($fileName);
         }
+        $title = $request->get('title');
+        $introduction = $request->get('introduction');
+        $content = $request->get('content');
 
-        if (isset($data->introduction)) {
-            $article->setIntroduction($data->introduction->html);
-        }
-
-        if (isset($data->content)) {
-            $article->setContent($data->content->html);
-        }
-
+        $article->setTitle(trim($title));
+        $article->setIntroduction($introduction ?: null);
+        $article->setContent($content ?: null);
         $updatedAt = new \DateTime();
         $updatedAt->setTimezone(new \DateTimeZone("Europe/Paris"));
         $article->setUpdatedAt($updatedAt);

@@ -9,6 +9,7 @@ import { Trumb }               from "@dashboardComponents/Tools/Trumb";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
 import Formulaire              from "@dashboardComponents/functions/Formulaire";
+import {Drop} from "@dashboardComponents/Tools/Drop";
 
 export class ArticleForm extends Component {
     constructor(props) {
@@ -20,6 +21,8 @@ export class ArticleForm extends Component {
             content: { value: props.content ? props.content : "", html: props.content ? props.content : "" },
             errors: []
         }
+
+        this.inputFile = React.createRef();
 
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeTrumb = this.handleChangeTrumb.bind(this);
@@ -45,18 +48,15 @@ export class ArticleForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { context, url, messageSuccess } = this.props;
-        const { title } = this.state;
+        const { url, messageSuccess } = this.props;
+        const { title, introduction, content } = this.state;
 
         this.setState({ success: false})
 
-        let method = "PUT";
+        let file = this.inputFile.current.drop.current.files;
         let paramsToValidate = [
             {type: "text", id: 'title', value: title}
         ];
-        if(context === "create"){
-            method = "POST";
-        }
 
         // validate global
         let validate = Validateur.validateur(paramsToValidate)
@@ -65,9 +65,20 @@ export class ArticleForm extends Component {
         if(!validate.code){
             this.setState({ errors: validate.errors });
         }else{
+            let formData = new FormData();
+            formData.append('title', title);
+            formData.append('introduction', introduction.html);
+            formData.append('content', content.html);
+
+            if(file !== ""){
+                if(file[0]){
+                    formData.append('file', file[0].file);
+                }
+            }
+
             Formulaire.loader(true);
             let self = this;
-            axios({ method: method, url: url, data: self.state })
+            axios({ method: "POST", url: url, data: formData, headers: {'Content-Type': 'multipart/form-data'} })
                 .then(function (response) {
                     let data = response.data;
                     self.props.onUpdateList(data);
@@ -92,6 +103,11 @@ export class ArticleForm extends Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="line">
                     <Input valeur={title} identifiant="title" errors={errors} onChange={this.handleChange} >Titre de l'article</Input>
+                </div>
+
+                <div className="line">
+                    <Drop ref={this.inputFile} identifiant="file" errors={errors} accept={"image/*"} maxFiles={1}
+                          label="Téléverser une image" labelError="Seules les images sont acceptées.">Image de garde</Drop>
                 </div>
 
                 <div className="line">
