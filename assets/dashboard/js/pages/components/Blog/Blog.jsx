@@ -33,7 +33,7 @@ export class Blog extends Component {
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     }
 
-    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_users_index'), this.state.perPage) }
+    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_articles_index'), this.state.perPage) }
 
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
@@ -112,6 +112,10 @@ export class Blog extends Component {
                 havePagination = true;
                 content = loadData ? <LoaderElement /> : <div>Hello</div>
                 break;
+        }
+
+        if(data && data.length <= 0){
+            havePagination = false;
         }
 
         return <>

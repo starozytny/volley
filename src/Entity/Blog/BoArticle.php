@@ -4,6 +4,7 @@ namespace App\Entity\Blog;
 
 use App\Repository\Blog\BoArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=BoArticleRepository::class)
@@ -14,11 +15,13 @@ class BoArticle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"admin:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"admin:read"})
      */
     private $title;
 
@@ -34,11 +37,13 @@ class BoArticle
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"admin:read"})
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"admin:read"})
      */
     private $content;
 
