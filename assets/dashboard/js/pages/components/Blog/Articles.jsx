@@ -7,7 +7,9 @@ import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 import Sort              from "@dashboardComponents/functions/sort";
 import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
-export class Blog extends Component {
+import { ArticlesList }    from "./ArticlesList";
+
+export class Articles extends Component {
     constructor(props) {
         super(props);
 
@@ -18,7 +20,6 @@ export class Blog extends Component {
             data: null,
             currentData: null,
             element: null,
-            filters: [],
             perPage: 10
         }
 
@@ -28,7 +29,6 @@ export class Blog extends Component {
         this.handleChangeContext = this.handleChangeContext.bind(this);
         this.handleUpdateList = this.handleUpdateList.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        this.handleGetFilters = this.handleGetFilters.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     }
@@ -51,51 +51,22 @@ export class Blog extends Component {
 
     handleDelete = (element) => {
         Formulaire.axiosDeleteElement(this, element, Routing.generate('api_users_delete', {'id': element.id}),
-            'Supprimer cet utilisateur ?', 'Cette action est irréversible.');
+            'Supprimer cet article ?', 'Cette action est irréversible.');
     }
     handleDeleteGroup = () => {
         let checked = document.querySelectorAll('.i-selector:checked');
-        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun utilisateur sélectionné.')
-    }
-
-    handleGetFilters = (filters) => {
-        const { dataImmuable, perPage } = this.state;
-
-        let newData = [];
-        if(filters.length === 0) {
-            newData = dataImmuable
-        }else{
-            dataImmuable.forEach(el => {
-                filters.forEach(filter => {
-                    if(filter === el.highRoleCode){
-                        newData.filter(elem => elem.id !== el.id)
-                        newData.push(el);
-                    }
-                })
-            })
-        }
-
-        sessionStorage.setItem("user.pagination", "0")
-        this.page.current.pagination.current.handlePageOne();
-        this.setState({ data: newData, currentData: newData.slice(0, perPage), filters: filters });
-        return newData;
+        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun article sélectionné.')
     }
 
     handleSearch = (search) => {
-        const { filters, perPage } = this.state;
-
-        let dataSearch = this.handleGetFilters(filters);
+        const { dataImmuable, perPage } = this.state;
 
         if(search === "") {
-            this.handleGetFilters(filters)
+            this.setState({ data: dataImmuable, currentData: dataImmuable.slice(0, perPage) });
         }else{
             let newData = [];
-            newData = dataSearch.filter(function(v) {
-                if(v.username.toLowerCase().includes(search)
-                    || v.email.toLowerCase().includes(search)
-                    || v.firstname.toLowerCase().includes(search)
-                    || v.lastname.toLowerCase().includes(search)
-                ){
+            newData = dataImmuable.filter(function(v) {
+                if(v.title.toLowerCase().includes(search)){
                     return v;
                 }
             })
@@ -104,13 +75,17 @@ export class Blog extends Component {
     }
 
     render () {
-        const { loadPageError, context, loadData, data, currentData, element, filters } = this.state;
+        const { loadPageError, context, loadData, data, currentData, element } = this.state;
 
         let content, havePagination = false;
         switch (context){
             default:
                 havePagination = true;
-                content = loadData ? <LoaderElement /> : <div>Hello</div>
+                content = loadData ? <LoaderElement /> : <ArticlesList onChangeContext={this.handleChangeContext}
+                                                                   onDelete={this.handleDelete}
+                                                                   onSearch={this.handleSearch}
+                                                                   onDeleteAll={this.handleDeleteGroup}
+                                                                   data={currentData} />
                 break;
         }
 
