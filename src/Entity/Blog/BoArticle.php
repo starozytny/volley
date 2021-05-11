@@ -54,6 +54,11 @@ class BoArticle
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $file;
+
     public function __construct()
     {
         $createAt = new \DateTime();
@@ -159,6 +164,18 @@ class BoArticle
     public function setAuthor(?BoAuthor $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

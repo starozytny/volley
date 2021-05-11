@@ -17,7 +17,7 @@ export class ArticlesItem extends Component {
                             <div className="name">
                                 <span>{elem.title}</span>
                             </div>
-                            <div className="sub sub-username">{elem.createAtString} {elem.updateAtAgo && ("- Modifié " + elem.updateAtAgo)}</div>
+                            <div className="sub sub-username">{elem.createAtString} {elem.updatedAtAgo && "- Modifié : " + elem.updatedAtAgo}</div>
                         </div>
                         <div className="actions">
                             <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
