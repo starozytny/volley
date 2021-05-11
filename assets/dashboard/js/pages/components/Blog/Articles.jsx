@@ -7,7 +7,8 @@ import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 import Sort              from "@dashboardComponents/functions/sort";
 import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
-import { ArticlesList }    from "./ArticlesList";
+import { ArticlesList }  from "./ArticlesList";
+import { ArticleCreate } from "./ArticleCreate";
 
 export class Articles extends Component {
     constructor(props) {
@@ -79,6 +80,9 @@ export class Articles extends Component {
 
         let content, havePagination = false;
         switch (context){
+            case "create":
+                content = <ArticleCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
+                break;
             default:
                 havePagination = true;
                 content = loadData ? <LoaderElement /> : <ArticlesList onChangeContext={this.handleChangeContext}
