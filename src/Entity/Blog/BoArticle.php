@@ -3,6 +3,7 @@
 namespace App\Entity\Blog;
 
 use App\Repository\Blog\BoArticleRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -89,6 +90,18 @@ class BoArticle
         return $this;
     }
 
+    /**
+     * Return created at time in string format d/m/Y
+     * @Groups({"admin:read"})
+     */
+    public function getCreateAtString(): ?string
+    {
+        if($this->createdAt == null){
+            return null;
+        }
+        return date_format($this->createdAt, 'd/m/Y');
+    }
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -99,6 +112,19 @@ class BoArticle
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * How long ago an article was update.
+     *
+     * @Groups({"admin:read"})
+     */
+    public function getUpdatedAtAgo(): ?string
+    {
+        if($this->updatedAt == null){
+            return null;
+        }
+        return Carbon::instance($this->updatedAt)->diffForHumans();
     }
 
     public function getIntroduction(): ?string
