@@ -16,8 +16,8 @@ export class ArticleForm extends Component {
 
         this.state = {
             title: props.title,
-            introduction: { value: props.introduction, html: "" },
-            content: { value: props.content, html: "" },
+            introduction: { value: props.introduction ? props.introduction : "", html: props.introduction ? props.introduction : "" },
+            content: { value: props.content ? props.content : "", html: props.content ? props.content : "" },
             errors: []
         }
 
@@ -35,7 +35,11 @@ export class ArticleForm extends Component {
     handleChange = (e) => { this.setState({[e.currentTarget.name]: e.currentTarget.value}) }
 
     handleChangeTrumb = (e) => {
-        this.setState({ [e.currentTarget.id]: { value: '', html: e.currentTarget.innerHTML } })
+        let val = this.state.introduction.value;
+        if(e.currentTarget.id === "content"){
+            val = this.state.content.value;
+        }
+        this.setState({ [e.currentTarget.id]: { value: val, html: e.currentTarget.innerHTML } })
     }
 
     handleSubmit = (e) => {
@@ -71,8 +75,6 @@ export class ArticleForm extends Component {
                     toastr.info(messageSuccess);
                 })
                 .catch(function (error) {
-                    console.log(error)
-                    console.log(error.response)
                     Formulaire.displayErrors(self, error);
                 })
                 .then(() => {

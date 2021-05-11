@@ -9,6 +9,7 @@ import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
 import { ArticlesList }  from "./ArticlesList";
 import { ArticleCreate } from "./ArticleCreate";
+import { ArticleUpdate } from "./ArticleUpdate";
 
 export class Articles extends Component {
     constructor(props) {
@@ -82,6 +83,9 @@ export class Articles extends Component {
         switch (context){
             case "create":
                 content = <ArticleCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
+                break;
+            case "update":
+                content = <ArticleUpdate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element}/>
                 break;
             default:
                 havePagination = true;

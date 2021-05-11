@@ -51,7 +51,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/blog", name="blog_index")
+     * @Route("/articles", name="blog_index")
      */
     public function blog(): Response
     {

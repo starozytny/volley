@@ -6,6 +6,7 @@ use App\Entity\Blog\BoArticle;
 use App\Entity\User;
 use App\Repository\Blog\BoArticleRepository;
 use App\Service\ApiResponse;
+use App\Service\SanitizeData;
 use App\Service\ValidatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -94,6 +95,72 @@ class ArticleController extends AbstractController
 
         $noErrors = $validator->validate($article);
 
+        if ($noErrors !== true) {
+            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+        }
+
+        $em->persist($article);
+        $em->flush();
+
+        return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
+    }
+
+    /**
+     * Update an article
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/{id}", name="update", options={"expose"=true}, methods={"PUT"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns an article object",
+     * )
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden for not good role or article",
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Validation failed",
+     * )
+     *
+     * @OA\RequestBody (
+     *     description="Only admin can change roles",
+     *     @Model(type=BoArticle::class, groups={"admin:write"}),
+     *     required=true
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param ValidatorService $validator
+     * @param ApiResponse $apiResponse
+     * @param BoArticle $article
+     * @return JsonResponse
+     */
+    public function update(Request $request, ValidatorService $validator, ApiResponse $apiResponse, BoArticle $article): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent());
+
+        if (isset($data->title)) {
+            $article->setTitle(trim($data->title));
+        }
+
+        if (isset($data->introduction)) {
+            $article->setIntroduction($data->introduction->html);
+        }
+
+        if (isset($data->content)) {
+            $article->setContent($data->content->html);
+        }
+
+        $updatedAt = new \DateTime();
+        $updatedAt->setTimezone(new \DateTimeZone("Europe/Paris"));
+        $article->setUpdatedAt($updatedAt);
+
+        $noErrors = $validator->validate($article);
         if ($noErrors !== true) {
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
