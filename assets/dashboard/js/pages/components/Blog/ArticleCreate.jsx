@@ -21,11 +21,12 @@ export class ArticleCreate extends Component {
                     <h2>Ajouter un article</h2>
                     <ArticleForm
                         context="create"
-                        url={Routing.generate('api_users_create')}
+                        url={Routing.generate('api_articles_create')}
                         title=""
                         introduction=""
                         content=""
                         onUpdateList={onUpdateList}
+                        onChangeContext={onChangeContext}
                         messageSuccess="Félicitation ! Vous avez ajouté un nouveau article !"
                     />
                 </div>

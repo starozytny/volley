@@ -15,13 +15,13 @@ class BoArticle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"admin:read"})
+     * @Groups({"admin:read", "admin:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"admin:read"})
+     * @Groups({"admin:read", "admin:write"})
      */
     private $title;
 
@@ -32,18 +32,19 @@ class BoArticle
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"admin:write"})
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"admin:read"})
+     * @Groups({"admin:read", "admin:write"})
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"admin:read"})
+     * @Groups({"admin:read", "admin:write"})
      */
     private $content;
 
@@ -51,6 +52,13 @@ class BoArticle
      * @ORM\ManyToOne(targetEntity=BoAuthor::class, inversedBy="articles")
      */
     private $author;
+
+    public function __construct()
+    {
+        $createAt = new \DateTime();
+        $createAt->setTimezone(new \DateTimeZone("Europe/Paris"));
+        $this->createdAt = $createAt;
+    }
 
     public function getId(): ?int
     {

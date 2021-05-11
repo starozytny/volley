@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import axios                   from "axios";
+import toastr                  from "toastr";
 
-import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
-import { Alert }               from "@dashboardComponents/Tools/Alert";
+import { Input }               from "@dashboardComponents/Tools/Fields";
 import { Button }              from "@dashboardComponents/Tools/Button";
+import { Trumb }               from "@dashboardComponents/Tools/Trumb";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
 import Formulaire              from "@dashboardComponents/functions/Formulaire";
-import {Trumb} from "@dashboardComponents/Tools/Trumb";
 
 export class ArticleForm extends Component {
     constructor(props) {
@@ -16,13 +16,13 @@ export class ArticleForm extends Component {
 
         this.state = {
             title: props.title,
-            introduction: props.introduction,
-            content: props.content,
-            errors: [],
-            success: false
+            introduction: { value: props.introduction, html: "" },
+            content: { value: props.content, html: "" },
+            errors: []
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeTrumb = this.handleChangeTrumb.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -32,25 +32,23 @@ export class ArticleForm extends Component {
         document.getElementById("title").focus()
     }
 
-    handleChange = (e) => {
-        let name = e.currentTarget.name;
-        let value = e.currentTarget.value;
-        this.setState({[name]: value})
+    handleChange = (e) => { this.setState({[e.currentTarget.name]: e.currentTarget.value}) }
+
+    handleChangeTrumb = (e) => {
+        this.setState({ [e.currentTarget.id]: { value: '', html: e.currentTarget.innerHTML } })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
 
         const { context, url, messageSuccess } = this.props;
-        const { title, introduction, content } = this.state;
+        const { title } = this.state;
 
         this.setState({ success: false})
 
         let method = "PUT";
         let paramsToValidate = [
-            {type: "text", id: 'title', value: title},
-            {type: "text", id: 'introduction', value: introduction},
-            {type: "text", id: 'content', value: content},
+            {type: "text", id: 'title', value: title}
         ];
         if(context === "create"){
             method = "POST";
@@ -69,16 +67,12 @@ export class ArticleForm extends Component {
                 .then(function (response) {
                     let data = response.data;
                     self.props.onUpdateList(data);
-                    self.setState({ success: messageSuccess, errors: [] });
-                    if(context === "create"){
-                        self.setState( {
-                            title: '',
-                            introduction: '',
-                            content: '',
-                        })
-                    }
+                    self.props.onChangeContext("list");
+                    toastr.info(messageSuccess);
                 })
                 .catch(function (error) {
+                    console.log(error)
+                    console.log(error.response)
                     Formulaire.displayErrors(self, error);
                 })
                 .then(() => {
@@ -90,23 +84,20 @@ export class ArticleForm extends Component {
 
     render () {
         const { context } = this.props;
-        const { errors, success, title, introduction, content } = this.state;
+        const { errors, title, introduction, content } = this.state;
 
         return <>
             <form onSubmit={this.handleSubmit}>
-
-                {success !== false && <Alert type="info">{success}</Alert>}
-
                 <div className="line">
                     <Input valeur={title} identifiant="title" errors={errors} onChange={this.handleChange} >Titre de l'article</Input>
                 </div>
 
                 <div className="line">
-                    <Trumb valeur={introduction} identifiant="introduction" errors={errors} onChange={this.handleChange} >Introduction</Trumb>
+                    <Trumb valeur={introduction.value} identifiant="introduction" errors={errors} onChange={this.handleChangeTrumb} >Introduction</Trumb>
                 </div>
 
                 <div className="line">
-                    <Trumb valeur={content} identifiant="content" errors={errors} onChange={this.handleChange} >Contenu de l'article</Trumb>
+                    <Trumb valeur={content.value} identifiant="content" errors={errors} onChange={this.handleChangeTrumb} >Contenu de l'article</Trumb>
                 </div>
 
                 <div className="line">
