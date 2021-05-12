@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
  * @Route("/api/articles", name="api_articles_")
@@ -45,6 +46,26 @@ class ArticleController extends AbstractController
         $order = $request->query->get('order') ?: 'ASC';
         $articles = $repository->findBy([], ['createdAt' => $order]);
         return $apiResponse->apiJsonResponse($articles, User::ADMIN_READ);
+    }
+
+    public function setArticle($article, $request, $fileName)
+    {
+        $title = $request->get('title');
+        $introduction = $request->get('introduction');
+        $content = $request->get('content');
+
+        $article->setTitle(trim($title));
+        $article->setIntroduction($introduction ?: null);
+        $article->setContent($content ?: null);
+
+        if($fileName){
+            $article->setFile($fileName);
+        }
+
+        $slug = new AsciiSlugger();
+        $article->setSlug($slug->slug(trim($title)));
+
+        return $article;
     }
 
     /**
@@ -83,15 +104,8 @@ class ArticleController extends AbstractController
         $file = $request->files->get('file');
 
         $fileName = ($file) ? $fileUploader->upload($file, "articles", true) : null;
-        $title = $request->get('title');
-        $introduction = $request->get('introduction');
-        $content = $request->get('content');
 
-        $article = new BoArticle();
-        $article->setTitle(trim($title));
-        $article->setIntroduction($introduction ?: null);
-        $article->setContent($content ?: null);
-        $article->setFile($fileName);
+        $article = $this->setArticle(new BoArticle(), $request, $fileName);
 
         $noErrors = $validator->validate($article);
 
@@ -145,6 +159,7 @@ class ArticleController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $file = $request->files->get('file');
 
+        $fileName = null;
         if($file){
             $oldFile = $this->getParameter('public_directory'). 'articles/' . $article->getFile();
             if($article->getFile() && file_exists($oldFile)){
@@ -152,15 +167,10 @@ class ArticleController extends AbstractController
             }
 
             $fileName = $fileUploader->upload($file, "articles", true);
-            $article->setFile($fileName);
         }
-        $title = $request->get('title');
-        $introduction = $request->get('introduction');
-        $content = $request->get('content');
 
-        $article->setTitle(trim($title));
-        $article->setIntroduction($introduction ?: null);
-        $article->setContent($content ?: null);
+        $article = $this->setArticle(new BoArticle(), $request, $fileName);
+
         $updatedAt = new \DateTime();
         $updatedAt->setTimezone(new \DateTimeZone("Europe/Paris"));
         $article->setUpdatedAt($updatedAt);

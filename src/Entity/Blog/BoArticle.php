@@ -5,10 +5,13 @@ namespace App\Entity\Blog;
 use App\Repository\Blog\BoArticleRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=BoArticleRepository::class)
+ * @UniqueEntity(fields={"title"})
+ * @UniqueEntity(fields={"slug"})
  */
 class BoArticle
 {
@@ -56,8 +59,14 @@ class BoArticle
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"admin:read", "admin:write"})
      */
     private $file;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -176,6 +185,18 @@ class BoArticle
     public function setFile(?string $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
