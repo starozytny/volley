@@ -65,11 +65,13 @@ class BoArticle
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"admin:read", "admin:write"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="boolean")
+     *  @Groups({"admin:read"})
      */
     private $isPublished;
 

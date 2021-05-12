@@ -10,6 +10,8 @@ import Formulaire        from "@dashboardComponents/functions/Formulaire";
 import { ArticlesList }  from "./ArticlesList";
 import { ArticleCreate } from "./ArticleCreate";
 import { ArticleUpdate } from "./ArticleUpdate";
+import axios from "axios";
+import toastr from "toastr";
 
 export class Articles extends Component {
     constructor(props) {
@@ -33,6 +35,7 @@ export class Articles extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
+        this.handleChangePublished = this.handleChangePublished.bind(this);
     }
 
     componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_articles_index'), this.state.perPage) }
@@ -76,6 +79,24 @@ export class Articles extends Component {
         }
     }
 
+    handleChangePublished = (element) => {
+        Formulaire.loader(true);
+        let self = this;
+        axios({ method: "POST", url: Routing.generate('api_articles_article_published', {'id': element.id}) })
+            .then(function (response) {
+                let data = response.data;
+                self.handleUpdateList(data, "update");
+                toastr.info(element.isPublished ? "Article mis hors ligne" : "Article en ligne");
+            })
+            .catch(function (error) {
+                Formulaire.displayErrors(self, error);
+            })
+            .then(() => {
+                Formulaire.loader(false);
+            })
+        ;
+    }
+
     render () {
         const { loadPageError, context, loadData, data, currentData, element } = this.state;
 
@@ -93,6 +114,7 @@ export class Articles extends Component {
                                                                    onDelete={this.handleDelete}
                                                                    onSearch={this.handleSearch}
                                                                    onDeleteAll={this.handleDeleteGroup}
+                                                                   onChangePublished={this.handleChangePublished}
                                                                    data={currentData} />
                 break;
         }

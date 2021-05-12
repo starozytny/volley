@@ -19,7 +19,7 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
- * @Route("/api/articles", name="api_articles_")
+ * @Route("/api", name="api_articles_")
  */
 class ArticleController extends AbstractController
 {
@@ -28,7 +28,7 @@ class ArticleController extends AbstractController
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @Route("/", name="index", options={"expose"=true}, methods={"GET"})
+     * @Route("/articles", name="index", options={"expose"=true}, methods={"GET"})
      *
      * @OA\Response(
      *     response=200,
@@ -73,7 +73,7 @@ class ArticleController extends AbstractController
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @Route("/", name="create", options={"expose"=true}, methods={"POST"})
+     * @Route("/articles", name="create", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,
@@ -124,7 +124,7 @@ class ArticleController extends AbstractController
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @Route("/{id}", name="update", options={"expose"=true}, methods={"POST"})
+     * @Route("/articles/{id}", name="update", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,
@@ -180,7 +180,38 @@ class ArticleController extends AbstractController
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
 
-        $em->persist($article);
+        $em->flush();
+
+        return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
+    }
+
+    /**
+     * Switch is published
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/article/{id}", name="article_published", options={"expose"=true}, methods={"POST"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns an article object",
+     * )
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden for not good role or article",
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param ApiResponse $apiResponse
+     * @param BoArticle $article
+     * @return JsonResponse
+     */
+    public function switchIsPublished(ApiResponse $apiResponse, BoArticle $article): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $article->setIsPublished(!$article->getIsPublished());
         $em->flush();
 
         return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);

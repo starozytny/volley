@@ -5,7 +5,7 @@ import { Selector }     from "@dashboardComponents/Layout/Selector";
 
 export class ArticlesItem extends Component {
     render () {
-        const { elem, onChangeContext, onDelete, onSelectors } = this.props
+        const { elem, onChangeContext, onDelete, onSelectors, onChangePublished } = this.props
 
         return <div className="item">
             <Selector id={elem.id} onSelectors={onSelectors} />
@@ -17,11 +17,15 @@ export class ArticlesItem extends Component {
                             <div className="name">
                                 <span>{elem.title}</span>
                             </div>
-                            <div className="sub sub-username">{elem.createAtString} {elem.updatedAtAgo && "- Modifié : " + elem.updatedAtAgo}</div>
+                            <div className="sub">Créé : {elem.createAtString} {elem.updatedAtAgo && "- Modifié : " + elem.updatedAtAgo}</div>
+                            <div className="sub">{location.origin + "/" + elem.slug}</div>
                         </div>
                         <div className="actions">
-                            <ButtonIcon icon={"pencil"} onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
-                            <ButtonIcon icon={"trash"} onClick={() => onDelete(elem)}>Supprimer</ButtonIcon>
+                            <ButtonIcon icon={elem.isPublished ? "vision" : "vision-not"} onClick={() => onChangePublished(elem)}>
+                                {elem.isPublished ? "En ligne" : "Hors ligne"}
+                            </ButtonIcon>
+                            <ButtonIcon icon="pencil" onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
+                            <ButtonIcon icon="trash" onClick={() => onDelete(elem)}>Supprimer</ButtonIcon>
                         </div>
                     </div>
                 </div>
