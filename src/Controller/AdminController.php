@@ -57,4 +57,12 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/pages/settings/index.html.twig');
     }
+
+    /**
+     * @Route("/contact", name="contact_index")
+     */
+    public function contact(): Response
+    {
+        return $this->render('admin/pages/contact/index.html.twig');
+    }
 }
