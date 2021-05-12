@@ -68,11 +68,17 @@ class BoArticle
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPublished;
+
     public function __construct()
     {
         $createAt = new \DateTime();
         $createAt->setTimezone(new \DateTimeZone("Europe/Paris"));
         $this->createdAt = $createAt;
+        $this->isPublished = false;
     }
 
     public function getId(): ?int
@@ -197,6 +203,18 @@ class BoArticle
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): self
+    {
+        $this->isPublished = $isPublished;
 
         return $this;
     }
