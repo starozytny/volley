@@ -95,7 +95,6 @@ function axiosDeleteGroupElement(self, checked, url,
     if(selectors.length === 0){
         toastr.info(txtEmpty);
     }else{
-        let self = this;
         Swal.fire(SwalOptions.options(title, text))
             .then((result) => {
                 if (result.isConfirmed) {
