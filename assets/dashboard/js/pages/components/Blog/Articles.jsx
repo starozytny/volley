@@ -55,12 +55,12 @@ export class Articles extends Component {
     }
 
     handleDelete = (element) => {
-        Formulaire.axiosDeleteElement(this, element, Routing.generate('api_users_delete', {'id': element.id}),
+        Formulaire.axiosDeleteElement(this, element, Routing.generate('api_articles_delete', {'id': element.id}),
             'Supprimer cet article ?', 'Cette action est irréversible.');
     }
     handleDeleteGroup = () => {
         let checked = document.querySelectorAll('.i-selector:checked');
-        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun article sélectionné.')
+        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_articles_delete_group'), 'Aucun article sélectionné.')
     }
 
     handleSearch = (search) => {

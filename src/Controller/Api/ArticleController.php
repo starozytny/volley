@@ -90,7 +90,7 @@ class ArticleController extends AbstractController
      *     required=true
      * )
      *
-     * @OA\Tag(name="Users")
+     * @OA\Tag(name="Articles")
      *
      * @param Request $request
      * @param ValidatorService $validator
@@ -145,7 +145,7 @@ class ArticleController extends AbstractController
      *     required=true
      * )
      *
-     * @OA\Tag(name="Users")
+     * @OA\Tag(name="Articles")
      *
      * @param Request $request
      * @param ValidatorService $validator
@@ -201,7 +201,7 @@ class ArticleController extends AbstractController
      *     description="Forbidden for not good role or article",
      * )
      *
-     * @OA\Tag(name="Users")
+     * @OA\Tag(name="Articles")
      *
      * @param ApiResponse $apiResponse
      * @param BoArticle $article
@@ -215,5 +215,88 @@ class ArticleController extends AbstractController
         $em->flush();
 
         return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
+    }
+
+    private function deleteArticle($em, BoArticle $article)
+    {
+        if($article->getFile()){
+            $file = $this->getParameter('public_directory'). 'articles/' . $article->getFile();
+            if(file_exists($file)){
+                unlink($file);
+            }
+        }
+
+        $em->remove($article);
+    }
+
+    /**
+     * Admin - Delete an article
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/articles/{id}", name="delete", options={"expose"=true}, methods={"DELETE"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return message successful",
+     * )
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden for not good role or article",
+     * )
+     *
+     * @OA\Tag(name="Articles")
+     *
+     * @param ApiResponse $apiResponse
+     * @param BoArticle $article
+     * @return JsonResponse
+     */
+    public function delete(ApiResponse $apiResponse, BoArticle $article): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $this->deleteArticle($em, $article);
+        $em->flush();
+
+        return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
+    }
+
+    /**
+     * Admin - Delete a group of article
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @Route("/", name="delete_group", options={"expose"=true}, methods={"DELETE"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return message successful",
+     * )
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden for not good role or articles",
+     * )
+     *
+     * @OA\Tag(name="Articles")
+     *
+     * @param Request $request
+     * @param ApiResponse $apiResponse
+     * @return JsonResponse
+     */
+    public function deleteGroup(Request $request, ApiResponse $apiResponse): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent());
+
+        $articles = $em->getRepository(BoArticle::class)->findBy(['id' => $data]);
+
+        if ($articles) {
+            foreach ($articles as $article) {
+                $this->deleteArticle($em, $article);
+            }
+        }
+
+        $em->flush();
+        return $apiResponse->apiJsonResponseSuccessful("Supression de la sélection réussie !");
     }
 }
