@@ -18,7 +18,10 @@ export class ArticlesItem extends Component {
                                 <span>{elem.title}</span>
                             </div>
                             <div className="sub">Créé : {elem.createAtString} {elem.updatedAtAgo && "- Modifié : " + elem.updatedAtAgo}</div>
-                            <div className="sub">{location.origin + "/" + elem.slug}</div>
+                            <div className="sub link">
+                                {location.origin + "/articles/" + elem.slug}
+                                <a href="" target="_blank"> <span className="icon-link-2" /> </a>
+                            </div>
                         </div>
                         <div className="actions">
                             <ButtonIcon icon={elem.isPublished ? "vision" : "vision-not"} onClick={() => onChangePublished(elem)}>
