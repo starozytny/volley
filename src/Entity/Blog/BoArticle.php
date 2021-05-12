@@ -53,11 +53,6 @@ class BoArticle
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=BoAuthor::class, inversedBy="articles")
-     */
-    private $author;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"admin:read", "admin:write"})
      */
@@ -169,18 +164,6 @@ class BoArticle
     public function setContent(?string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?BoAuthor
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?BoAuthor $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }
