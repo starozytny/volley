@@ -18,6 +18,7 @@ export class ContactItem extends Component {
                                 <span>{elem.name}</span>
                             </div>
                             <div className="sub">{elem.email}</div>
+                            <div className="sub">{elem.createdAtAgo}</div>
                         </div>
                     </div>
                 </div>

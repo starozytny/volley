@@ -32,13 +32,13 @@ export class Contact extends Component {
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     }
 
-    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_users_index'), this.state.perPage) }
+    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_contact_index'), Sort.compareCreatedAt, this.state.perPage) }
 
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
     handleUpdateList = (element, newContext=null) => {
         const { data, context, perPage } = this.state
-        Formulaire.updateDataPagination(this, Sort.compareLastname, newContext, context, data, element, perPage);
+        Formulaire.updateDataPagination(this, Sort.compareCreatedAt, newContext, context, data, element, perPage);
     }
 
     handleChangeContext = (context, element=null) => {
@@ -54,7 +54,7 @@ export class Contact extends Component {
     }
     handleDeleteGroup = () => {
         let checked = document.querySelectorAll('.i-selector:checked');
-        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun contact sélectionné.')
+        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun message sélectionné.')
     }
 
     render () {
