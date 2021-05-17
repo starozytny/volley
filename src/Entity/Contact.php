@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContactRepository;
 use Carbon\Carbon;
+use Carbon\Factory;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -118,7 +119,13 @@ class Contact
      */
     public function getCreatedAtAgo(): string
     {
-        return Carbon::instance($this->getCreatedAt())->diffForHumans();
+        $frenchFactory = new Factory([
+            'locale' => 'fr_FR',
+            'timezone' => 'Europe/Paris'
+        ]);
+        $createdAt = Carbon::instance($this->getCreatedAt());
+
+        return $frenchFactory->make($createdAt)->diffForHumans();
     }
 
     public function getIsSeen(): ?bool

@@ -49,20 +49,26 @@ export class ContactForm extends Component {
                 this.setState({errors: validate.errors});
                 toastr.error("Veuillez vérifier que tous les champs obligatoires soient renseignés")
             }else{
-                // Formulaire.loader(true);
+                Formulaire.loader(true);
                 let self = this;
-                // axios({ method: method, url: url, data: element })
-                //     .then(function (response) {
-                //         let data = response.data;
-                //         self.props.onAddEleve(data);
-                //     })
-                //     .catch(function (error) {
-                //         Formulaire.displayErrors(self, error);
-                //     })
-                //     .then(() => {
-                //         Formulaire.loader(false);
-                //     })
-                // ;
+                axios.post(Routing.generate('api_contact_create'), self.state)
+                    .then(function (response) {
+                        let data = response.data;
+                        self.setState({
+                            name: "",
+                            email: "",
+                            message: "",
+                            errors: [],
+                            success: data.message
+                        })
+                    })
+                    .catch(function (error) {
+                        Formulaire.displayErrors(self, error);
+                    })
+                    .then(() => {
+                        Formulaire.loader(false);
+                    })
+                ;
             }
         }
     }

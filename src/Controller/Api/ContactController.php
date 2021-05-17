@@ -2,13 +2,12 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Contact;
 use App\Entity\User;
 use App\Repository\ContactRepository;
-use App\Repository\UserRepository;
 use App\Service\ApiResponse;
 use App\Service\Export;
 use App\Service\MailerService;
-use App\Service\SanitizeData;
 use App\Service\SettingsService;
 use App\Service\ValidatorService;
 use DateTime;
@@ -18,7 +17,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -39,7 +37,7 @@ class ContactController extends AbstractController
      *     response=200,
      *     description="Returns array of contacts",
      * )
-     * @OA\Tag(name="Users")
+     * @OA\Tag(name="Contact")
      *
      * @param Request $request
      * @param ContactRepository $contactRepository
@@ -54,39 +52,23 @@ class ContactController extends AbstractController
     }
 
     /**
-     * Admin - Create an user
-     *
-     * @Security("is_granted('ROLE_ADMIN')")
+     * Admin - Create an message contact
      *
      * @Route("/", name="create", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
      *     response=200,
-     *     description="Returns a new user object",
-     *     @Model(type=User::class, groups={"admin:write"})
+     *     description="Returns a message",
      * )
      *
-     * @OA\Response(
-     *     response=400,
-     *     description="JSON empty or missing data or validation failed",
-     * )
-     *
-     * @OA\RequestBody (
-     *     @Model(type=User::class, groups={"admin:write"}),
-     *     required=true
-     * )
-     *
-     * @OA\Tag(name="Users")
+     * @OA\Tag(name="Contact")
      *
      * @param Request $request
      * @param ValidatorService $validator
-     * @param UserPasswordEncoderInterface $passwordEncoder
      * @param ApiResponse $apiResponse
-     * @param SanitizeData $sanitizeData
      * @return JsonResponse
      */
-    public function create(Request $request, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder,
-                           ApiResponse $apiResponse, SanitizeData $sanitizeData): JsonResponse
+    public function create(Request $request, ValidatorService $validator, ApiResponse $apiResponse): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
@@ -95,111 +77,27 @@ class ContactController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-        if (!isset($data->username) || !isset($data->email) || !isset($data->firstname) || !isset($data->lastname)) {
+
+        if (!isset($data->name) || !isset($data->email) || !isset($data->message)) {
             return $apiResponse->apiJsonResponseBadRequest('Il manque des données.');
         }
 
-        $user = new User();
-        $user->setUsername($sanitizeData->fullSanitize($data->username));
-        $user->setFirstname(ucfirst($sanitizeData->sanitizeString($data->firstname)));
-        $user->setLastname(mb_strtoupper($sanitizeData->sanitizeString($data->lastname)));
-        $user->setEmail($data->email);
-        $pass = (isset($data->password) && $data->password != "") ? $data->password : uniqid();
-        $user->setPassword($passwordEncoder->encodePassword($user, $pass));
+        $contact = (new Contact())
+            ->setName(trim($data->name))
+            ->setEmail($data->email)
+            ->setMessage($data->message)
+        ;
 
-        if (isset($data->roles)) {
-            $user->setRoles($data->roles);
-        }
-
-        $noErrors = $validator->validate($user);
+        $noErrors = $validator->validate($contact);
 
         if ($noErrors !== true) {
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
 
-        $em->persist($user);
+        $em->persist($contact);
         $em->flush();
 
-        return $apiResponse->apiJsonResponse($user, User::ADMIN_READ);
-    }
-
-    /**
-     * Update an user
-     *
-     * @Route("/{id}", name="update", options={"expose"=true}, methods={"PUT"})
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="Returns an user object",
-     *     @Model(type=User::class, groups={"update"})
-     * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Forbidden for not good role or user",
-     * )
-     * @OA\Response(
-     *     response=400,
-     *     description="Validation failed",
-     * )
-     *
-     * @OA\RequestBody (
-     *     description="Only admin can change roles",
-     *     @Model(type=User::class, groups={"update"}),
-     *     required=true
-     * )
-     *
-     * @OA\Tag(name="Users")
-     *
-     * @param Request $request
-     * @param ValidatorService $validator
-     * @param ApiResponse $apiResponse
-     * @param SanitizeData $sanitizeData
-     * @param User $user
-     * @return JsonResponse
-     */
-    public function update(Request $request, ValidatorService $validator,
-                           ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user): JsonResponse
-    {
-        if ($this->getUser() != $user && !$this->isGranted("ROLE_ADMIN")) {
-            return $apiResponse->apiJsonResponseForbidden();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $data = json_decode($request->getContent());
-
-        if (isset($data->username)) {
-            $user->setUsername($sanitizeData->fullSanitize($data->username));
-        }
-
-        if (isset($data->email)) {
-            $user->setEmail($data->email);
-        }
-
-        if (isset($data->firstname)) {
-            $user->setFirstname(ucfirst($sanitizeData->sanitizeString($data->firstname)));
-        }
-
-        if (isset($data->lastname)) {
-            $user->setLastname(mb_strtoupper($sanitizeData->sanitizeString($data->lastname)));
-        }
-
-        $groups = User::USER_READ;
-        if ($this->isGranted("ROLE_ADMIN")) {
-            if (isset($data->roles)) {
-                $user->setRoles($data->roles);
-            }
-            $groups = User::ADMIN_READ;
-        }
-
-        $noErrors = $validator->validate($user);
-        if ($noErrors !== true) {
-            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
-        }
-
-        $em->persist($user);
-        $em->flush();
-
-        return $apiResponse->apiJsonResponse($user, $groups);
+        return $apiResponse->apiJsonResponseSuccessful("Message envoyé.");
     }
 
     /**
