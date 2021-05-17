@@ -66,9 +66,11 @@ class ContactController extends AbstractController
      * @param Request $request
      * @param ValidatorService $validator
      * @param ApiResponse $apiResponse
+     * @param MailerService $mailerService
      * @return JsonResponse
      */
-    public function create(Request $request, ValidatorService $validator, ApiResponse $apiResponse): JsonResponse
+    public function create(Request $request, ValidatorService $validator, ApiResponse $apiResponse,
+                           MailerService $mailerService, SettingsService $settingsService): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
@@ -92,6 +94,20 @@ class ContactController extends AbstractController
 
         if ($noErrors !== true) {
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+        }
+
+        if($mailerService->sendMail(
+                $settingsService->getEmailContact(),
+                "[" . $settingsService->getWebsiteName() ."] Demande de contact",
+                "Demande de contact réalisé à partir de " . $settingsService->getWebsiteName(),
+                'app/email/contact/contact.html.twig',
+                ['contact' => $contact, 'settings' => $settingsService->getSettings()]
+            ) != true)
+        {
+            return $apiResponse->apiJsonResponseValidationFailed([[
+                'name' => 'message',
+                'message' => "Le message n\'a pas pu être délivré. Veuillez contacter le support."
+            ]]);
         }
 
         $em->persist($contact);
