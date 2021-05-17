@@ -7,7 +7,7 @@ import { LoaderElement } from "@dashboardComponents/Layout/Loader";
 import Sort              from "@dashboardComponents/functions/sort";
 import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
-import { UserList }      from "./UserList";
+import { ContactList }      from "./ContactList";
 
 export class Contact extends Component {
     constructor(props) {
@@ -64,10 +64,10 @@ export class Contact extends Component {
         switch (context){
             default:
                 havePagination = true;
-                content = loadData ? <LoaderElement /> : <UserList onChangeContext={this.handleChangeContext}
-                                                                   onDelete={this.handleDelete}
-                                                                   onDeleteAll={this.handleDeleteGroup}
-                                                                   data={currentData} />
+                content = loadData ? <LoaderElement /> : <ContactList onChangeContext={this.handleChangeContext}
+                                                                      onDelete={this.handleDelete}
+                                                                      onDeleteAll={this.handleDeleteGroup}
+                                                                      data={currentData} />
                 break;
         }
 

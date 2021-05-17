@@ -5,7 +5,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min';
 
 import React from "react";
 import { render } from "react-dom";
-import { Contact } from "./components/Contact/User";
+import { Contact } from "./components/Contact/Contact";
 
 Routing.setRoutingData(routes);
 
