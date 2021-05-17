@@ -7,9 +7,10 @@ import Routing              from "@publicFolder/bundles/fosjsrouting/js/router.m
 import { Input, TextArea }  from "@dashboardComponents/Tools/Fields";
 import { Button }           from "@dashboardComponents/Tools/Button";
 import { Alert }            from "@dashboardComponents/Tools/Alert";
+import { RgpdInfo } from "../../../components/Tools/Rgpd";
+
 import Validateur           from "@dashboardComponents/functions/validateur";
 import Formulaire           from "@dashboardComponents/functions/Formulaire";
-import {RgpdInfo} from "../../../components/Tools/Rgpd";
 
 export class ContactForm extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ export class ContactForm extends Component {
         this.state = {
             errors: [],
             success: null,
+            critere: "",
             name: "",
             email: "",
             message: ""
@@ -31,16 +33,51 @@ export class ContactForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+        const { critere, name, email, message } = this.state;
+
+        if(critere !== ""){
+            toastr.error("Veuillez rafraichir la page.");
+        }else{
+            let validate = Validateur.validateur([
+                {type: "text", id: 'name', value: name},
+                {type: "text", id: 'email', value: email},
+                {type: "text", id: 'message', value: message},
+            ])
+
+            if(!validate.code) {
+                this.setState({errors: validate.errors});
+                toastr.error("Veuillez vérifier que tous les champs obligatoires soient renseignés")
+            }else{
+                // Formulaire.loader(true);
+                let self = this;
+                // axios({ method: method, url: url, data: element })
+                //     .then(function (response) {
+                //         let data = response.data;
+                //         self.props.onAddEleve(data);
+                //     })
+                //     .catch(function (error) {
+                //         Formulaire.displayErrors(self, error);
+                //     })
+                //     .then(() => {
+                //         Formulaire.loader(false);
+                //     })
+                // ;
+            }
+        }
     }
 
     render () {
-        const { errors, success, name, email, message } = this.state;
+        const { errors, success, critere, name, email, message } = this.state;
 
         return <form onSubmit={this.handleSubmit}>
             {success && <Alert type="info">{success}</Alert>}
             <div className="line line-2">
                 <Input identifiant="name" valeur={name} errors={errors} onChange={this.handleChange}>Nom / Raison sociale</Input>
                 <Input identifiant="email" valeur={email} errors={errors} onChange={this.handleChange}>Adresse e-mail</Input>
+            </div>
+            <div className="line line-critere">
+                <Input identifiant="critere" valeur={critere} errors={errors} onChange={this.handleChange}>Critère</Input>
             </div>
             <div className="line">
                 <TextArea identifiant="message" valeur={message} errors={errors} onChange={this.handleChange}>Message</TextArea>
