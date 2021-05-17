@@ -25,7 +25,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/legales/politique-confidentialite", name="app_politique")
+     * @Route("/legales/politique-confidentialite", options={"expose"=true}, name="app_politique")
      */
     public function politique(): Response
     {

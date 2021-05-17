@@ -22,6 +22,11 @@
   }
 }
 
+.form-rgpd{
+  font-size: 14px;
+  color: var(--grey2);
+}
+
 .form-group{
   @include flex(column, flex-start, flex-start);
 
