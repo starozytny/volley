@@ -7,7 +7,7 @@ import Routing              from "@publicFolder/bundles/fosjsrouting/js/router.m
 import { Input, TextArea }  from "@dashboardComponents/Tools/Fields";
 import { Button }           from "@dashboardComponents/Tools/Button";
 import { Alert }            from "@dashboardComponents/Tools/Alert";
-import { RgpdInfo } from "../../../components/Tools/Rgpd";
+import { RgpdInfo }         from "@appComponents/Tools/Rgpd";
 
 import Validateur           from "@dashboardComponents/functions/validateur";
 import Formulaire           from "@dashboardComponents/functions/Formulaire";
