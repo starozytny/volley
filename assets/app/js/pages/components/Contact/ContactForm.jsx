@@ -80,7 +80,7 @@ export class ContactForm extends Component {
             {success && <Alert type="info">{success}</Alert>}
             <div className="line line-2">
                 <Input identifiant="name" valeur={name} errors={errors} onChange={this.handleChange}>Nom / Raison sociale</Input>
-                <Input identifiant="email" valeur={email} errors={errors} onChange={this.handleChange}>Adresse e-mail</Input>
+                <Input identifiant="email" valeur={email} errors={errors} onChange={this.handleChange} type="email">Adresse e-mail</Input>
             </div>
             <div className="line line-critere">
                 <Input identifiant="critere" valeur={critere} errors={errors} onChange={this.handleChange}>Critère</Input>
