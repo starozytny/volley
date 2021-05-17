@@ -10,7 +10,7 @@ export class ContactItem extends Component {
         return <div className="item">
             <Selector id={elem.id} onSelectors={onSelectors} />
 
-            <div className="item-content">
+            <div className="item-content" onClick={() => onChangeContext('read', elem)}>
                 <div className="item-body">
                     <div className="infos">
                         <div>

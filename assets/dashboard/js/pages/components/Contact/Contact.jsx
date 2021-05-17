@@ -8,6 +8,7 @@ import Sort              from "@dashboardComponents/functions/sort";
 import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
 import { ContactList }      from "./ContactList";
+import {ContactRead} from "./ContactRead";
 
 export class Contact extends Component {
     constructor(props) {
@@ -45,6 +46,8 @@ export class Contact extends Component {
         this.setState({ context, element });
         if(context === "list"){
             this.page.current.pagination.current.handleComeback()
+        }else if(context === "read"){
+
         }
     }
 
@@ -62,6 +65,9 @@ export class Contact extends Component {
 
         let content, havePagination = false;
         switch (context){
+            case 'read':
+                content = <ContactRead element={element} onChangeContext={this.handleChangeContext}/>
+                break;
             default:
                 havePagination = true;
                 content = loadData ? <LoaderElement /> : <ContactList onChangeContext={this.handleChangeContext}

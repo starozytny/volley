@@ -7,12 +7,12 @@ import { ContactItem }   from "./ContactItem";
 
 export class ContactList extends Component {
     render () {
-        const { data, onChangeContext, onDeleteAll } = this.props;
+        const { data, onDeleteAll } = this.props;
 
         return <>
             <div>
                 <div className="items-table">
-                    <div className="items items-default items-user">
+                    <div className="items items-default items-contact">
                         {data && data.length !== 0 ? data.map(elem => {
                             return <ContactItem {...this.props} elem={elem} key={elem.id}/>
                         }) : <Alert>Aucun résultat</Alert>}
