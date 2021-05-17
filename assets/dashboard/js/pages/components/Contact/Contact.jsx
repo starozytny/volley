@@ -65,12 +65,12 @@ export class Contact extends Component {
     }
 
     handleDelete = (element) => {
-        Formulaire.axiosDeleteElement(this, element, Routing.generate('api_users_delete', {'id': element.id}),
+        Formulaire.axiosDeleteElement(this, element, Routing.generate('api_contact_delete', {'id': element.id}),
             'Supprimer ce message ?', 'Cette action est irréversible.');
     }
     handleDeleteGroup = () => {
         let checked = document.querySelectorAll('.i-selector:checked');
-        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun message sélectionné.')
+        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_contact_delete_group'), 'Aucun message sélectionné.')
     }
 
     render () {

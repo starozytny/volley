@@ -1,8 +1,11 @@
 @import "../vars/vars";
 
 .items-contact{
-  .item-content{
-    cursor: pointer;
+  .infos{
+    div:first-child{
+      cursor: pointer;
+      width: 100%;
+    }
   }
 }
 

@@ -140,7 +140,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * Admin - Delete an user
+     * Admin - Delete a message contact
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
@@ -150,42 +150,29 @@ class ContactController extends AbstractController
      *     response=200,
      *     description="Return message successful",
      * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Forbidden for not good role or user",
-     * )
      *
-     * @OA\Response(
-     *     response=400,
-     *     description="Cannot delete me",
-     * )
-     *
-     * @OA\Tag(name="Users")
+     * @OA\Tag(name="Contact")
      *
      * @param ApiResponse $apiResponse
-     * @param User $user
+     * @param Contact $contact
      * @return JsonResponse
      */
-    public function delete(ApiResponse $apiResponse, User $user): JsonResponse
+    public function delete(ApiResponse $apiResponse, Contact $contact): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER) {
-            return $apiResponse->apiJsonResponseForbidden();
+        if (!$contact->getIsSeen()) {
+            return $apiResponse->apiJsonResponseBadRequest('Vous n\'avez pas lu ce message.');
         }
 
-        if ($user === $this->getUser()) {
-            return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
-        }
-
-        $em->remove($user);
+        $em->remove($contact);
         $em->flush();
 
         return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
     }
 
     /**
-     * Admin - Delete a group of user
+     * Admin - Delete a group of message contact
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
@@ -195,17 +182,8 @@ class ContactController extends AbstractController
      *     response=200,
      *     description="Return message successful",
      * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Forbidden for not good role or user",
-     * )
      *
-     * @OA\Response(
-     *     response=400,
-     *     description="Cannot delete me",
-     * )
-     *
-     * @OA\Tag(name="Users")
+     * @OA\Tag(name="Contact")
      *
      * @param Request $request
      * @param ApiResponse $apiResponse
@@ -216,19 +194,15 @@ class ContactController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
-        $users = $em->getRepository(User::class)->findBy(['id' => $data]);
+        $contacts = $em->getRepository(Contact::class)->findBy(['id' => $data]);
 
-        if ($users) {
-            foreach ($users as $user) {
-                if ($user->getHighRoleCode() === User::CODE_ROLE_DEVELOPER) {
-                    return $apiResponse->apiJsonResponseForbidden();
+        if ($contacts) {
+            foreach ($contacts as $contact) {
+                if (!$contact->getIsSeen()) {
+                    return $apiResponse->apiJsonResponseBadRequest('Vous n\'avez pas lu ce message.');
                 }
 
-                if ($user === $this->getUser()) {
-                    return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
-                }
-
-                $em->remove($user);
+                $em->remove($contact);
             }
         }
 
