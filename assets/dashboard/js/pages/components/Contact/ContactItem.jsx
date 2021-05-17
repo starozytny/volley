@@ -19,6 +19,11 @@ export class ContactItem extends Component {
                             </div>
                             <div className="sub">{elem.email}</div>
                             <div className="sub">{elem.createdAtAgo}</div>
+
+                            <div className="sub sub-seen">
+                                <span className={elem.isSeen ? "icon-check" : "icon-vision-not"} />
+                                <span>{elem.isSeen ? "Lu" : "Non lu"}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
