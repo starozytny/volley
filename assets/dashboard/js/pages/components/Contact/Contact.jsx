@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import axios             from "axios";
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Page }          from "@dashboardComponents/Layout/Page";
@@ -48,6 +49,18 @@ export class Contact extends Component {
             this.page.current.pagination.current.handleComeback()
         }else if(context === "read"){
 
+            if(!element.isSeen){
+                const self = this;
+                axios.post(Routing.generate('api_contact_isSeen', {'id': element.id}), {})
+                    .then(function (response) {
+                        let data = response.data;
+                        self.handleUpdateList(data, 'update');
+                    })
+                    .catch(function (error) {
+                        Formulaire.displayErrors(self, error)
+                    })
+                ;
+            }
         }
     }
 
