@@ -47,4 +47,12 @@ class AppController extends AbstractController
     {
         return $this->render('app/pages/legales/rgpd.html.twig');
     }
+
+    /**
+     * @Route("/nous-contacter", name="app_contact")
+     */
+    public function contact(): Response
+    {
+        return $this->render('app/pages/contact/index.html.twig');
+    }
 }
