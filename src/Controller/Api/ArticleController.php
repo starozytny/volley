@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Blog\BoArticle;
+use App\Entity\Blog\BoCategory;
 use App\Entity\User;
 use App\Repository\Blog\BoArticleRepository;
 use App\Service\ApiResponse;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
@@ -37,26 +39,44 @@ class ArticleController extends AbstractController
      * @OA\Tag(name="Articles")
      *
      * @param Request $request
-     * @param BoArticleRepository $repository
-     * @param ApiResponse $apiResponse
+     * @param SerializerInterface $serializer
      * @return JsonResponse
      */
-    public function index(Request $request, BoArticleRepository $repository, ApiResponse $apiResponse): JsonResponse
+    public function index(Request $request, SerializerInterface $serializer): JsonResponse
     {
+        $em = $this->getDoctrine()->getManager();
         $order = $request->query->get('order') ?: 'ASC';
-        $articles = $repository->findBy([], ['createdAt' => $order]);
-        return $apiResponse->apiJsonResponse($articles, User::ADMIN_READ);
+        $articles = $em->getRepository(BoArticle::class)->findBy([], ['createdAt' => $order]);
+        $categories = $em->getRepository(BoCategory::class)->findAll();
+
+        $articles = $serializer->serialize($articles, "json", ['groups' => User::ADMIN_READ]);
+        $categories = $serializer->serialize($categories, "json", ['groups' => User::ADMIN_READ]);
+
+        return new JsonResponse([
+            'articles' => $articles,
+            'categories' => $categories
+        ]);
     }
 
-    public function setArticle($article, $request, $fileName)
+    public function setArticle($em, $apiResponse, BoArticle $article, $request, $fileName)
     {
         $title = $request->get('title');
         $introduction = $request->get('introduction');
         $content = $request->get('content');
+        $category = $request->get('category');
+
+        $category = $em->getRepository(BoCategory::class)->find($category);
+        if(!$category){
+            return $apiResponse->apiJsonResponseValidationFailed([[
+                'name' => 'category',
+                'message' => "Cette catégorie n'existe pas."
+            ]]);
+        }
 
         $article->setTitle(trim($title));
         $article->setIntroduction($introduction ?: null);
         $article->setContent($content ?: null);
+        $article->setCategory($category);
 
         if($fileName){
             $article->setFile($fileName);
@@ -105,18 +125,20 @@ class ArticleController extends AbstractController
 
         $fileName = ($file) ? $fileUploader->upload($file, "articles", true) : null;
 
-        $article = $this->setArticle(new BoArticle(), $request, $fileName);
+        $article = $this->setArticle($em, $apiResponse, new BoArticle(), $request, $fileName);
 
-        $noErrors = $validator->validate($article);
+        if($article instanceof BoArticle){
+            $noErrors = $validator->validate($article);
+            if ($noErrors !== true) {
+                return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+            }
 
-        if ($noErrors !== true) {
-            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+            $em->persist($article);
+            $em->flush();
+            return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
+        }else{
+            return $article;
         }
-
-        $em->persist($article);
-        $em->flush();
-
-        return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
     }
 
     /**
@@ -169,20 +191,23 @@ class ArticleController extends AbstractController
             $fileName = $fileUploader->upload($file, "articles", true);
         }
 
-        $article = $this->setArticle(new BoArticle(), $request, $fileName);
+        $article = $this->setArticle($em, $apiResponse, new BoArticle(), $request, $fileName);
 
-        $updatedAt = new \DateTime();
-        $updatedAt->setTimezone(new \DateTimeZone("Europe/Paris"));
-        $article->setUpdatedAt($updatedAt);
+        if($article instanceof BoArticle){
+            $updatedAt = new \DateTime();
+            $updatedAt->setTimezone(new \DateTimeZone("Europe/Paris"));
+            $article->setUpdatedAt($updatedAt);
 
-        $noErrors = $validator->validate($article);
-        if ($noErrors !== true) {
-            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+            $noErrors = $validator->validate($article);
+            if ($noErrors !== true) {
+                return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+            }
+
+            $em->flush();
+            return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
+        }else{
+            return $article;
         }
-
-        $em->flush();
-
-        return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
     }
 
     /**

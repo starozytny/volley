@@ -7,7 +7,7 @@ import { ArticleForm }   from "./ArticleForm";
 
 export class ArticleUpdate extends Component {
     render () {
-        const { onChangeContext, onUpdateList, element } = this.props;
+        const { onChangeContext, onUpdateList, element, categories } = this.props;
 
         return <>
             <div>
@@ -24,6 +24,8 @@ export class ArticleUpdate extends Component {
                         title={element.title}
                         introduction={element.introduction}
                         content={element.content}
+                        category={element.category}
+                        categories={categories}
                         onUpdateList={onUpdateList}
                         onChangeContext={onChangeContext}
                         messageSuccess="Félicitation ! La mise à jour s'est réalisé avec succès !"

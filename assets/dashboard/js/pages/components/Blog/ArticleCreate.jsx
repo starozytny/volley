@@ -7,7 +7,7 @@ import { ArticleForm }   from "./ArticleForm";
 
 export class ArticleCreate extends Component {
     render () {
-        const { onChangeContext, onUpdateList } = this.props;
+        const { onChangeContext, onUpdateList, categories } = this.props;
 
         return <>
             <div>
@@ -25,6 +25,8 @@ export class ArticleCreate extends Component {
                         title=""
                         introduction=""
                         content=""
+                        category=""
+                        categories={categories}
                         onUpdateList={onUpdateList}
                         onChangeContext={onChangeContext}
                         messageSuccess="Félicitation ! Vous avez ajouté un nouveau article !"

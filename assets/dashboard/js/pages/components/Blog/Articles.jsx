@@ -38,13 +38,34 @@ export class Articles extends Component {
         this.handleChangePublished = this.handleChangePublished.bind(this);
     }
 
-    componentDidMount() { Formulaire.axiosGetDataPagination(this, Routing.generate('api_articles_index'), null, this.state.perPage) }
+    componentDidMount() {
+        const { perPage } = this.state;
+
+        const self = this;
+        axios.get(Routing.generate('api_articles_index'), {})
+            .then(function (response) {
+                let resp = response.data;
+
+                let data = JSON.parse(resp.articles);
+                let categories = JSON.parse(resp.categories);
+
+                data.sort(Sort.compareCreatedAt);
+                self.setState({ categories: categories, dataImmuable: data, data: data, currentData: data.slice(0, perPage) });
+            })
+            .catch(function () {
+                self.setState({ loadPageError: true });
+            })
+            .then(function () {
+                self.setState({ loadData: false });
+            })
+        ;
+    }
 
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
     handleUpdateList = (element, newContext=null) => {
         const { data, context, perPage } = this.state
-        Formulaire.updateDataPagination(this, Sort.compareLastname, newContext, context, data, element, perPage);
+        Formulaire.updateDataPagination(this, Sort.compareCreatedAt, newContext, context, data, element, perPage);
     }
 
     handleChangeContext = (context, element=null) => {
@@ -98,15 +119,15 @@ export class Articles extends Component {
     }
 
     render () {
-        const { loadPageError, context, loadData, data, currentData, element } = this.state;
+        const { loadPageError, context, loadData, data, currentData, element, categories } = this.state;
 
         let content, havePagination = false;
         switch (context){
             case "create":
-                content = <ArticleCreate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
+                content = <ArticleCreate categories={categories} onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} />
                 break;
             case "update":
-                content = <ArticleUpdate onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element}/>
+                content = <ArticleUpdate categories={categories} onChangeContext={this.handleChangeContext} onUpdateList={this.handleUpdateList} element={element}/>
                 break;
             default:
                 havePagination = true;
