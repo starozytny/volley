@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\Blog;
 
 use App\Entity\Blog\BoArticle;
 use App\Entity\Blog\BoCategory;
@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
- * @Route("/api", name="api_articles_")
+ * @Route("/api/blog", name="api_articles_")
  */
 class ArticleController extends AbstractController
 {
@@ -36,7 +36,7 @@ class ArticleController extends AbstractController
      *     response=200,
      *     description="Returns array of articles",
      * )
-     * @OA\Tag(name="Articles")
+     * @OA\Tag(name="Blog")
      *
      * @param Request $request
      * @param SerializerInterface $serializer
@@ -110,7 +110,7 @@ class ArticleController extends AbstractController
      *     required=true
      * )
      *
-     * @OA\Tag(name="Articles")
+     * @OA\Tag(name="Blog")
      *
      * @param Request $request
      * @param ValidatorService $validator
@@ -162,12 +162,11 @@ class ArticleController extends AbstractController
      * )
      *
      * @OA\RequestBody (
-     *     description="Only admin can change roles",
      *     @Model(type=BoArticle::class, groups={"admin:write"}),
      *     required=true
      * )
      *
-     * @OA\Tag(name="Articles")
+     * @OA\Tag(name="Blog")
      *
      * @param Request $request
      * @param ValidatorService $validator
@@ -191,7 +190,7 @@ class ArticleController extends AbstractController
             $fileName = $fileUploader->upload($file, "articles", true);
         }
 
-        $article = $this->setArticle($em, $apiResponse, new BoArticle(), $request, $fileName);
+        $article = $this->setArticle($em, $apiResponse, $article, $request, $fileName);
 
         if($article instanceof BoArticle){
             $updatedAt = new \DateTime();
@@ -226,7 +225,7 @@ class ArticleController extends AbstractController
      *     description="Forbidden for not good role or article",
      * )
      *
-     * @OA\Tag(name="Articles")
+     * @OA\Tag(name="Blog")
      *
      * @param ApiResponse $apiResponse
      * @param BoArticle $article
@@ -270,7 +269,7 @@ class ArticleController extends AbstractController
      *     description="Forbidden for not good role or article",
      * )
      *
-     * @OA\Tag(name="Articles")
+     * @OA\Tag(name="Blog")
      *
      * @param ApiResponse $apiResponse
      * @param BoArticle $article

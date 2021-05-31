@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import axios                   from "axios";
 import toastr                  from "toastr";
 
-import {Input, Select} from "@dashboardComponents/Tools/Fields";
+import { Input, Select }       from "@dashboardComponents/Tools/Fields";
 import { Button }              from "@dashboardComponents/Tools/Button";
 import { Trumb }               from "@dashboardComponents/Tools/Trumb";
+import { Drop }                from "@dashboardComponents/Tools/Drop";
 
 import Validateur              from "@dashboardComponents/functions/validateur";
 import Formulaire              from "@dashboardComponents/functions/Formulaire";
-import {Drop} from "@dashboardComponents/Tools/Drop";
 
 export class ArticleForm extends Component {
     constructor(props) {
