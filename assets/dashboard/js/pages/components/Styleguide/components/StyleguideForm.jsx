@@ -155,25 +155,25 @@ export class StyleguideForm extends Component {
                 createAt, arrived, postalCode, city, fruit, faq } = this.state;
 
         let checkboxItems = [
-            { 'value': 'ROLE_USER', 'label': 'Utilisateur', 'identifiant': 'utilisateur' },
-            { 'value': 'ROLE_ADMIN', 'label': 'Admin', 'identifiant': 'admin' }
+            { value: 'ROLE_USER', label: 'Utilisateur', identifiant: 'utilisateur' },
+            { value: 'ROLE_ADMIN', label: 'Admin', identifiant: 'admin' }
         ]
 
         let radioboxItems = [
-            { 'value': 0, 'label': 'Homme', 'identifiant': 'homme' },
-            { 'value': 1, 'label': 'Femme', 'identifiant': 'femme' }
+            { value: 0, label: 'Homme', identifiant: 'homme' },
+            { value: 1, label: 'Femme', identifiant: 'femme' }
         ]
 
         let selectItems = [
-            { 'value': 0, 'label': 'France', 'identifiant': 'france' },
-            { 'value': 1, 'label': 'Allemagne', 'identifiant': 'allemagne' },
-            { 'value': 2, 'label': 'Japon', 'identifiant': 'japon' },
+            { value: 0, label: 'France', identifiant: 'france' },
+            { value: 1, label: 'Allemagne', identifiant: 'allemagne' },
+            { value: 2, label: 'Japon', identifiant: 'japon' },
         ]
 
         let selectFruitItems = [
-            { 'value': 0, 'label': 'Orange', 'identifiant': 'orange' },
-            { 'value': 1, 'label': 'Pomme', 'identifiant': 'pomme' },
-            { 'value': 2, 'label': 'Mangue', 'identifiant': 'mangue' },
+            { value: 0, label: 'Orange', identifiant: 'orange' },
+            { value: 1, label: 'Pomme', identifiant: 'pomme' },
+            { value: 2, label: 'Mangue', identifiant: 'mangue' },
         ]
 
         return (
