@@ -8,11 +8,11 @@ import { Checkbox, Input, Radiobox, Select, TextArea,
 import { DatePick, DateTimePick, TimePick }            from "@dashboardComponents/Tools/DatePicker";
 import { Drop }                                        from "@dashboardComponents/Tools/Drop"
 import { Button }                                      from "@dashboardComponents/Tools/Button";
+import { Trumb }                                       from "@dashboardComponents/Tools/Trumb";
 
 import Validator    from "@dashboardComponents/functions/validateur";
 import Sanitaze     from "@dashboardComponents/functions/sanitaze";
-import Formulaire     from "@dashboardComponents/functions/Formulaire";
-import {Trumb} from "@dashboardComponents/Tools/Trumb";
+import Formulaire   from "@dashboardComponents/functions/Formulaire";
 
 export class StyleguideForm extends Component {
     constructor(props) {
