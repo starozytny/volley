@@ -45,29 +45,35 @@ class FileUploader
         return $fileName;
     }
 
-    public function deleteFile($fileName, $folderName, $isPrivate = false)
+    public function deleteFile($fileName, $folderName, $isPublic = true)
     {
         if($fileName){
-            $file = $this->getDirectory($isPrivate) . $folderName . '/' . $fileName;
+            $file = $this->getDirectory($isPublic) . $folderName . '/' . $fileName;
             if(file_exists($file)){
                 unlink($file);
             }
         }
     }
 
-    public function replaceFile($fileName, $oldFileName, $folderName, $isPrivate = false)
+    public function replaceFile($fileName, $oldFileName, $folderName, $isPublic = true): ?string
     {
-        $oldFile = $this->getDirectory($isPrivate) . $folderName . '/' . $oldFileName;
-        if($fileName && file_exists($oldFile) && $fileName !== $oldFileName){
-            unlink($oldFile);
+        if($fileName){
+            $oldFile = $this->getDirectory($isPublic) . $folderName . '/' . $oldFileName;
+            if($oldFileName && file_exists($oldFile) && $fileName !== $oldFileName){
+                unlink($oldFile);
+            }
+
+            return $this->upload($fileName, $folderName, $isPublic);
         }
+
+        return null;
     }
 
-    private function getDirectory($isPrivate)
+    private function getDirectory($isPublic)
     {
-        $path = $this->publicDirectory;
-        if($isPrivate){
-            $path = $this->privateDirectory;
+        $path = $this->privateDirectory;
+        if($isPublic){
+            $path = $this->publicDirectory;
         }
 
         return $path;
