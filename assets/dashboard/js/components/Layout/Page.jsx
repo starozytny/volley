@@ -66,9 +66,9 @@ export class Layout extends Component {
         }
     }
 
-    handleUpdateList = (element, newContext=null) => {
+    handleUpdateList = (element, newContext = null, sorter = null) => {
         const { data, context, perPage } = this.state
-        Formulaire.updateDataPagination(this, Sort.compareCreatedAt, newContext, context, data, element, perPage);
+        Formulaire.updateDataPagination(this, sorter, newContext, context, data, element, perPage);
     }
 
     handleSearch = (search, searchFunction) => {
