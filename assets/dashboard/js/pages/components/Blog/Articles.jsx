@@ -32,12 +32,13 @@ export class Articles extends Component {
 
         this.layout = React.createRef();
 
+        this.handleGetData = this.handleGetData.bind(this);
+        this.handleUpdateList = this.handleUpdateList.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
         this.handleChangePublished = this.handleChangePublished.bind(this);
 
-        this.handleGetData = this.handleGetData.bind(this);
         this.handleContentList = this.handleContentList.bind(this);
         this.handleContentCreate = this.handleContentCreate.bind(this);
         this.handleContentUpdate = this.handleContentUpdate.bind(this);
@@ -65,22 +66,7 @@ export class Articles extends Component {
         ;
     }
 
-    handleContentList = (currentData, changeContext) => {
-        return <ArticlesList onChangeContext={changeContext}
-                             onDelete={this.handleDelete}
-                             onSearch={this.handleSearch}
-                             onDeleteAll={this.handleDeleteGroup}
-                             onChangePublished={this.handleChangePublished}
-                             data={currentData} />
-    }
-
-    handleContentCreate = (changeContext, updateList) => {
-        return <ArticleFormulaire categories={this.layout.current.state.categories} onChangeContext={changeContext} onUpdateList={updateList}/>
-    }
-
-    handleContentUpdate = (changeContext, updateList, element) => {
-        return <ArticleFormulaire categories={this.layout.current.state.categories} element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
-    }
+    handleUpdateList = (element, newContext=null) => { this.layout.current.handleSearch(element, newContext, Sort.compareCreatedAt); }
 
     handleDelete = (element) => {
         Formulaire.axiosDeleteElement(this, element, Routing.generate('api_articles_delete', {'id': element.id}),
@@ -109,6 +95,23 @@ export class Articles extends Component {
                 Formulaire.loader(false);
             })
         ;
+    }
+
+    handleContentList = (currentData, changeContext) => {
+        return <ArticlesList onChangeContext={changeContext}
+                             onDelete={this.handleDelete}
+                             onSearch={this.handleSearch}
+                             onDeleteAll={this.handleDeleteGroup}
+                             onChangePublished={this.handleChangePublished}
+                             data={currentData} />
+    }
+
+    handleContentCreate = (changeContext, updateList) => {
+        return <ArticleFormulaire categories={this.layout.current.state.categories} onChangeContext={changeContext} onUpdateList={updateList}/>
+    }
+
+    handleContentUpdate = (changeContext, updateList, element) => {
+        return <ArticleFormulaire categories={this.layout.current.state.categories} element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
     }
 
     render () {
