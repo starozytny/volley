@@ -9,6 +9,10 @@ import { Button }              from "@dashboardComponents/Tools/Button";
 import Validateur              from "@dashboardComponents/functions/validateur";
 import Formulaire              from "@dashboardComponents/functions/Formulaire";
 
+export function UserFormulaire ({  }) {
+    return <div>tmp</div>
+}
+
 export class UserForm extends Component {
     constructor(props) {
         super(props);
