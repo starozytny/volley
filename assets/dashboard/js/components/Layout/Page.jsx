@@ -16,7 +16,7 @@ export class Page extends Component {
 
     render () {
         const { haveLoadPageError, children,
-                havePagination, perPage = "10", taille, data,
+            havePagination, perPage = "10", taille, data,
         } = this.props;
 
         let hPagination = (havePagination && data && data.length !== 0);
