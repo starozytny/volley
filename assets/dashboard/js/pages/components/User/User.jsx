@@ -9,7 +9,6 @@ import Formulaire        from "@dashboardComponents/functions/Formulaire";
 import { UserList }       from "./UserList";
 import { UserFormulaire } from "./UserForm";
 
-
 function searchFunction(dataImmuable, search){
     let newData = [];
     newData = dataImmuable.filter(function(v) {
@@ -86,17 +85,17 @@ export class User extends Component {
         return <UserList onChangeContext={changeContext}
                          onDelete={this.handleDelete}
                          onGetFilters={this.handleGetFilters}
-                         filters={filters}
                          onSearch={this.handleSearch}
                          onDeleteAll={this.handleDeleteGroup}
+                         filters={filters}
                          data={currentData} />
     }
 
-    handleContentCreate = (changeContext, updateList) => {
+    handleContentCreate = (changeContext) => {
         return <UserFormulaire type="create" onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
-    handleContentUpdate = (changeContext, updateList, element) => {
+    handleContentUpdate = (changeContext, element) => {
         return <UserFormulaire type="update" element={element} onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 

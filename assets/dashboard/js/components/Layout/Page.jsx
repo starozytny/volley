@@ -62,9 +62,13 @@ export class Layout extends Component {
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
     handleChangeContext = (context, element=null) => {
+        const { onChangeContextRead } = this.props;
+
         this.setState({ context, element });
         if(context === "list"){
             this.page.current.pagination.current.handleComeback()
+        }else if(context === "read"){
+            onChangeContextRead(element)
         }
     }
 
@@ -106,16 +110,19 @@ export class Layout extends Component {
     }
 
     render () {
-        const { onContentList, onContentCreate, onContentUpdate } = this.props;
+        const { onContentList, onContentCreate, onContentUpdate, onContentRead } = this.props;
         const { loadPageError, context, loadData, data, currentData, element, sessionName, filters } = this.state;
 
         let content, havePagination = false;
         switch (context){
             case "create":
-                content = onContentCreate(this.handleChangeContext, this.handleUpdateList)
+                content = onContentCreate(this.handleChangeContext)
                 break;
             case "update":
-                content = onContentUpdate(this.handleChangeContext, this.handleUpdateList, element)
+                content = onContentUpdate(this.handleChangeContext, element)
+                break;
+            case "read":
+                content = onContentRead(this.handleChangeContext, element)
                 break;
             default:
                 havePagination = true;

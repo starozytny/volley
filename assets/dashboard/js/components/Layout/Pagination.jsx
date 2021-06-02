@@ -37,13 +37,15 @@ export class Pagination extends Component {
     }
 
     handleComeback = () => {
-        const { perPage, items, sessionName } = this.props;
+        const { perPage, items, sessionName, currentPage } = this.props;
 
-        const selectedPage = localStorage.getItem(sessionName);
-        const offset = selectedPage * perPage;
+        if(currentPage){
+            const selectedPage = localStorage.getItem(sessionName);
+            const offset = selectedPage * perPage;
 
-        this.setState({ currentPage: selectedPage, offset: offset })
-        this.props.onUpdate(items.slice(offset, offset + parseInt(perPage)))
+            this.setState({ currentPage: selectedPage, offset: offset })
+            this.props.onUpdate(items.slice(offset, offset + parseInt(perPage)))
+        }
     }
 
     handlePageOne = () => {
