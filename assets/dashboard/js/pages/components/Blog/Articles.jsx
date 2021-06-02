@@ -8,9 +8,8 @@ import {Layout }         from "@dashboardComponents/Layout/Page";
 import Sort              from "@dashboardComponents/functions/sort";
 import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
-import { ArticlesList }  from "./ArticlesList";
-import { ArticleCreate } from "./ArticleCreate";
-import { ArticleUpdate } from "./ArticleUpdate";
+import { ArticlesList }      from "./ArticlesList";
+import { ArticleFormulaire } from "./ArticleForm";
 
 function searchFunction(dataImmuable, search){
     let newData = [];
@@ -66,6 +65,23 @@ export class Articles extends Component {
         ;
     }
 
+    handleContentList = (currentData, changeContext) => {
+        return <ArticlesList onChangeContext={changeContext}
+                             onDelete={this.handleDelete}
+                             onSearch={this.handleSearch}
+                             onDeleteAll={this.handleDeleteGroup}
+                             onChangePublished={this.handleChangePublished}
+                             data={currentData} />
+    }
+
+    handleContentCreate = (changeContext, updateList) => {
+        return <ArticleFormulaire categories={this.layout.current.state.categories} onChangeContext={changeContext} onUpdateList={updateList}/>
+    }
+
+    handleContentUpdate = (changeContext, updateList, element) => {
+        return <ArticleFormulaire categories={this.layout.current.state.categories} element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
+    }
+
     handleDelete = (element) => {
         Formulaire.axiosDeleteElement(this, element, Routing.generate('api_articles_delete', {'id': element.id}),
             'Supprimer cet article ?', 'Cette action est irréversible.');
@@ -93,23 +109,6 @@ export class Articles extends Component {
                 Formulaire.loader(false);
             })
         ;
-    }
-
-    handleContentList = (currentData, changeContext) => {
-        return <ArticlesList onChangeContext={changeContext}
-                             onDelete={this.handleDelete}
-                             onSearch={this.handleSearch}
-                             onDeleteAll={this.handleDeleteGroup}
-                             onChangePublished={this.handleChangePublished}
-                             data={currentData} />
-    }
-
-    handleContentCreate = (changeContext, updateList) => {
-        return <ArticleCreate categories={this.layout.current.state.categories} onChangeContext={changeContext} onUpdateList={updateList}/>
-    }
-
-    handleContentUpdate = (changeContext, updateList, element) => {
-        return <ArticleUpdate categories={this.layout.current.state.categories} element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
     }
 
     render () {
