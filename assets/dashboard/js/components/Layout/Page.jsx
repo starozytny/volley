@@ -73,7 +73,7 @@ export class Layout extends Component {
         Formulaire.updateDataPagination(this, sorter, newContext, context, data, element, perPage);
     }
 
-    handleSearch = (search, searchFunction, haveFilter = false) => {
+    handleSearch = (search, searchFunction, haveFilter = false, filterFunction) => {
         const { dataImmuable, filters, perPage } = this.state;
 
         if(!haveFilter){
@@ -84,9 +84,9 @@ export class Layout extends Component {
                 this.setState({ data: newData, currentData: newData.slice(0, perPage) });
             }
         }else{
-            let dataSearch = this.handleGetFilters(filters);
+            let dataSearch = this.handleGetFilters(filters, filterFunction);
             if(search === "") {
-                this.handleGetFilters(filters)
+                this.handleGetFilters(filters, filterFunction)
             }else{
                 let newData = searchFunction(dataSearch, search);
                 this.setState({ data: newData, currentData: newData.slice(0, perPage) });
@@ -107,7 +107,7 @@ export class Layout extends Component {
 
     render () {
         const { onContentList, onContentCreate, onContentUpdate } = this.props;
-        const { loadPageError, context, loadData, data, currentData, element, sessionName } = this.state;
+        const { loadPageError, context, loadData, data, currentData, element, sessionName, filters } = this.state;
 
         let content, havePagination = false;
         switch (context){
@@ -119,7 +119,7 @@ export class Layout extends Component {
                 break;
             default:
                 havePagination = true;
-                content = loadData ? <LoaderElement /> : onContentList(currentData, this.handleChangeContext)
+                content = loadData ? <LoaderElement /> : onContentList(currentData, this.handleChangeContext, this.handleGetFilters, filters)
                 break;
         }
 

@@ -13,7 +13,11 @@ import { UserFormulaire } from "./UserForm";
 function searchFunction(dataImmuable, search){
     let newData = [];
     newData = dataImmuable.filter(function(v) {
-        if(v.title.toLowerCase().includes(search)){
+        if(v.username.toLowerCase().includes(search)
+            || v.email.toLowerCase().includes(search)
+            || v.firstname.toLowerCase().includes(search)
+            || v.lastname.toLowerCase().includes(search)
+        ){
             return v;
         }
     })
@@ -76,7 +80,7 @@ export class User extends Component {
 
     handleGetFilters = (filters) => { this.layout.current.handleGetFilters(filters, filterFunction); }
 
-    handleSearch = (search) => { this.layout.current.handleSearch(true, search, searchFunction, true); }
+    handleSearch = (search) => { this.layout.current.handleSearch(search, searchFunction, true, filterFunction); }
 
     handleContentList = (currentData, changeContext, getFilters, filters) => {
         return <UserList onChangeContext={changeContext}
@@ -89,11 +93,11 @@ export class User extends Component {
     }
 
     handleContentCreate = (changeContext, updateList) => {
-        return <UserFormulaire onChangeContext={changeContext} onUpdateList={updateList}/>
+        return <UserFormulaire type="create" onChangeContext={changeContext} onUpdateList={updateList}/>
     }
 
     handleContentUpdate = (changeContext, updateList, element) => {
-        return <UserFormulaire element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
+        return <UserFormulaire type="update" element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
     }
 
     render () {
