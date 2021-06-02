@@ -48,15 +48,29 @@ class FileUploader
     public function deleteFile($fileName, $folderName, $isPrivate = false)
     {
         if($fileName){
-            $path = $this->publicDirectory;
-            if($isPrivate){
-                $path = $this->privateDirectory;
-            }
-            $file = $path . $folderName . '/' . $fileName;
+            $file = $this->getDirectory($isPrivate) . $folderName . '/' . $fileName;
             if(file_exists($file)){
                 unlink($file);
             }
         }
+    }
+
+    public function replaceFile($fileName, $oldFileName, $folderName, $isPrivate = false)
+    {
+        $oldFile = $this->getDirectory($isPrivate) . $folderName . '/' . $oldFileName;
+        if($fileName && file_exists($oldFile) && $fileName !== $oldFileName){
+            unlink($oldFile);
+        }
+    }
+
+    private function getDirectory($isPrivate)
+    {
+        $path = $this->publicDirectory;
+        if($isPrivate){
+            $path = $this->privateDirectory;
+        }
+
+        return $path;
     }
 
     public function getPublicDirectory()
