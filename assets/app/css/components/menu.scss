@@ -1,5 +1,18 @@
 @import "../vars/vars";
 
+nav.fixed{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--alpha);
+  z-index: 1000;
+
+  & + main{
+    margin-top: 76px;
+  }
+}
+
 .nav-header-logo{
   padding: 12px;
 
@@ -82,6 +95,11 @@
 //                     | |  |_|\___/_____|  |_|    | |
 //                     |__|                       |__|
 @media (min-width: 1024px) {
+  nav.fixed{
+    & + main{
+      margin-top: 66px;
+    }
+  }
   nav{
     background: var(--alpha);
   }
