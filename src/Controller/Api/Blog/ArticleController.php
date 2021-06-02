@@ -178,16 +178,7 @@ class ArticleController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $file = $request->files->get('file');
 
-        $fileName = null;
-        if($file){
-            $oldFile = $this->getParameter('public_directory'). 'articles/' . $article->getFile();
-            if($article->getFile() && file_exists($oldFile)){
-                unlink($oldFile);
-            }
-
-            $fileName = $fileUploader->upload($file, "articles", true);
-        }
-
+        $fileName = $fileUploader->replaceFile($file, $article->getFile(), 'articles');
         $article = $this->setArticle($em, $apiResponse, $article, $request, $fileName);
 
         if($article instanceof BoArticle){
