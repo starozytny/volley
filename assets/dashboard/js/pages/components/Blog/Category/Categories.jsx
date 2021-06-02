@@ -64,12 +64,12 @@ export class Categories extends Component {
                                data={currentData} />
     }
 
-    handleContentCreate = (changeContext, updateList) => {
-        return <CategoryFormulaire onChangeContext={changeContext} onUpdateList={updateList}/>
+    handleContentCreate = (changeContext) => {
+        return <CategoryFormulaire type="create" onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
     handleContentUpdate = (changeContext, updateList, element) => {
-        return <CategoryFormulaire element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
+        return <CategoryFormulaire type="update" element={element} onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
     render () {

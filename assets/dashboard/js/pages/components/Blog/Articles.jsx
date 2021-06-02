@@ -106,12 +106,12 @@ export class Articles extends Component {
                              data={currentData} />
     }
 
-    handleContentCreate = (changeContext, updateList) => {
-        return <ArticleFormulaire categories={this.layout.current.state.categories} onChangeContext={changeContext} onUpdateList={updateList}/>
+    handleContentCreate = (changeContext) => {
+        return <ArticleFormulaire type="create" categories={this.layout.current.state.categories} onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
     handleContentUpdate = (changeContext, updateList, element) => {
-        return <ArticleFormulaire categories={this.layout.current.state.categories} element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
+        return <ArticleFormulaire type="update" categories={this.layout.current.state.categories} element={element} onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
     render () {
