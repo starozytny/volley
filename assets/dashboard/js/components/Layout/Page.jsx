@@ -4,7 +4,6 @@ import { PageError }        from "./PageError";
 import { Pagination }       from "./Pagination";
 import { LoaderElement }    from "@dashboardComponents/Layout/Loader";
 
-import Sort                 from "@dashboardComponents/functions/sort";
 import Formulaire           from "@dashboardComponents/functions/Formulaire";
 
 export class Page extends Component {
@@ -15,7 +14,7 @@ export class Page extends Component {
     }
 
     render () {
-        const { haveLoadPageError, children,
+        const { haveLoadPageError, children, sessionName,
             havePagination, perPage = "10", taille, data,
         } = this.props;
 
@@ -26,7 +25,7 @@ export class Page extends Component {
             <div className="main-content">
                 {children}
                 <Pagination ref={this.pagination} havePagination={hPagination} perPage={perPage} taille={taille} items={data}
-                            onUpdate={(items) => this.props.onUpdate(items)}/>
+                            onUpdate={(items) => this.props.onUpdate(items)} sessionName={sessionName}/>
             </div>
 
         </>
@@ -44,7 +43,9 @@ export class Layout extends Component {
             data: null,
             currentData: null,
             element: null,
-            perPage: props.perPage
+            filters: [],
+            perPage: props.perPage,
+            sessionName: props.sessionName
         }
 
         this.page = React.createRef();
@@ -53,6 +54,7 @@ export class Layout extends Component {
         this.handleChangeContext = this.handleChangeContext.bind(this);
         this.handleUpdateList = this.handleUpdateList.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleGetFilters = this.handleGetFilters.bind(this);
     }
 
     componentDidMount() { this.props.onGetData(this); }
@@ -60,9 +62,13 @@ export class Layout extends Component {
     handleUpdateData = (data) => { this.setState({ currentData: data })  }
 
     handleChangeContext = (context, element=null) => {
+        const { onChangeContextRead } = this.props;
+
         this.setState({ context, element });
         if(context === "list"){
             this.page.current.pagination.current.handleComeback()
+        }else if(context === "read"){
+            onChangeContextRead(element)
         }
     }
 
@@ -71,32 +77,56 @@ export class Layout extends Component {
         Formulaire.updateDataPagination(this, sorter, newContext, context, data, element, perPage);
     }
 
-    handleSearch = (search, searchFunction) => {
-        const { dataImmuable, perPage } = this.state;
+    handleSearch = (search, searchFunction, haveFilter = false, filterFunction) => {
+        const { dataImmuable, filters, perPage } = this.state;
 
-        if(search === "") {
-            this.setState({ data: dataImmuable, currentData: dataImmuable.slice(0, perPage) });
+        if(!haveFilter){
+            if(search === "") {
+                this.setState({ data: dataImmuable, currentData: dataImmuable.slice(0, perPage) });
+            }else{
+                let newData = searchFunction(dataImmuable, search);
+                this.setState({ data: newData, currentData: newData.slice(0, perPage) });
+            }
         }else{
-            let newData = searchFunction(dataImmuable, search);
-            this.setState({ data: newData, currentData: newData.slice(0, perPage) });
+            let dataSearch = this.handleGetFilters(filters, filterFunction);
+            if(search === "") {
+                this.handleGetFilters(filters, filterFunction)
+            }else{
+                let newData = searchFunction(dataSearch, search);
+                this.setState({ data: newData, currentData: newData.slice(0, perPage) });
+            }
         }
     }
 
+    handleGetFilters = (filters, filterFunction) => {
+        const { dataImmuable, perPage, sessionName } = this.state;
+
+        let newData = filterFunction(dataImmuable, filters);
+
+        sessionStorage.setItem(sessionName, "0")
+        this.page.current.pagination.current.handlePageOne();
+        this.setState({ data: newData, currentData: newData.slice(0, perPage), filters: filters });
+        return newData;
+    }
+
     render () {
-        const { onContentList, onContentCreate, onContentUpdate } = this.props;
-        const { loadPageError, context, loadData, data, currentData, element } = this.state;
+        const { onContentList, onContentCreate, onContentUpdate, onContentRead } = this.props;
+        const { loadPageError, context, loadData, data, currentData, element, sessionName, filters } = this.state;
 
         let content, havePagination = false;
         switch (context){
             case "create":
-                content = onContentCreate(this.handleChangeContext, this.handleUpdateList)
+                content = onContentCreate(this.handleChangeContext)
                 break;
             case "update":
-                content = onContentUpdate(this.handleChangeContext, this.handleUpdateList, element)
+                content = onContentUpdate(this.handleChangeContext, element)
+                break;
+            case "read":
+                content = onContentRead(this.handleChangeContext, element)
                 break;
             default:
                 havePagination = true;
-                content = loadData ? <LoaderElement /> : onContentList(currentData, this.handleChangeContext)
+                content = loadData ? <LoaderElement /> : onContentList(currentData, this.handleChangeContext, this.handleGetFilters, filters)
                 break;
         }
 
@@ -105,7 +135,7 @@ export class Layout extends Component {
         }
 
         return <>
-            <Page ref={this.page} haveLoadPageError={loadPageError}
+            <Page ref={this.page} haveLoadPageError={loadPageError} sessionName={sessionName}
                   havePagination={havePagination} taille={data && data.length} data={data} onUpdate={this.handleUpdateData}
             >
                 {content}
