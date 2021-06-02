@@ -67,7 +67,7 @@ export class User extends Component {
 
     handleGetData = (self) => { Formulaire.axiosGetDataPagination(self, Routing.generate('api_users_index'), null, this.state.perPage) }
 
-    handleUpdateList = (element, newContext=null) => { this.layout.current.handleSearch(element, newContext, Sort.compareLastname); }
+    handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, Sort.compareLastname); }
 
     handleDelete = (element) => {
         Formulaire.axiosDeleteElement(this, element, Routing.generate('api_users_delete', {'id': element.id}),
@@ -93,11 +93,11 @@ export class User extends Component {
     }
 
     handleContentCreate = (changeContext, updateList) => {
-        return <UserFormulaire type="create" onChangeContext={changeContext} onUpdateList={updateList}/>
+        return <UserFormulaire type="create" onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
     handleContentUpdate = (changeContext, updateList, element) => {
-        return <UserFormulaire type="update" element={element} onChangeContext={changeContext} onUpdateList={updateList}/>
+        return <UserFormulaire type="update" element={element} onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
     render () {
