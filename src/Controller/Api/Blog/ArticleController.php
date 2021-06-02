@@ -239,18 +239,6 @@ class ArticleController extends AbstractController
         return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
     }
 
-    private function deleteArticle($em, BoArticle $article)
-    {
-        if($article->getFile()){
-            $file = $this->getParameter('public_directory'). 'articles/' . $article->getFile();
-            if(file_exists($file)){
-                unlink($file);
-            }
-        }
-
-        $em->remove($article);
-    }
-
     /**
      * Admin - Delete an article
      *
@@ -271,13 +259,15 @@ class ArticleController extends AbstractController
      *
      * @param ApiResponse $apiResponse
      * @param BoArticle $article
+     * @param FileUploader $fileUploader
      * @return JsonResponse
      */
-    public function delete(ApiResponse $apiResponse, BoArticle $article): JsonResponse
+    public function delete(ApiResponse $apiResponse, BoArticle $article, FileUploader $fileUploader): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
 
-        $this->deleteArticle($em, $article);
+        $fileUploader->deleteFile($article->getFile(), 'articles');
+        $em->remove($article);
         $em->flush();
 
         return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
@@ -303,9 +293,10 @@ class ArticleController extends AbstractController
      *
      * @param Request $request
      * @param ApiResponse $apiResponse
+     * @param FileUploader $fileUploader
      * @return JsonResponse
      */
-    public function deleteGroup(Request $request, ApiResponse $apiResponse): JsonResponse
+    public function deleteGroup(Request $request, ApiResponse $apiResponse, FileUploader $fileUploader): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
@@ -314,7 +305,8 @@ class ArticleController extends AbstractController
 
         if ($articles) {
             foreach ($articles as $article) {
-                $this->deleteArticle($em, $article);
+                $fileUploader->deleteFile($article->getFile(), 'articles');
+                $em->remove($article);
             }
         }
 
