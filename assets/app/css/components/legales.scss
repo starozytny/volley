@@ -1,34 +1,3 @@
 @import "../vars/vars";
 
 @import "../../../common/css/components/legales";
-
-.legales{
-  #cookies-global-response{
-    .cookies-choices{
-      justify-content: flex-start;
-
-
-      & > div{
-        background-color: var(--alpha);
-        border-radius: 4px;
-        box-shadow: 0 4px 12px var(--greyShadow);
-      }
-
-      & > div:first-child{
-        &.active{
-          background-color: var(--danger);
-          color: var(--alpha);
-        }
-        margin-right: 12px;
-      }
-
-      & > div:last-child{
-        &.active{
-          background-color: var(--primary);
-          color: var(--alpha);
-        }
-        color: var(--txt);
-      }
-    }
-  }
-}

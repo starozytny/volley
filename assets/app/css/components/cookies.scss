@@ -2,7 +2,7 @@
 
 .matomo-iframe{
   border: 0;
-  height: 325px;
+  min-height: 168px;
   width: 320px;
   margin-top: 12px;
 }
@@ -99,6 +99,43 @@
       @include fontSemibold();
       font-size: 18px;
       margin-bottom: 12px;
+    }
+  }
+}
+
+.cookies-global-response{
+  .cookies-choices{
+    justify-content: flex-start;
+
+    & > div{
+      background-color: var(--alpha);
+      border-radius: 4px;
+      box-shadow: 0 4px 12px var(--greyShadow);
+    }
+
+    & > div:first-child{
+      &.active{
+        background-color: var(--danger);
+        color: var(--alpha);
+      }
+      margin-right: 12px;
+    }
+
+    & > div:last-child{
+      &.active{
+        background-color: var(--primary);
+        color: var(--alpha);
+      }
+      color: var(--txt);
+    }
+  }
+}
+
+.cookies-global-response{
+  .cookies-choices {
+
+    & > div {
+      background-color: var(--grey);
     }
   }
 }

@@ -151,6 +151,10 @@ export class Cookies extends Component {
                     src="https://matomo.demodirecte.fr/index.php?module=CoreAdminHome&action=optOut&language=fr&backgroundColor=&fontColor=&fontSize=&fontFamily=Poppins"
                 />
             </div>
+            <div className="item cookies-global-response cookies-global-response-2">
+                <span className="title">Réponse globale</span>
+                <CookiesGlobalResponse fixed={false} consent={consent} onOpen={this.handleOpen} onDisplay={this.handleDisplay}/>
+            </div>
         </div>
 
         return <>
