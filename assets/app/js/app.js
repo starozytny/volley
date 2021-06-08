@@ -18,5 +18,5 @@ render(
 
 let cookies = document.getElementById("cookies");
 render(
-    <Cookies />, cookies
+    <Cookies {...cookies.dataset}/>, cookies
 )

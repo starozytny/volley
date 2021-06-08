@@ -1,6 +1,13 @@
 @import "../vars/vars";
 
-#cookies{
+.matomo-iframe{
+  border: 0;
+  height: 325px;
+  width: 320px;
+  margin-top: 12px;
+}
+
+.cookies{
   position: fixed;
   z-index: 200000;
   bottom: 12px;
@@ -84,6 +91,18 @@
   }
 }
 
+.aside-cookies-choices{
+  .item{
+    margin-bottom: 48px;
+    .title{
+      display: block;
+      @include fontSemibold();
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+  }
+}
+
 //                      __   _____  __    ___    __
 //                     | _| |___ / / /_  / _ \  |_ |
 //    _____ _____ _____| |    |_ \| '_ \| | | |  | |_____ _____ _____
@@ -91,7 +110,7 @@
 //                     | |  |____/ \___/ \___/   | |
 //                     |__|                     |__|
 @media (min-width:360px) {
-  #cookies {
+  .cookies {
     width: calc(360px - 24px);
   }
 }
@@ -103,7 +122,10 @@
 //                     | |   /_/  \___/ \___/   | |
 //                     |__|                    |__|
 @media (min-width:768px) {
-  #cookies {
+  .matomo-iframe{
+    width: calc(620px - 24px);
+  }
+  .cookies {
     bottom: 48px;
     left: 48px;
   }
