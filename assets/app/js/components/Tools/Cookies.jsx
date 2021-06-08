@@ -129,12 +129,23 @@ export class Cookies extends Component {
             <div className="item">
                 <span className="title">Cookies statistiques</span>
                 <p>
-                    Les cookies statistiques via <b>Matomo</b> nous aident à mesurer l'audience et
-                    comprendre comment les visiteurs interagissent avec notre site internet.
-                    Ces données ne sont pas identifiable grâce à l'anonymisation de l'adresse IP.
-                    De plus, la conservation des données est limitée à 13 mois maximum.
-                    <br/>
-                    Ces données ne sont pas partagées à un tiers.
+                    Matomo Analytics (anciennement Piwik Analytics) est une solution de mesure d'audience qui utilise des cookies.
+                    Ce site web utilise Matomo Analytics avec une configuration conforme à la réglementation sur la
+                    protection des données personnelles et aux recommandations de la CNIL (Commission Nationale de l'Informatique et des Libertés).
+                    Cette configuration permet notamment de rendre anonyme les données des
+                    visiteurs et de limiter le délai de conservation de ces données à 13 mois maximum.
+                    <br /><br />
+                        <u>_pk_id :</u> Cookie qui stocke un identifiant unique pour “reconnaître” le visiteur. Durée de vie : 13 mois.
+                        <br />
+                            <u>_pk_ses :</u> Cookie qui stocke des informations concernant la visite. Durée de vie : 30 minutes.
+                            <br /><br />
+
+                                Les visiteurs ne sont pas suivis d’un site Web à un autre <br />
+                                Les « empreintes numériques » changent quotidiennement pour chaque visiteur, ce qui signifie
+                                qu’aucun visiteur ne peut être suivi pendant plusieurs jours sur le même site Web,
+                                et aucun profil d’utilisateur ne peut être généré lorsque les cookies sont désactivés. <br />
+                                Les données ne sont pas utilisées à d’autres fins que l’analyse. <br />
+                                Le centre de données se situe en Europe.
                 </p>
                 <iframe className="matomo-iframe"
                     src="https://matomo.demodirecte.fr/index.php?module=CoreAdminHome&action=optOut&language=fr&backgroundColor=&fontColor=&fontSize=&fontFamily=Poppins"
