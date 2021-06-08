@@ -4,12 +4,87 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min';
 
 import { Aside } from "@dashboardComponents/Tools/Aside";
 
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function setCookie(cname, cvalue, exdays, cdomain="") {
+    let d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + cdomain + ";path=/";
+}
+
+export class CookiesGlobalResponse extends Component {
+    constructor(props) {
+        super();
+
+        this.state = {
+            response: null
+        }
+
+        this.handleResponse = this.handleResponse.bind(this);
+    }
+
+    componentDidMount = () => {
+        const { consent } = this.props;
+
+        let cookie = getCookie(consent);
+        if(cookie === "true"){
+            this.setState({ response: 1 })
+        }else if(cookie === "false"){
+            this.setState({ response: 0 })
+            let iframe = document.querySelector('.matomo-iframe-display');
+            console.log(iframe)
+            iframe.classList.add('remove')
+        }
+    }
+
+    handleResponse = (type) => {
+        const { consent, onDisplay } = this.props;
+
+        if(type === 0) { // refusé
+            setCookie(consent, false, 30);
+        }else{ //accepté
+            setCookie(consent, true, 30);
+        }
+
+        if(onDisplay){
+            onDisplay();
+        }
+        this.setState({ response: type })
+    }
+
+    render () {
+        const { fixed, onOpen } = this.props;
+        const { response } = this.state;
+
+        return <div className="cookies-choices">
+            {fixed && <div onClick={onOpen}>Paramétrer</div>}
+            <div onClick={() => this.handleResponse(0)} className={response === 0 ? "active" : ""}>Tout refuser</div>
+            <div onClick={() => this.handleResponse(1)} className={response === 1 ? "active" : ""}>Tout accepter</div>
+        </div>
+    }
+}
+
 export class Cookies extends Component {
     constructor(props) {
         super();
 
         this.state = {
-            showCookie: true
+            showCookie: true,
         }
 
         this.aside = React.createRef();
@@ -20,24 +95,25 @@ export class Cookies extends Component {
     componentDidMount = () => {
         const { consent } = this.props;
 
-        let cookies = document.cookie.split(';');
-        let find = false;
-        cookies.forEach(el => {
-            if(el === consent+"=true" || el === consent+"=false"){
-                find = true;
-            }
-        })
-
-        if(find){
+        let cookie = getCookie(consent);
+        if(cookie !== ""){
             this.setState({ showCookie: false })
         }
     }
 
     handleOpen = () => {
+        const { consent } = this.props;
+
         this.aside.current.handleOpen();
+        setCookie(consent, "settings", 30);
+    }
+
+    handleDisplay = () => {
+        this.setState({ showCookie: false })
     }
 
     render () {
+        const { consent } = this.props;
         const { showCookie } = this.state;
 
         let settings = <div className="aside-cookies-choices">
@@ -79,11 +155,7 @@ export class Cookies extends Component {
                             Plus d'informations dans notre <a href={Routing.generate("app_politique")}>politique de confidentialité</a>
                         </div>
                     </div>
-                    <div className="cookies-choices">
-                        <div onClick={this.handleOpen}>Paramétrer</div>
-                        <div>Tout refuser</div>
-                        <div>Tout accepter</div>
-                    </div>
+                    <CookiesGlobalResponse fixed={true} consent={consent} onOpen={this.handleOpen} onDisplay={this.handleDisplay}/>
                 </div>
             </>}
             <Aside ref={this.aside} content={settings}>Paramétrer nos cookies</Aside>

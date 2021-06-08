@@ -7,7 +7,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import { Menu }     from "@dashboardComponents/Layout/Menu";
-import { Cookies }  from "@appComponents/Tools/Cookies";
+import { Cookies, CookiesGlobalResponse } from "@appComponents/Tools/Cookies";
 
 Routing.setRoutingData(routes);
 
@@ -20,3 +20,10 @@ let cookies = document.getElementById("cookies");
 render(
     <Cookies {...cookies.dataset}/>, cookies
 )
+
+let cookiesGlobalResponse = document.getElementById("cookies-global-response");
+if(cookiesGlobalResponse){
+    render(
+        <CookiesGlobalResponse {...cookies.dataset}/>, cookiesGlobalResponse
+    )
+}

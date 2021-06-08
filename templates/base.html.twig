@@ -12,6 +12,7 @@
 
         {% block stylesheets %}{% endblock %}
 
+        {% set consent = "logilinkLocalCookie" %} <!-- CONSENT Value -->
         <!-- Matomo -->
         <script type="text/javascript">
             var _paq = window._paq = window._paq || [];
@@ -30,7 +31,28 @@
             }]);
             <!-- FIN DU CODE CNIL -->
             /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            let cookies = document.cookie.split(';');
+            let findConsent = false, find = 2;
+            cookies.forEach(el => {
+                let elem = el.split("=");
+                if(elem[0].trim() === "logilinkLocalCookie"){
+                    findConsent = true;
+                    if(elem[1].trim() === "true"){
+                        find = 1;
+                    }else if(elem[1].trim() === "false"){
+                        find = 0;
+                    }
+                }
+            })
             _paq.push(['requireCookieConsent']);
+            if(find === 1){
+                _paq.push(['rememberCookieConsentGiven']);
+            }else if(find === 0){
+                if(findConsent){
+                    _paq.push(['disableCookies']);
+                }
+                _paq.push(['forgetCookieConsentGiven']);
+            }
             _paq.push(['trackPageView']);
             _paq.push(['enableLinkTracking']);
             (function() {
@@ -54,7 +76,7 @@
         </div>
     {% endif %}
 
-    <div id="cookies" data-consent="logilinkLocalCookie"></div>
+    <div id="cookies" data-consent="{{ consent }}"></div>
 
     <div>
         {# --------------- BODY ---------------- #}

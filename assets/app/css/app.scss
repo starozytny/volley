@@ -109,6 +109,10 @@ main{
     fill: var(--fondContent);
 }
 
+.matomo-iframe-display.remove{
+    display: none;
+}
+
 //                      __   _ ____  ___   ___    __
 //                     | _| / |___ \( _ ) / _ \  |_ |
 //    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
