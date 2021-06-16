@@ -89,7 +89,7 @@ class UserController extends AbstractController
                            ApiResponse $apiResponse, SanitizeData $sanitizeData): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $data = json_decode($request->getContent());
+        $data = json_decode($request->get('data'));
 
         if ($data === null) {
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
@@ -165,7 +165,7 @@ class UserController extends AbstractController
         }
 
         $em = $this->getDoctrine()->getManager();
-        $data = json_decode($request->getContent());
+        $data = json_decode($request->get('data'));
 
         if (isset($data->username)) {
             $user->setUsername($sanitizeData->fullSanitize($data->username));
