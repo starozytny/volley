@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\ApiResponse;
+use App\Service\Data\UserService;
 use App\Service\Export;
 use App\Service\FileUploader;
 use App\Service\MailerService;
@@ -29,6 +30,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     const FOLDER_AVATARS = "avatars";
+
     /**
      * Admin - Get array of users
      *
@@ -44,15 +46,14 @@ class UserController extends AbstractController
      * @OA\Tag(name="Users")
      *
      * @param Request $request
-     * @param UserRepository $userRepository
      * @param ApiResponse $apiResponse
+     * @param UserService $userService
      * @return JsonResponse
      */
-    public function index(Request $request, UserRepository $userRepository, ApiResponse $apiResponse): JsonResponse
+    public function index(Request $request, ApiResponse $apiResponse, UserService $userService): JsonResponse
     {
-        $order = $request->query->get('order') ?: 'ASC';
-        $users = $userRepository->findBy([], ['lastname' => $order]);
-        return $apiResponse->apiJsonResponse($users, User::ADMIN_READ);
+        $objs = $userService->getList($request->query->get('order') ?: 'ASC');
+        return $apiResponse->apiJsonResponse($objs, User::ADMIN_READ);
     }
 
     /**
