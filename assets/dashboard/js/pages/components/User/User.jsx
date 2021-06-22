@@ -65,7 +65,7 @@ export class User extends Component {
         this.handleContentUpdate = this.handleContentUpdate.bind(this);
     }
 
-    handleGetData = (self) => { Formulaire.axiosGetDataPagination(self, Routing.generate('api_users_index'), null, this.state.perPage) }
+    handleGetData = (self) => { Formulaire.axiosGetDataPagination(self, Routing.generate('api_users_index'), Sort.compareLastname, this.state.perPage) }
 
     handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, Sort.compareLastname); }
 
