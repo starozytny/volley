@@ -6,6 +6,7 @@ use App\Entity\Contact;
 use App\Entity\User;
 use App\Repository\ContactRepository;
 use App\Service\ApiResponse;
+use App\Service\Data\DataService;
 use App\Service\MailerService;
 use App\Service\SanitizeData;
 use App\Service\SettingsService;
@@ -77,7 +78,6 @@ class ContactController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-
         if (!isset($data->name) || !isset($data->email) || !isset($data->message)) {
             return $apiResponse->apiJsonResponseBadRequest('Il manque des données.');
         }
@@ -128,16 +128,12 @@ class ContactController extends AbstractController
      * @OA\Tag(name="Contact")
      *
      * @param Contact $obj
-     * @param ApiResponse $apiResponse
+     * @param DataService $dataService
      * @return JsonResponse
      */
-    public function isSeen(Contact $obj, ApiResponse $apiResponse): JsonResponse
+    public function isSeen(Contact $obj, DataService $dataService): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $obj->setIsSeen(true);
-
-        $em->flush();
-        return $apiResponse->apiJsonResponse($obj, User::ADMIN_READ);
+        return $dataService->isSeenToTrue($obj);
     }
 
     /**
@@ -154,21 +150,13 @@ class ContactController extends AbstractController
      *
      * @OA\Tag(name="Contact")
      *
-     * @param ApiResponse $apiResponse
      * @param Contact $obj
+     * @param DataService $dataService
      * @return JsonResponse
      */
-    public function delete(ApiResponse $apiResponse, Contact $obj): JsonResponse
+    public function delete(Contact $obj, DataService $dataService): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-
-        if (!$obj->getIsSeen()) {
-            return $apiResponse->apiJsonResponseBadRequest('Vous n\'avez pas lu ce message.');
-        }
-
-        $em->remove($obj);
-        $em->flush();
-        return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
+        return $dataService->delete($obj, true);
     }
 
     /**
@@ -186,27 +174,11 @@ class ContactController extends AbstractController
      * @OA\Tag(name="Contact")
      *
      * @param Request $request
-     * @param ApiResponse $apiResponse
+     * @param DataService $dataService
      * @return JsonResponse
      */
-    public function deleteGroup(Request $request, ApiResponse $apiResponse): JsonResponse
+    public function deleteSelected(Request $request, DataService $dataService): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $data = json_decode($request->getContent());
-
-        $objs = $em->getRepository(Contact::class)->findBy(['id' => $data]);
-
-        if ($objs) {
-            foreach ($objs as $obj) {
-                if (!$obj->getIsSeen()) {
-                    return $apiResponse->apiJsonResponseBadRequest('Vous n\'avez pas lu ce message.');
-                }
-
-                $em->remove($obj);
-            }
-        }
-
-        $em->flush();
-        return $apiResponse->apiJsonResponseSuccessful("Supression de la sélection réussie !");
+        return $dataService->deleteSelected(Contact::class, json_decode($request->getContent()), true);
     }
 }
