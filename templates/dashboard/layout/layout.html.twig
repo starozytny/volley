@@ -24,6 +24,12 @@
             <header>
                 <div class="header-container">
                     <span>{{ app.user.lastname | upper }} {{ app.user.firstname | capitalize }}</span>
+                    <div>
+                        <span style="margin-left: 4px"><a class="logout" href="{{ path('app_logout') }}">
+                                <span class="icon-logout"></span>
+                                <span>Se déconnecter</span>
+                        </a></span>
+                    </div>
                 </div>
             </header>
 
