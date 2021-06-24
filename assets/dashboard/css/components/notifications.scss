@@ -1,0 +1,17 @@
+@import "../vars/vars";
+
+.btn-notif{
+  cursor: pointer;
+  opacity: 0.6;
+  margin-right: 24px;
+  transform: scale(0.95);
+  transition: all 0.2s ease-in-out;
+
+  & > span:first-child{
+    font-size: 20px;
+  }
+
+  &:hover{
+    opacity: 1;
+  }
+}

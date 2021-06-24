@@ -4,42 +4,38 @@ header{
   padding: 12px;
   background-color: var(--fond);
 
-  .username{
-    opacity: 0.6;
-  }
-
   .header-container{
     @include flex(row, center, flex-end);
     margin: 12px 0;
 
-    & > div{
-      @include flex(row, center, flex-end);
+    .header-name{
+      @include flex(row, center, flex-start);
+
+      img{
+        width: 42px; height: 42px;
+        border-radius: 50px;
+        box-shadow: 0 2px 6px var(--greyShadow);
+        background-color: var(--fondContent);
+        margin-left: 12px;
+        transform: translateY(-2px);
+      }
     }
 
-    a{
-      color: var(--txt);
-      opacity: 0.7;
+    .profil{
+      @include flex(column, flex-start, flex-start);
 
-      [class^="icon-"]{
-        display:inline-block;
-        transform: translateY(1px);
-        margin-right: 4px;
-      }
-
-      &:hover{
-        opacity: 1;
-      }
-
-      span:last-child{
-        display: none;
+      & > span:first-child{
+        @include fontSemibold();
       }
     }
 
     .logout{
-      background-color: var(--grey);
-      padding: 12px;
-      border-radius: 4px;
-      margin-left: 12px;
+      opacity: 0.6;
+      color: var(--txt);
+
+      &:hover{
+        opacity: 1;
+      }
     }
   }
 }
