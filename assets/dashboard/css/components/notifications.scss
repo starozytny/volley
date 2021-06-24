@@ -59,13 +59,16 @@
 
   .notif-all{
     text-align: center;
-    color: var(--primary);
     @include fontSemibold();
     font-size: 14px;
     padding: 12px;
     opacity: 0.8;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
+
+    a{
+      color: var(--primary);
+    }
 
     &:hover{
       opacity: 1;

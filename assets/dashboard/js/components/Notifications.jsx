@@ -103,7 +103,7 @@ export class Notifications extends Component{
                     }) : <div className="item"><div className="createdAt">Aucune notification</div></div>}
                 </div>
                 <div className="notif-all">
-                    Voir toutes les notifications
+                    <a href={Routing.generate('admin_notifications_index')}>Voir toutes les notifications</a>
                 </div>
             </div>
         </div>

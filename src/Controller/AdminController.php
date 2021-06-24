@@ -85,4 +85,12 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/pages/contact/index.html.twig');
     }
+
+    /**
+     * @Route("/notifications", options={"expose"=true}, name="notifications_index")
+     */
+    public function notifications(): Response
+    {
+        return $this->render('admin/pages/notifications/index.html.twig');
+    }
 }
