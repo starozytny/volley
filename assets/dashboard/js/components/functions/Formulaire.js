@@ -40,6 +40,17 @@ function axiosGetDataPagination(self, url, sorter = null, perPage=10){
     ;
 }
 
+function updateData(self, sorter, newContext, context, data, element){
+    let nContext = (newContext !== null) ? newContext : context;
+    let newData = UpdateList.update(nContext, data, element);
+    newData.sort(sorter)
+
+    self.setState({
+        data: newData,
+        element: element
+    })
+}
+
 function updateDataPagination(self, sorter, newContext, context, data, element, perPage=10){
     let nContext = (newContext !== null) ? newContext : context;
     let newData = UpdateList.update(nContext, data, element);
@@ -140,5 +151,6 @@ module.exports = {
     axiosGetDataPagination,
     axiosDeleteElement,
     axiosDeleteGroupElement,
-    updateDataPagination
+    updateData,
+    updateDataPagination,
 }

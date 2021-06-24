@@ -2,9 +2,12 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Contact;
+use App\Entity\Notification;
 use App\Entity\User;
 use App\Repository\NotificationRepository;
 use App\Service\ApiResponse;
+use App\Service\Data\DataService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +27,7 @@ class NotificationController extends AbstractController
      *     response=200,
      *     description="Returns array of notifications",
      * )
-     * @OA\Tag(name="Contact")
+     * @OA\Tag(name="Notification")
      *
      * @param NotificationRepository $repository
      * @param ApiResponse $apiResponse
@@ -34,5 +37,26 @@ class NotificationController extends AbstractController
     {
         $objs = $repository->findAll();
         return $apiResponse->apiJsonResponse($objs, User::ADMIN_READ);
+    }
+
+    /**
+     * Change isSeen to true
+     *
+     * @Route("/{id}/is-seen", name="isSeen", options={"expose"=true}, methods={"POST"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns contact object",
+     * )
+     *
+     * @OA\Tag(name="Notification")
+     *
+     * @param Notification $obj
+     * @param DataService $dataService
+     * @return JsonResponse
+     */
+    public function isSeen(Notification $obj, DataService $dataService): JsonResponse
+    {
+        return $dataService->isSeenToTrue($obj);
     }
 }
