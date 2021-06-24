@@ -14,21 +14,31 @@ export class Notifications extends Component{
                 </div>
                 <div className="notif-body">
                     <div className="item">
-                        <div className="item-icon">
-                            <span className="icon-user" />
+                        <div className="item-content">
+                            <div className="item-icon">
+                                <span className="icon-user" />
+                            </div>
+                            <div className="item-infos">
+                                <div className="title">Nouveau utilisateur</div>
+                                <div className="createdAt">Il y a 5 minutes</div>
+                            </div>
                         </div>
-                        <div className="item-infos">
-                            <div className="title">Nouveau utilisateur</div>
-                            <div className="createdAt">Il y a 5 minutes</div>
+                        <div className="item-actions">
+                            <span className="icon-trash" />
                         </div>
                     </div>
                     <div className="item">
-                        <div className="item-icon">
-                            <span className="icon-user" />
+                        <div className="item-content">
+                            <div className="item-icon">
+                                <span className="icon-user" />
+                            </div>
+                            <div className="item-infos">
+                                <div className="title">Nouveau utilisateur</div>
+                                <div className="createdAt">Il y a 5 minutes</div>
+                            </div>
                         </div>
-                        <div className="item-infos">
-                            <div className="title">Nouveau utilisateur</div>
-                            <div className="createdAt">Il y a 5 minutes</div>
+                        <div className="item-actions">
+                            <span className="icon-trash" />
                         </div>
                     </div>
                 </div>
