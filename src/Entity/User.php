@@ -20,7 +20,6 @@ use OpenApi\Annotations as OA;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
- * @method string getUserIdentifier()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -213,11 +212,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
+     * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -418,8 +417,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function __call($name, $arguments)
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        // TODO: Implement @method string getUserIdentifier()
+        return (string) $this->username;
     }
 }
