@@ -19,6 +19,7 @@ use OpenApi\Annotations as OA;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
+ * @method string getUserIdentifier()
  */
 class User implements UserInterface
 {
@@ -414,5 +415,10 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }
