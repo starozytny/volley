@@ -1,5 +1,19 @@
 @import "../vars/vars";
 
+.notif-container{
+  &.active{
+    .notif-card{
+      top: 52px;
+      z-index: 5;
+      opacity: 1;
+    }
+
+    .btn-notif{
+      opacity: 1;
+    }
+  }
+}
+
 .btn-notif{
   position: relative;
   cursor: pointer;
@@ -12,7 +26,7 @@
     font-size: 20px;
   }
 
-  &:hover, &.active{
+  &:hover{
     opacity: 1;
   }
 
@@ -33,13 +47,15 @@
 
 .notif-card{
   position: absolute;
-  top: 52px;
+  top: -300px;
   right: 0;
   width: calc(320px - 24px);
   background-color: var(--alpha);
   box-shadow: 0 6px 24px var(--greyShadow);
   border-radius: 8px;
-  z-index: 5;
+  z-index: -5;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
 
   .notif-all{
     text-align: center;
@@ -145,8 +161,14 @@
   .notif-container{
     position: relative;
   }
-  .notif-card {
-    top: 36px;
+  .notif-card{
     right: 26px;
+  }
+  .notif-container{
+    &.active{
+      .notif-card{
+        top: 36px;
+      }
+    }
   }
 }

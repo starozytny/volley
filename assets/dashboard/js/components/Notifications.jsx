@@ -1,16 +1,30 @@
 import React, { Component } from "react";
 
 export class Notifications extends Component{
+    constructor(props) {
+        super();
+
+        this.state = {
+            open: false,
+        }
+
+        this.handleOpen = this.handleOpen.bind(this);
+    }
+
+    handleOpen = () => { this.setState({ open: !this.state.open }) }
+
     render() {
-        return <div className="notif-container">
-            <div className="btn-notif">
+        const { open } = this.state;
+
+        return <div className={"notif-container" + (open ? " active" : "")}>
+            <div className="btn-notif" onClick={this.handleOpen}>
                 <span className="icon-notification" />
                 <span className="number">5</span>
             </div>
             <div className="notif-card">
                 <div className="notif-cancel">
                     <span>Notifications</span>
-                    <span className="icon-cancel" />
+                    <span className="icon-cancel" onClick={this.handleOpen} />
                 </div>
                 <div className="notif-body">
                     <div className="item">
