@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\Settings;
 use App\Entity\User;
 use App\Service\Data\UserService;
@@ -89,8 +90,14 @@ class AdminController extends AbstractController
     /**
      * @Route("/notifications", options={"expose"=true}, name="notifications_index")
      */
-    public function notifications(): Response
+    public function notifications(SerializerInterface $serializer): Response
     {
-        return $this->render('admin/pages/notifications/index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $objs = $em->getRepository(Notification::class)->findAll();
+        $objs = $serializer->serialize($objs, 'json', ['groups' => User::ADMIN_READ]);
+
+        return $this->render('admin/pages/notifications/index.html.twig', [
+            'notifications' => $objs
+        ]);
     }
 }

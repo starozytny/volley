@@ -153,6 +153,20 @@ function loader(status){
     }
 }
 
+function isSeen (self, element, url){
+    if(!element.isSeen){
+        axios.post(url, {})
+            .then(function (response) {
+                let data = response.data;
+                self.handleUpdateList(data, 'update');
+            })
+            .catch(function (error) {
+                displayErrors(self, error)
+            })
+        ;
+    }
+}
+
 module.exports = {
     loader,
     displayErrors,
@@ -162,5 +176,6 @@ module.exports = {
     axiosDeleteGroupElement,
     updateData,
     updateDataPagination,
-    deleteElement
+    deleteElement,
+    isSeen
 }

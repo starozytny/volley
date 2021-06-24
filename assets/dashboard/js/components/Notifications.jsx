@@ -50,20 +50,7 @@ export class Notifications extends Component{
         this.setState({ open: !this.state.open })
     }
 
-    handleSeen = (element) => {
-        if(!element.isSeen){
-            const self = this;
-            axios.post(Routing.generate('api_notifications_isSeen', {'id': element.id}), {})
-                .then(function (response) {
-                    let data = response.data;
-                    self.handleUpdateList(data, 'update');
-                })
-                .catch(function (error) {
-                    Formulaire.displayErrors(self, error)
-                })
-            ;
-        }
-    }
+    handleSeen = (element) => { Formulaire.isSeen(this, element, Routing.generate('api_notifications_isSeen', {'id': element.id})) }
 
     handleDelete = (element) => {
         Formulaire.deleteElement(this, element, Routing.generate('api_notifications_delete', {'id': element.id}), false, false);
