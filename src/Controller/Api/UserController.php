@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
@@ -85,14 +86,14 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param ValidatorService $validator
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param UserPasswordHasherInterface $passwordHasher
      * @param ApiResponse $apiResponse
      * @param SanitizeData $sanitizeData
      * @param FileUploader $fileUploader
      * @param NotificationService $notificationService
      * @return JsonResponse
      */
-    public function create(Request $request, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder,
+    public function create(Request $request, ValidatorService $validator, UserPasswordHasherInterface $passwordHasher,
                            ApiResponse $apiResponse, SanitizeData $sanitizeData, FileUploader $fileUploader,
                            NotificationService $notificationService): JsonResponse
     {
@@ -113,7 +114,7 @@ class UserController extends AbstractController
         $user->setLastname(mb_strtoupper($sanitizeData->sanitizeString($data->lastname)));
         $user->setEmail($data->email);
         $pass = (isset($data->password) && $data->password != "") ? $data->password : uniqid();
-        $user->setPassword($passwordEncoder->encodePassword($user, $pass));
+        $user->setPassword($passwordHasher->hashPassword($user, $pass));
 
         if (isset($data->roles)) {
             $user->setRoles($data->roles);
@@ -421,11 +422,11 @@ class UserController extends AbstractController
      * @param Request $request
      * @param $token
      * @param ValidatorService $validator
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param UserPasswordHasherInterface $passwordHasher
      * @param ApiResponse $apiResponse
      * @return JsonResponse
      */
-    public function passwordUpdate(Request $request, $token, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder,
+    public function passwordUpdate(Request $request, $token, ValidatorService $validator, UserPasswordHasherInterface $passwordHasher,
                            ApiResponse $apiResponse): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
@@ -436,7 +437,7 @@ class UserController extends AbstractController
         }
 
         $user = $em->getRepository(User::class)->findOneBy(['token' => $token]);
-        $user->setPassword($passwordEncoder->encodePassword($user, $data->password));
+        $user->setPassword($passwordHasher->hashPassword($user, $data->password));
         $user->setForgetAt(null);
         $user->setForgetCode(null);
 
