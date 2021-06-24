@@ -9,6 +9,7 @@ use App\Service\Data\UserService;
 use App\Service\Export;
 use App\Service\FileUploader;
 use App\Service\MailerService;
+use App\Service\NotificationService;
 use App\Service\SanitizeData;
 use App\Service\SettingsService;
 use App\Service\ValidatorService;
@@ -30,6 +31,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     const FOLDER_AVATARS = "avatars";
+    const ICON = "user";
 
     /**
      * Admin - Get array of users
@@ -87,10 +89,12 @@ class UserController extends AbstractController
      * @param ApiResponse $apiResponse
      * @param SanitizeData $sanitizeData
      * @param FileUploader $fileUploader
+     * @param NotificationService $notificationService
      * @return JsonResponse
      */
     public function create(Request $request, ValidatorService $validator, UserPasswordEncoderInterface $passwordEncoder,
-                           ApiResponse $apiResponse, SanitizeData $sanitizeData, FileUploader $fileUploader): JsonResponse
+                           ApiResponse $apiResponse, SanitizeData $sanitizeData, FileUploader $fileUploader,
+                           NotificationService $notificationService): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->get('data'));
@@ -130,6 +134,8 @@ class UserController extends AbstractController
         $em->persist($user);
         $em->flush();
 
+        $notificationService->createNotification("Création d'un utilisateur", self::ICON, $this->getUser());
+
         return $apiResponse->apiJsonResponse($user, User::ADMIN_READ);
     }
 
@@ -162,13 +168,14 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param ValidatorService $validator
+     * @param NotificationService $notificationService
      * @param ApiResponse $apiResponse
      * @param SanitizeData $sanitizeData
      * @param User $user
      * @param FileUploader $fileUploader
      * @return JsonResponse
      */
-    public function update(Request $request, ValidatorService $validator,
+    public function update(Request $request, ValidatorService $validator, NotificationService $notificationService,
                            ApiResponse $apiResponse, SanitizeData $sanitizeData, User $user, FileUploader $fileUploader): JsonResponse
     {
         if ($this->getUser() != $user && !$this->isGranted("ROLE_ADMIN")) {
@@ -215,6 +222,8 @@ class UserController extends AbstractController
 
         $em->persist($user);
         $em->flush();
+
+        $notificationService->createNotification("Mise à jour d'un utilisateur", self::ICON, $this->getUser());
 
         return $apiResponse->apiJsonResponse($user, $groups);
     }

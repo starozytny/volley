@@ -54,6 +54,7 @@ class Notification
         $createdAt = new \DateTime();
         $createdAt->setTimezone(new \DateTimeZone("Europe/Paris"));
         $this->createdAt = $createdAt;
+        $this->isSeen = false;
     }
 
     public function getId(): ?int
