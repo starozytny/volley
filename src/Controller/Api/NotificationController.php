@@ -59,4 +59,25 @@ class NotificationController extends AbstractController
     {
         return $dataService->isSeenToTrue($obj);
     }
+
+    /**
+     * Delete a notification
+     *
+     * @Route("/{id}", name="delete", options={"expose"=true}, methods={"DELETE"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return message successful",
+     * )
+     *
+     * @OA\Tag(name="Notification")
+     *
+     * @param Notification $obj
+     * @param DataService $dataService
+     * @return JsonResponse
+     */
+    public function delete(Notification $obj, DataService $dataService): JsonResponse
+    {
+        return $dataService->delete($obj);
+    }
 }

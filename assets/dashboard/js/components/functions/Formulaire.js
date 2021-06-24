@@ -77,24 +77,33 @@ function displayErrors(self, error, message="Veuillez vérifier les informations
     }
 }
 
-function axiosDeleteElement(self, element, url, title, text){
+function deleteElement(self, element, url, showLoader = true, showFire = true)
+{
+    if(showLoader){
+        loader(true);
+    }
+    axios.delete(url, {})
+        .then(function (response) {
+            if(showFire){
+                Swal.fire(response.data.message, '', 'success');
+            }
+            self.handleUpdateList(element, "delete");
+        })
+        .catch(function (error) {
+            console.log(error)
+            displayErrors(self, error, "Une erreur est survenue, veuillez contacter le support.")
+        })
+        .then(() => {
+            loader(false);
+        })
+    ;
+}
+
+function axiosDeleteElement(self, element, url, title, text, showLoader = true, showFire = true){
     Swal.fire(SwalOptions.options(title, text))
         .then((result) => {
             if (result.isConfirmed) {
-
-                loader(true);
-                axios.delete(url, {})
-                    .then(function (response) {
-                        Swal.fire(response.data.message, '', 'success');
-                        self.handleUpdateList(element, "delete");
-                    })
-                    .catch(function (error) {
-                        displayErrors(self, error, "Une erreur est survenue, veuillez contacter le support.")
-                    })
-                    .then(() => {
-                        loader(false);
-                    })
-                ;
+                deleteElement(self, element, url, showLoader, showFire);
             }
         })
     ;
@@ -153,4 +162,5 @@ module.exports = {
     axiosDeleteGroupElement,
     updateData,
     updateDataPagination,
+    deleteElement
 }
