@@ -59,7 +59,29 @@ export class Notifications extends Component{
     render() {
         const { open, data } = this.state;
 
-        let taille = data && data.length;
+        let items = [];
+        let taille = 0;
+        if(data){
+            data.forEach(el => {
+                if(!el.isSeen){
+                    taille++;
+                }
+                items.push(<div className="item" key={el.id}>
+                    <div className="item-content" onClick={() => this.handleSeen(el)}>
+                        <div className="item-icon">
+                            <span className={"icon-" + el.icon} />
+                        </div>
+                        <div className="item-infos">
+                            <div className="title">{!el.isSeen && <span className="toSee" />} {el.name}</div>
+                            <div className="createdAt">{el.createdAtAgo}</div>
+                        </div>
+                    </div>
+                    <div className="item-actions">
+                        <span className="icon-trash" onClick={() => this.handleDelete(el)}/>
+                    </div>
+                </div>)
+            })
+        }
 
         return <div ref={this.wrapperRef} className={"notif-container" + (open ? " active" : "")}>
             <div className="btn-notif" onClick={this.handleOpen}>
@@ -72,22 +94,7 @@ export class Notifications extends Component{
                     <span className="icon-cancel" onClick={this.handleOpen} />
                 </div>
                 <div className="notif-body">
-                    {data && data.length !== 0 ? data.map(el => {
-                        return <div className="item" key={el.id}>
-                            <div className="item-content" onClick={() => this.handleSeen(el)}>
-                                <div className="item-icon">
-                                    <span className={"icon-" + el.icon} />
-                                </div>
-                                <div className="item-infos">
-                                    <div className="title">{!el.isSeen && <span className="toSee" />} {el.name}</div>
-                                    <div className="createdAt">{el.createdAtAgo}</div>
-                                </div>
-                            </div>
-                            <div className="item-actions">
-                                <span className="icon-trash" onClick={() => this.handleDelete(el)}/>
-                            </div>
-                        </div>
-                    }) : <div className="item"><div className="createdAt">Aucune notification</div></div>}
+                    {items.length !== 0 ? items : <div className="item"><div className="createdAt">Aucune notification</div></div>}
                 </div>
                 <div className="notif-all">
                     <a href={Routing.generate('admin_notifications_index')}>Voir toutes les notifications</a>
