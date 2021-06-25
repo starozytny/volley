@@ -116,12 +116,12 @@ select{
 
   &.checked > label{
     border: 1px solid var(--grey2);
+    border-color: var(--txt);
     color: var(--beta);
     opacity: 1;
 
     &:hover{
       background-color: var(--fond);
-      border-color: var(--grey);
     }
   }
 
