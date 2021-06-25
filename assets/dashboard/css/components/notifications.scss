@@ -111,14 +111,6 @@
       @include flex(row, flex-start, flex-start);
     }
 
-    .toSee{
-      display: block;
-      width: 4px; height: 4px;
-      background-color: var(--danger);
-      border-radius: 10px;
-      margin-right: 6px;
-    }
-
     .createdAt{
       opacity: 0.6;
       font-size: 12px;
@@ -137,6 +129,14 @@
       }
     }
   }
+}
+
+.toSee{
+  display: block;
+  width: 4px; height: 4px;
+  background-color: var(--danger);
+  border-radius: 10px;
+  margin-right: 6px;
 }
 
 .notif-cancel{
