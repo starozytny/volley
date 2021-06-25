@@ -249,15 +249,15 @@ select{
 
 .form-group-error{
   label{
-    color: var(--danger);
+    color: var(--error);
   }
   input, textarea{
-    border-color: var(--danger);
-    color: var(--danger);
+    border-color: var(--error);
+    color: var(--error);
     background-color: var(--dangerFondError);
   }
   .error{
-    color: var(--danger);
+    color: var(--error);
     padding: 6px 4px 4px 4px;
     font-size: 14px;
 
@@ -267,17 +267,17 @@ select{
   }
   .form-files{
     .dzu-dropzone{
-      border: 1px dashed var(--danger);
+      border: 1px dashed var(--error);
 
       .dzu-inputLabel{
-        color: var(--danger);
+        color: var(--error);
       }
     }
   }
 
   .checkbox-items, .radiobox-items{
     label{
-      border-color: var(--danger);
+      border-color: var(--error);
       background-color: var(--dangerFondError);
     }
     .checked > label {
