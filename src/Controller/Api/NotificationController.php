@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Contact;
 use App\Entity\Notification;
 use App\Entity\User;
 use App\Repository\NotificationRepository;
@@ -10,6 +9,7 @@ use App\Service\ApiResponse;
 use App\Service\Data\DataService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Annotations as OA;
 
@@ -79,5 +79,26 @@ class NotificationController extends AbstractController
     public function delete(Notification $obj, DataService $dataService): JsonResponse
     {
         return $dataService->delete($obj);
+    }
+
+    /**
+     * Delete a group of message notification
+     *
+     * @Route("/", name="delete_group", options={"expose"=true}, methods={"DELETE"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Return message successful",
+     * )
+     *
+     * @OA\Tag(name="Notification")
+     *
+     * @param Request $request
+     * @param DataService $dataService
+     * @return JsonResponse
+     */
+    public function deleteSelected(Request $request, DataService $dataService): JsonResponse
+    {
+        return $dataService->deleteSelected(Notification::class, json_decode($request->getContent()));
     }
 }
