@@ -254,6 +254,7 @@ select{
   input, textarea{
     border-color: var(--danger);
     color: var(--danger);
+    background-color: var(--dangerFondError);
   }
   .error{
     color: var(--danger);
@@ -277,6 +278,7 @@ select{
   .checkbox-items, .radiobox-items{
     label{
       border-color: var(--danger);
+      background-color: var(--dangerFondError);
     }
     .checked > label {
       border-color: var(--grey2);
