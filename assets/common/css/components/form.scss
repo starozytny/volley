@@ -251,7 +251,11 @@ select{
   label{
     color: var(--error);
   }
-  input, textarea{
+  input, textarea, select,
+    .react-selectize.default.root-node:not(.open) .react-selectize-control,
+    .simple-select.react-selectize.default.root-node.open .react-selectize-control,
+    .trumbowyg-box, .trumbowyg-editor
+  {
     border-color: var(--error);
     color: var(--error);
     background-color: var(--dangerFondError);
@@ -268,6 +272,7 @@ select{
   .form-files{
     .dzu-dropzone{
       border: 1px dashed var(--error);
+      background-color: var(--dangerFondError);
 
       .dzu-inputLabel{
         color: var(--error);
