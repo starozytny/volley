@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\ContactRepository;
+use App\Repository\NotificationRepository;
 use Carbon\Carbon;
 use Carbon\Factory;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,9 +10,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ContactRepository::class)
+ * @ORM\Entity(repositoryClass=NotificationRepository::class)
  */
-class Contact
+class Notification
 {
     /**
      * @ORM\Id
@@ -33,16 +33,8 @@ class Contact
      * @ORM\Column(type="string", length=255)
      * @Groups({"admin:read"})
      * @Assert\NotBlank()
-     * @Assert\Email()
      */
-    private $email;
-
-    /**
-     * @ORM\Column(type="text")
-     * @Groups({"admin:read"})
-     * @Assert\NotBlank()
-     */
-    private $message;
+    private $icon;
 
     /**
      * @ORM\Column(type="datetime")
@@ -56,6 +48,11 @@ class Contact
      * @Assert\NotBlank()
      */
     private $isSeen;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="notifications")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -82,36 +79,24 @@ class Contact
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getIcon(): ?string
     {
-        return $this->email;
+        return $this->icon;
     }
 
-    public function setEmail(string $email): self
+    public function setIcon(string $icon): self
     {
-        $this->email = $email;
+        $this->icon = $icon;
 
         return $this;
     }
 
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    public function setMessage(string $message): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -119,20 +104,23 @@ class Contact
     }
 
     /**
-     * How long ago an user was added.
+     * How long ago an user was logged for the last time.
      *
-     * @return string
      * @Groups({"admin:read"})
      */
-    public function getCreatedAtAgo(): string
+    public function getCreatedAtAgo(): ?string
     {
-        $frenchFactory = new Factory([
-            'locale' => 'fr_FR',
-            'timezone' => 'Europe/Paris'
-        ]);
-        $createdAt = Carbon::instance($this->getCreatedAt());
+        if($this->getCreatedAt()){
+            $frenchFactory = new Factory([
+                'locale' => 'fr_FR',
+                'timezone' => 'Europe/Paris'
+            ]);
+            $time = Carbon::instance($this->getCreatedAt());
 
-        return $frenchFactory->make($createdAt)->diffForHumans();
+            return $frenchFactory->make($time)->diffForHumans();
+        }
+
+        return null;
     }
 
     public function getIsSeen(): ?bool
@@ -143,6 +131,18 @@ class Contact
     public function setIsSeen(bool $isSeen): self
     {
         $this->isSeen = $isSeen;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
