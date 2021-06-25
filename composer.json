@@ -6,10 +6,13 @@
     "require": {
         "php": ">=7.2.5",
         "ext-ctype": "*",
+        "ext-curl": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
         "ext-zip": "*",
-        "ext-gd": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
@@ -44,10 +47,7 @@
         "symfony/var-dumper": "5.3.*",
         "symfony/web-profiler-bundle": "5.3.*",
         "symfony/webpack-encore-bundle": "^1.8",
-        "symfony/yaml": "5.3.*",
-        "ext-simplexml": "*",
-        "ext-libxml": "*",
-        "ext-curl": "*"
+        "symfony/yaml": "5.3.*"
     },
     "config": {
         "optimize-autoloader": true,
