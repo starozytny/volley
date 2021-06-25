@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Carbon\Factory;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=NotificationRepository::class)
@@ -24,23 +25,27 @@ class Notification
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"admin:read"})
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"admin:read"})
+     * @Assert\NotBlank()
      */
     private $icon;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"admin:read"})
+     * @Assert\NotBlank()
      */
     private $isSeen;
 
