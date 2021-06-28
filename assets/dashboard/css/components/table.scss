@@ -1,8 +1,8 @@
 @import "../vars/vars";
 
 .items-table{
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 0;
+  padding-bottom: 0;
   background-color: var(--alpha);
   border-radius: 4px;
   box-shadow: 0 0 10px var(--greyShadow2);
@@ -11,7 +11,7 @@
   & > .items{
     & > .item{
       @include flex(row, center, flex-start);
-      padding: 12px;
+      padding: 24px 12px 12px 12px;
 
       &:hover{
         background-color: var(--primaryNuance0);
@@ -140,6 +140,7 @@
     .actions{
       width: 100%;
       @include flex(row, flex-start, flex-end);
+      margin-top: 8px;
     }
 
     .col-1{
@@ -185,6 +186,9 @@
 @media (min-width:768px) {
   .items-table {
     & > .items {
+      & > .item{
+        padding-top: 12px;
+      }
       & > .item-header {
         display: flex;
         font-size: 14px;
@@ -194,10 +198,10 @@
         overflow: hidden;
 
         .item-body-image{
-          padding-left: 54px;
+          padding-left: 74px;
 
           .col-1{
-            transform: translateX(-54px);
+            transform: translateX(-74px);
           }
         }
 
@@ -257,6 +261,7 @@
     .infos{
       .actions{
         width: auto;
+        margin-top: 0;
       }
       .col-1{
         & + *{
@@ -264,6 +269,18 @@
             margin-top: 0;
           }
         }
+      }
+    }
+
+    .item-body-image{
+      .infos{
+        width: calc(100% - 64px - 12px);
+        align-items: flex-start;
+      }
+
+      .item-image , .item-image > img{
+        width: 64px;
+        height: 64px;
       }
     }
 

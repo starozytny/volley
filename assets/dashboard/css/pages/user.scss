@@ -62,20 +62,13 @@
 }
 
 .items-table {
-  padding-top: 0;
-  padding-bottom: 0;
 
   & > .items > .item{
     align-items: flex-start;
-    padding-top: 24px;
   }
 
   .item-selector{
     transform: translateY(24px);
-  }
-
-  .item-content{
-    width: calc(100% - 24px);
   }
 }
 
@@ -86,22 +79,6 @@
 }
 
 .items-user{
-  .infos{
-    width: calc(100% - 42px - 12px);
-  }
-
-  .avatar{
-    background: var(--fond);
-    width: 42px; height: 42px;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-right: 12px;
-
-    img{
-      width: 42px; height: 42px;
-    }
-  }
-
   .sub-username{
     margin-bottom: 4px;
   }
@@ -112,10 +89,6 @@
 
   .sub.txt-danger{
     opacity: 1;
-  }
-
-  .actions{
-    margin-top: 8px;
   }
 }
 
@@ -135,44 +108,9 @@
     }
   }
 
-  .items-table {
-    & > .items > .item {
-      padding-bottom: 24px;
-    }
-  }
-
   .preview-form-oldFile{
     img{
       width: 64px; height: 64px;
-    }
-  }
-
-  .items-user{
-    .infos{
-      width: calc(100% - 64px - 12px);
-    }
-
-    .avatar , .avatar > img{
-      width: 64px;
-      height: 64px;
-    }
-    .role{
-      margin: 0 0 0 8px;
-    }
-
-    .infos{
-      & > div:first-child{
-        width: calc(50% - 24px);
-        margin-right: 24px;
-      }
-
-      & > div:nth-child(2){
-        width: calc(50% - 90px - 24px);
-        margin-right: 24px;
-      }
-      .actions{
-        width: 90px;
-      }
     }
   }
 }
