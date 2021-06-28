@@ -43,8 +43,7 @@ class UserController extends AbstractController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Returns array of users",
-     *     @Model(type=User::class, groups={"admin:read"})
+     *     description="Returns array of users"
      * )
      * @OA\Tag(name="Users")
      *
@@ -68,18 +67,12 @@ class UserController extends AbstractController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Returns a new user object",
-     *     @Model(type=User::class, groups={"admin:write"})
+     *     description="Returns a new user object"
      * )
      *
      * @OA\Response(
      *     response=400,
      *     description="JSON empty or missing data or validation failed",
-     * )
-     *
-     * @OA\RequestBody (
-     *     @Model(type=User::class, groups={"admin:write"}),
-     *     required=true
      * )
      *
      * @OA\Tag(name="Users")
@@ -147,8 +140,7 @@ class UserController extends AbstractController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Returns an user object",
-     *     @Model(type=User::class, groups={"update"})
+     *     description="Returns an user object"
      * )
      * @OA\Response(
      *     response=403,
@@ -157,12 +149,6 @@ class UserController extends AbstractController
      * @OA\Response(
      *     response=400,
      *     description="Validation failed",
-     * )
-     *
-     * @OA\RequestBody (
-     *     description="Only admin can change roles",
-     *     @Model(type=User::class, groups={"update"}),
-     *     required=true
      * )
      *
      * @OA\Tag(name="Users")

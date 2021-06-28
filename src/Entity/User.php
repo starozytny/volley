@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Groups({"admin:read", "admin:write", "update", "user:read"})
+     * @Groups({"admin:read", "user:read"})
      */
     private $username;
 
@@ -50,26 +50,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"admin:read", "admin:write", "update", "user:read"})
+     * @Groups({"admin:read", "user:read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"admin:read", "admin:write", "update"})
+     * @Groups({"admin:read"})
      * @OA\Property(type="array", @OA\Items(type="string"))
      */
     private $roles = ['ROLE_USER'];
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"admin:read", "admin:write", "update", "user:read"})
+     * @Groups({"admin:read", "user:read"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"admin:read", "admin:write", "update", "user:read"})
+     * @Groups({"admin:read", "user:read"})
      */
     private $firstname;
 
@@ -107,7 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"admin:read", "admin:write", "update", "user:read"})
+     * @Groups({"admin:read", "user:read"})
      */
     private $avatar;
 
