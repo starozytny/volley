@@ -12,9 +12,9 @@ import { ContactRead }      from "./ContactRead";
 const URL_DELETE_ELEMENT = 'api_contact_delete';
 const URL_DELETE_GROUP = 'api_contact_delete_group';
 const URL_IS_SEEN = 'api_notifications_isSeen';
-
 const MSG_DELETE_ELEMENT = 'Supprimer ce message ?';
 const MSG_DELETE_GROUP = 'Aucun message sélectionné.';
+const SORTER = Sort.compareCreatedAt;
 
 export class Contact extends Component {
     constructor(props) {
@@ -37,16 +37,9 @@ export class Contact extends Component {
         this.handleChangeContextRead = this.handleChangeContextRead.bind(this);
     }
 
-    handleGetData = (self) => {
-        const { donnees } = this.props;
+    handleGetData = (self) => { self.handleSetDataPagination(this.props.donnees, SORTER); }
 
-        let data = JSON.parse(donnees);
-        data.sort(Sort.compareCreatedAt);
-
-        self.handleSetDataPagination(data);
-    }
-
-    handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, Sort.compareCreatedAt); }
+    handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, SORTER); }
 
     handleDelete = (element) => {
         this.layout.current.handleDelete(this, element, Routing.generate(URL_DELETE_ELEMENT, {'id': element.id}), MSG_DELETE_ELEMENT);

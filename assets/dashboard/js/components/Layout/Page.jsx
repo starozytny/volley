@@ -32,6 +32,16 @@ export class Page extends Component {
     }
 }
 
+function initData(donnees, sorter)
+{
+    let data = JSON.parse(donnees);
+    if(sorter){
+        data.sort(sorter);
+    }
+
+    return data;
+}
+
 export class Layout extends Component {
     constructor(props) {
         super(props);
@@ -83,14 +93,15 @@ export class Layout extends Component {
         Formulaire.updateDataPagination(this, sorter, newContext, context, data, element, perPage);
     }
 
-    handleSetDataPagination = (data) => {
+    handleSetDataPagination = (donnees, sorter = null) => {
         const { perPage } = this.state;
 
+        let data = initData(donnees, sorter);
         this.setState({ dataImmuable: data, data: data, currentData: data.slice(0, perPage), loadPageError: false, loadData: false })
     }
 
-    handleSetData = (data) => {
-        this.setState({ data: data, loadPageError: false, loadData: false })
+    handleSetData = (donnees, sorter = null) => {
+        this.setState({ data: initData(donnees, sorter), loadPageError: false, loadData: false })
     }
 
     handleSearch = (search, searchFunction, haveFilter = false, filterFunction) => {

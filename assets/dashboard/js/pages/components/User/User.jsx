@@ -13,6 +13,7 @@ const URL_DELETE_ELEMENT = 'api_users_delete';
 const URL_DELETE_GROUP = 'api_users_delete_group';
 const MSG_DELETE_ELEMENT = 'Supprimer cet utilisateur ?';
 const MSG_DELETE_GROUP = 'Aucun utilisateur sélectionné.';
+const SORTER = Sort.compareLastname;
 
 function searchFunction(dataImmuable, search){
     let newData = [];
@@ -71,16 +72,9 @@ export class User extends Component {
         this.handleContentRead = this.handleContentRead.bind(this);
     }
 
-    handleGetData = (self) => {
-        const { donnees } = this.props;
+    handleGetData = (self) => { self.handleSetDataPagination(this.props.donnees, SORTER); }
 
-        let data = JSON.parse(donnees);
-        data.sort(Sort.compareLastname);
-
-        self.handleSetDataPagination(data);
-    }
-
-    handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, Sort.compareLastname); }
+    handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, SORTER); }
 
     handleDelete = (element) => {
         this.layout.current.handleDelete(this, element, Routing.generate(URL_DELETE_ELEMENT, {'id': element.id}), MSG_DELETE_ELEMENT);
