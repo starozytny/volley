@@ -1,9 +1,7 @@
 import React from "react";
 
-import { Button, ButtonIcon } from "@dashboardComponents/Tools/Button";
-import {UserItem} from "../../User/UserItem";
-import {Alert} from "@dashboardComponents/Tools/Alert";
-import {Selector} from "@dashboardComponents/Layout/Selector";
+import { ButtonIcon } from "@dashboardComponents/Tools/Button";
+import { Selector } from "@dashboardComponents/Layout/Selector";
 
 export function StyleguideTable () {
     let data = [
