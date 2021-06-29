@@ -29,7 +29,7 @@ export class UserItem extends Component {
                         <img src={avatar} alt={`Avatar de ${elem.username}`}/>
                     </div>
                     <div className="infos infos-col-3">
-                        <div className="col-1" onClick={() => onChangeContext('read', elem)}>
+                        <div className="col-1">
                             <div className="name">
                                 <span>{elem.lastname.toUpperCase()} {elem.firstname}</span>
                                 {elem.highRoleCode !== 0 && <span className="role">{elem.highRole}</span>}
@@ -43,6 +43,7 @@ export class UserItem extends Component {
                         <div className="col-3 actions">
                             {elem.highRoleCode !== 1 &&
                             <>
+                                <ButtonIcon icon="vision" onClick={() => onChangeContext("read", elem)}>Profil</ButtonIcon>
                                 <ButtonIcon icon="pencil" onClick={() => onChangeContext("update", elem)}>Modifier</ButtonIcon>
                                 <ButtonIcon icon="trash" onClick={() => onDelete(elem)}>Supprimer</ButtonIcon>
                                 <ButtonIcon icon="share" element="a" target="_blank" onClick={url}>Imiter</ButtonIcon>
