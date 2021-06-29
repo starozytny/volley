@@ -362,7 +362,7 @@ class UserController extends AbstractController
 
         if ($user->getForgetAt()) {
             $interval = date_diff($user->getForgetAt(), new DateTime());
-            if ($interval->i < 30) {
+            if ($interval->y == 0 && $interval->m == 0 && $interval->d == 0 && $interval->h == 0 && $interval->i < 30) {
                 return $apiResponse->apiJsonResponseValidationFailed([[
                     'name' => 'fUsername',
                     'message' => "Un lien a déjà été envoyé. Veuillez réessayer ultérieurement."
@@ -372,7 +372,10 @@ class UserController extends AbstractController
 
         $code = uniqid($user->getId());
 
-        $user->setForgetAt(new DateTime());
+        $forgetAt = new \DateTime();
+        $forgetAt->setTimezone(new \DateTimeZone("Europe/Paris"));
+
+        $user->setForgetAt($forgetAt);
         $user->setForgetCode($code);
 
         $url = $this->generateUrl('app_password_reinit', ['token' => $user->getToken(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
