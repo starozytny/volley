@@ -196,6 +196,7 @@
         color: var(--grey2);
         border-bottom: none;
         overflow: hidden;
+        @include fontSemibold();
 
         .item-body-image{
           padding-left: 74px;
