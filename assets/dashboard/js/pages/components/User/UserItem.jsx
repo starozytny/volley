@@ -25,11 +25,11 @@ export class UserItem extends Component {
 
             <div className="item-content">
                 <div className="item-body item-body-image">
-                    <div className="item-image">
+                    <div className="item-image" onClick={() => onChangeContext('read', elem)}>
                         <img src={avatar} alt={`Avatar de ${elem.username}`}/>
                     </div>
                     <div className="infos infos-col-3">
-                        <div className="col-1">
+                        <div className="col-1" onClick={() => onChangeContext('read', elem)}>
                             <div className="name">
                                 <span>{elem.lastname.toUpperCase()} {elem.firstname}</span>
                                 {elem.highRoleCode !== 0 && <span className="role">{elem.highRole}</span>}

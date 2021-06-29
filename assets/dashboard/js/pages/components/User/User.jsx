@@ -8,6 +8,8 @@ import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
 import { UserList }       from "./UserList";
 import { UserFormulaire } from "./UserForm";
+import {ContactRead} from "../Contact/ContactRead";
+import {UserRead} from "./UserRead";
 
 function searchFunction(dataImmuable, search){
     let newData = [];
@@ -67,6 +69,7 @@ export class User extends Component {
         this.handleContentList = this.handleContentList.bind(this);
         this.handleContentCreate = this.handleContentCreate.bind(this);
         this.handleContentUpdate = this.handleContentUpdate.bind(this);
+        this.handleContentRead = this.handleContentRead.bind(this);
     }
 
     handleGetData = (self) => {
@@ -108,10 +111,14 @@ export class User extends Component {
         return <UserFormulaire type="update" element={element} onChangeContext={changeContext} onUpdateList={this.handleUpdateList}/>
     }
 
+    handleContentRead = (changeContext, element) => {
+        return <UserRead elem={element} onChangeContext={changeContext}/>
+    }
+
     render () {
         return <>
             <Layout ref={this.layout} {...this.state} onGetData={this.handleGetData}
-                    onContentList={this.handleContentList}
+                    onContentList={this.handleContentList} onContentRead={this.handleContentRead}
                     onContentCreate={this.handleContentCreate} onContentUpdate={this.handleContentUpdate}/>
         </>
     }

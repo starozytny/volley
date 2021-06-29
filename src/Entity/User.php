@@ -261,13 +261,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return string|null
+     * @Groups({"admin:read"})
+     */
+    public function getCreatedAtString(): ?string
+    {
+        if($this->createdAt){
+            $frenchFactory = new Factory([
+                'locale' => 'fr_FR',
+                'timezone' => 'Europe/Paris'
+            ]);
+            $time = Carbon::instance($this->createdAt);
+
+            return $frenchFactory->make($time)->isoFormat('ll');
+        }
+
+        return null;
+    }
+
+    /**
      * How long ago an user was added.
      *
      * @return string
+     * @Groups({"admin:read"})
      */
     public function getCreatedAtAgo(): string
     {
-        return Carbon::instance($this->getCreatedAt())->diffForHumans();
+        $frenchFactory = new Factory([
+            'locale' => 'fr_FR',
+            'timezone' => 'Europe/Paris'
+        ]);
+        $time = Carbon::instance($this->getCreatedAt());
+
+        return $frenchFactory->make($time)->diffForHumans();
     }
 
     public function getLastLogin(): ?\DateTimeInterface
