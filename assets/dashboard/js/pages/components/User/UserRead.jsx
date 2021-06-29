@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button }        from "@dashboardComponents/Tools/Button";
+import {Button, ButtonIcon} from "@dashboardComponents/Tools/Button";
 
 export class UserRead extends Component {
     render () {
@@ -22,6 +22,9 @@ export class UserRead extends Component {
                 <div className="item-user-read">
 
                     <div className="user-read-infos">
+                        <div className="actions">
+                            <ButtonIcon icon="pencil" onClick={() => onChangeContext('update', elem)} >Modifier</ButtonIcon>
+                        </div>
                         <div className="user-read-infos-container">
                             <div className="avatar">
                                 <img src={avatar} alt={`Avatar de ${elem.username}`}/>
@@ -32,7 +35,9 @@ export class UserRead extends Component {
                                     <div>#{elem.id}</div>
                                     <span>{elem.lastname.toUpperCase()} {elem.firstname}</span>
                                 </div>
-                                <div className="username">({elem.username})</div>
+                                <div className="username">
+                                    <span>({elem.username})</span>
+                                </div>
                                 <div className="sub">{elem.email}</div>
                             </div>
 

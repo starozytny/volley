@@ -178,6 +178,15 @@
   .role-time{
     background-color: var(--fondContent);
   }
+
+  .actions{
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--fond);
+    border-radius: 4px;
+    z-index: 3;
+  }
 }
 
 //                      __   _____ __    ___    __
