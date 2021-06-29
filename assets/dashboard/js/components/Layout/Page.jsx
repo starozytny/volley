@@ -55,6 +55,10 @@ export class Layout extends Component {
         this.handleUpdateList = this.handleUpdateList.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleGetFilters = this.handleGetFilters.bind(this);
+        this.handleSetDataPagination = this.handleSetDataPagination.bind(this);
+        this.handleSetData = this.handleSetData.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     }
 
     componentDidMount() { this.props.onGetData(this); }
@@ -77,6 +81,16 @@ export class Layout extends Component {
     handleUpdateList = (element, newContext = null, sorter = null) => {
         const { data, context, perPage } = this.state
         Formulaire.updateDataPagination(this, sorter, newContext, context, data, element, perPage);
+    }
+
+    handleSetDataPagination = (data) => {
+        const { perPage } = this.state;
+
+        this.setState({ dataImmuable: data, data: data, currentData: data.slice(0, perPage), loadPageError: false, loadData: false })
+    }
+
+    handleSetData = (data) => {
+        this.setState({ data: data, loadPageError: false, loadData: false })
     }
 
     handleSearch = (search, searchFunction, haveFilter = false, filterFunction) => {
@@ -109,6 +123,15 @@ export class Layout extends Component {
         this.page.current.pagination.current.handlePageOne();
         this.setState({ data: newData, currentData: newData.slice(0, perPage), filters: filters });
         return newData;
+    }
+
+    handleDelete = (self, element, url, msg, text='Cette action est irréversible.') => {
+        Formulaire.axiosDeleteElement(self, element, url, msg, text);
+    }
+
+    handleDeleteGroup = (self, url, msg) => {
+        let checked = document.querySelectorAll('.i-selector:checked');
+        Formulaire.axiosDeleteGroupElement(self, checked, url, msg)
     }
 
     render () {

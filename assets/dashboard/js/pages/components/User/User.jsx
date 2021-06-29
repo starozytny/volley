@@ -4,7 +4,6 @@ import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.
 
 import { Layout }        from "@dashboardComponents/Layout/Page";
 import Sort              from "@dashboardComponents/functions/sort";
-import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
 import { UserList }       from "./UserList";
 import { UserRead }       from "./UserRead";
@@ -52,13 +51,9 @@ export class User extends Component {
     constructor(props) {
         super(props);
 
-        let data = JSON.parse(props.donnees);
-        data.sort(Sort.compareLastname);
-
         this.state = {
             perPage: 10,
-            sessionName: "user.pagination",
-            data: data
+            sessionName: "user.pagination"
         }
 
         this.layout = React.createRef();
@@ -77,20 +72,22 @@ export class User extends Component {
     }
 
     handleGetData = (self) => {
-        const { data, perPage } = this.state;
+        const { donnees } = this.props;
 
-        self.setState({ dataImmuable: data, data: data, currentData: data.slice(0, perPage), loadPageError: false, loadData: false });
+        let data = JSON.parse(donnees);
+        data.sort(Sort.compareLastname);
+
+        self.handleSetDataPagination(data);
     }
 
     handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, Sort.compareLastname); }
 
     handleDelete = (element) => {
-        Formulaire.axiosDeleteElement(this, element, Routing.generate(URL_DELETE_ELEMENT, {'id': element.id}),
-            MSG_DELETE_ELEMENT, 'Cette action est irréversible.');
+        this.layout.current.handleDelete(this, element, Routing.generate(URL_DELETE_ELEMENT, {'id': element.id}), MSG_DELETE_ELEMENT);
     }
+
     handleDeleteGroup = () => {
-        let checked = document.querySelectorAll('.i-selector:checked');
-        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate(URL_DELETE_GROUP), MSG_DELETE_GROUP)
+        this.layout.current.handleDeleteGroup(this, Routing.generate(URL_DELETE_GROUP), MSG_DELETE_GROUP);
     }
 
     handleGetFilters = (filters) => { this.layout.current.handleGetFilters(filters, filterFunction); }
