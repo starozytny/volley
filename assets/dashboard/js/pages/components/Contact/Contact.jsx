@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import axios             from "axios";
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Layout }        from "@dashboardComponents/Layout/Page";
@@ -10,13 +9,24 @@ import Formulaire        from "@dashboardComponents/functions/Formulaire";
 import { ContactList }      from "./ContactList";
 import { ContactRead }      from "./ContactRead";
 
+const URL_DELETE_ELEMENT = 'api_contact_delete';
+const URL_DELETE_GROUP = 'api_contact_delete_group';
+const URL_IS_SEEN = 'api_notifications_isSeen';
+
+const MSG_DELETE_ELEMENT = 'Supprimer ce message ?';
+const MSG_DELETE_GROUP = 'Aucun message sélectionné.';
+
 export class Contact extends Component {
     constructor(props) {
         super(props);
 
+        let data = JSON.parse(props.donnees);
+        data.sort(Sort.compareCreatedAt);
+
         this.state = {
             perPage: 10,
-            sessionName: "contact.pagination"
+            sessionName: "contact.pagination",
+            data: data
         }
 
         this.layout = React.createRef();
@@ -31,17 +41,21 @@ export class Contact extends Component {
         this.handleChangeContextRead = this.handleChangeContextRead.bind(this);
     }
 
-    handleGetData = (self) => { Formulaire.axiosGetDataPagination(self, Routing.generate('api_contact_index'), Sort.compareCreatedAt, this.state.perPage) }
+    handleGetData = (self) => {
+        const { data, perPage } = this.state;
+
+        self.setState({ dataImmuable: data, data: data, currentData: data.slice(0, perPage), loadPageError: false, loadData: false });
+    }
 
     handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, Sort.compareCreatedAt); }
 
     handleDelete = (element) => {
-        Formulaire.axiosDeleteElement(this, element, Routing.generate('api_contact_delete', {'id': element.id}),
-            'Supprimer ce message ?', 'Cette action est irréversible.');
+        Formulaire.axiosDeleteElement(this, element, Routing.generate(URL_DELETE_ELEMENT, {'id': element.id}),
+            MSG_DELETE_ELEMENT, 'Cette action est irréversible.');
     }
     handleDeleteGroup = () => {
         let checked = document.querySelectorAll('.i-selector:checked');
-        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_contact_delete_group'), 'Aucun message sélectionné.')
+        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate(URL_DELETE_GROUP), MSG_DELETE_GROUP)
     }
 
     handleContentList = (currentData, changeContext) => {
@@ -56,7 +70,7 @@ export class Contact extends Component {
     }
 
     handleChangeContextRead = (element) => {
-        Formulaire.isSeen(this, element, Routing.generate('api_contact_isSeen', {'id': element.id}))
+        Formulaire.isSeen(this, element, Routing.generate(URL_IS_SEEN, {'id': element.id}))
     }
 
     render () {

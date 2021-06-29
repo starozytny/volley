@@ -7,9 +7,13 @@ import Sort              from "@dashboardComponents/functions/sort";
 import Formulaire        from "@dashboardComponents/functions/Formulaire";
 
 import { UserList }       from "./UserList";
+import { UserRead }       from "./UserRead";
 import { UserFormulaire } from "./UserForm";
-import {ContactRead} from "../Contact/ContactRead";
-import {UserRead} from "./UserRead";
+
+const URL_DELETE_ELEMENT = 'api_users_delete';
+const URL_DELETE_GROUP = 'api_users_delete_group';
+const MSG_DELETE_ELEMENT = 'Supprimer cet utilisateur ?';
+const MSG_DELETE_GROUP = 'Aucun utilisateur sélectionné.';
 
 function searchFunction(dataImmuable, search){
     let newData = [];
@@ -81,12 +85,12 @@ export class User extends Component {
     handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, Sort.compareLastname); }
 
     handleDelete = (element) => {
-        Formulaire.axiosDeleteElement(this, element, Routing.generate('api_users_delete', {'id': element.id}),
-            'Supprimer cet utilisateur ?', 'Cette action est irréversible.');
+        Formulaire.axiosDeleteElement(this, element, Routing.generate(URL_DELETE_ELEMENT, {'id': element.id}),
+            MSG_DELETE_ELEMENT, 'Cette action est irréversible.');
     }
     handleDeleteGroup = () => {
         let checked = document.querySelectorAll('.i-selector:checked');
-        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate('api_users_delete_group'), 'Aucun utilisateur sélectionné.')
+        Formulaire.axiosDeleteGroupElement(this, checked, Routing.generate(URL_DELETE_GROUP), MSG_DELETE_GROUP)
     }
 
     handleGetFilters = (filters) => { this.layout.current.handleGetFilters(filters, filterFunction); }
