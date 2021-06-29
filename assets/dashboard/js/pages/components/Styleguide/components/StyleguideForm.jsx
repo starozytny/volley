@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import axios       from "axios";
+import toastr      from "toastr";
 import Routing     from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Checkbox, Input, Radiobox, Select, TextArea,
@@ -121,6 +122,11 @@ export class StyleguideForm extends Component {
             {type: "text", id: 'fruit', value: fruit},
             {type: "text", id: 'faq', value: faq},
         ])
+
+        toastr.error("test")
+        toastr.info("test")
+        toastr.warning("test")
+        toastr.success("test")
 
         if(avatar !== ""){
             let formData = new FormData();

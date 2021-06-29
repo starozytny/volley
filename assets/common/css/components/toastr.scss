@@ -20,25 +20,25 @@
     }
 
     &.toast-error{
-      background-color: var(--dangerShadow);
+      background-color: #EEB5AF;
       &:before{
         background-color: var(--danger);
       }
     }
     &.toast-info{
-      background-color: var(--primaryShadow);
+      background-color: #9AD2F4;
       &:before{
         background-color: var(--primary);
       }
     }
     &.toast-warning{
-      background-color: var(--warningShadow);
+      background-color: #F1D6AA;
       &:before{
         background-color: var(--warning);
       }
     }
     &.toast-success{
-      background-color: var(--successShadow);
+      background-color: #F6C9C4;
       &:before{
         background-color: var(--success);
       }
