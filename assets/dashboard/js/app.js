@@ -9,41 +9,22 @@ import { render } from 'react-dom';
 import { Menu } from './components/Layout/Menu';
 import { Notifications } from "@dashboardComponents/Notifications";
 
-// toastr.options = {
-//     "closeButton": true,
-//     "debug": false,
-//     "newestOnTop": true,
-//     "progressBar": true,
-//     "positionClass": "toast-top-right",
-//     "preventDuplicates": true,
-//     "onclick": null,
-//     "showDuration": "300",
-//     "hideDuration": "1000",
-//     "timeOut": "5000",
-//     "extendedTimeOut": "1000",
-//     "showEasing": "swing",
-//     "hideEasing": "linear",
-//     "showMethod": "fadeIn",
-//     "hideMethod": "fadeOut"
-// }
-
 toastr.options = {
-    "closeButton": false,
+    "closeButton": true,
     "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
+    "newestOnTop": true,
+    "progressBar": true,
     "positionClass": "toast-top-right",
-    "preventDuplicates": false,
+    "preventDuplicates": true,
     "onclick": null,
     "showDuration": "300",
     "hideDuration": "1000",
-    "timeOut": 0,
-    "extendedTimeOut": 0,
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
     "showEasing": "swing",
     "hideEasing": "linear",
     "showMethod": "fadeIn",
-    "hideMethod": "fadeOut",
-    "tapToDismiss": false
+    "hideMethod": "fadeOut"
 }
 
 Routing.setRoutingData(routes);
