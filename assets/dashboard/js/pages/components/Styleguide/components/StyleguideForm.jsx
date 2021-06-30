@@ -53,7 +53,7 @@ export class StyleguideForm extends Component {
     componentDidMount = () => { Sanitaze.getPostalCodes(this); } // fill arrayPostalCode
 
     handleChange = (e) => {
-        const { roles, question } = this.state;
+        const { roles } = this.state;
 
         let name = e.currentTarget.name;
         let value = e.currentTarget.value;
@@ -129,7 +129,7 @@ export class StyleguideForm extends Component {
             {type: "text", id: 'question', value: question},
         ])
 
-        toastr.error("error")
+        toastr.error("Bonjour, je suis une message d'erreur, je suis un peu long pour test la taille de la boite de dialogue.")
         toastr.info("info")
         toastr.warning("warning")
         toastr.success("success")

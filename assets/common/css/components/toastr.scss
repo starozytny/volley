@@ -8,6 +8,17 @@
     position: relative;
     background-image: none !important;
     background-color: var(--alpha);
+    opacity: 0.9;
+
+    .toast-message{
+      @include flex(row, flex-start, flex-start);
+
+      &:before{
+        font-family: 'icomoon' !important;
+        content: "\e966";
+        margin-right: 12px;
+      }
+    }
 
     &:before{
       content: "";
@@ -19,28 +30,25 @@
       top: 0; left: 0;
     }
 
-    &.toast-error{
-      background-color: #EEB5AF;
-      &:before{
-        background-color: var(--danger);
-      }
-    }
-    &.toast-info{
-      background-color: #9AD2F4;
-      &:before{
-        background-color: var(--primary);
-      }
-    }
-    &.toast-warning{
-      background-color: #F1D6AA;
-      &:before{
-        background-color: var(--warning);
-      }
-    }
-    &.toast-success{
-      background-color: #F6C9C4;
-      &:before{
-        background-color: var(--success);
+    $types:
+        "error" #EEB5AF var(--danger) "\e91e",
+        "info" #9AD2F4 var(--primary) "\e929",
+        "warning" #F1D6AA var(--warning) "\e961",
+        "success" #F6C9C4 var(--success) "\e925"
+    ;
+
+    @each $name, $bg, $bg2, $icon in $types {
+      &.toast-#{$name}{
+        background-color: $bg;
+        &:before{
+          background-color: $bg2;
+        }
+
+        .toast-message {
+          &:before {
+            content: $icon;
+          }
+        }
       }
     }
   }
