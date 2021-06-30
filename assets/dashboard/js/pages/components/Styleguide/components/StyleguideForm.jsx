@@ -129,10 +129,10 @@ export class StyleguideForm extends Component {
             {type: "text", id: 'question', value: question},
         ])
 
-        toastr.error("Bonjour, je suis une message d'erreur, je suis un peu long pour test la taille de la boite de dialogue.")
-        toastr.info("info")
-        toastr.warning("warning")
-        toastr.success("success")
+        toastr.error("Bonjour, je suis un <b>message d'erreur</b>, je suis un peu long pour tester la taille de la boite de dialogue.")
+        toastr.info("Info. 🧐")
+        toastr.warning("Warning. 😱")
+        toastr.success("Success ! 😁")
 
         console.log(question)
 

@@ -11,12 +11,14 @@
     opacity: 0.9;
 
     .toast-message{
-      @include flex(row, flex-start, flex-start);
+      position: relative;
+      padding-left: 24px;
 
       &:before{
         font-family: 'icomoon' !important;
         content: "\e966";
-        margin-right: 12px;
+        position: absolute;
+        top: 0; left: 0;
       }
     }
 
