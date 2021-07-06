@@ -99,6 +99,9 @@
     "doctrine/persistence": {
         "version": "2.1.0"
     },
+    "doctrine/reflection": {
+        "version": "1.2.2"
+    },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
@@ -126,6 +129,9 @@
             "./config/routes/fos_js_routing.yaml"
         ]
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.2"
+    },
     "gedmo/doctrine-extensions": {
         "version": "v3.0.0"
     },
@@ -145,6 +151,12 @@
     },
     "laminas/laminas-code": {
         "version": "4.4.0"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.2.1"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
     },
     "lcobucci/clock": {
         "version": "2.0.0"
@@ -233,7 +245,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
