@@ -5,7 +5,6 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\ApiResponse;
-use App\Service\Data\UserService;
 use App\Service\Export;
 use App\Service\FileUploader;
 use App\Service\MailerService;
@@ -21,10 +20,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/api/users", name="api_users_")
@@ -47,15 +44,13 @@ class UserController extends AbstractController
      * )
      * @OA\Tag(name="Users")
      *
-     * @param Request $request
      * @param ApiResponse $apiResponse
-     * @param UserService $userService
+     * @param UserRepository $repository
      * @return JsonResponse
      */
-    public function index(Request $request, ApiResponse $apiResponse, UserService $userService): JsonResponse
+    public function index(ApiResponse $apiResponse, UserRepository $repository): JsonResponse
     {
-        $objs = $userService->getList($request->query->get('order') ?: 'ASC');
-        return $apiResponse->apiJsonResponse($objs, User::ADMIN_READ);
+        return $apiResponse->apiJsonResponse($repository->findAll(), User::ADMIN_READ);
     }
 
     /**
@@ -416,7 +411,7 @@ class UserController extends AbstractController
      * @return JsonResponse
      */
     public function passwordUpdate(Request $request, $token, ValidatorService $validator, UserPasswordHasherInterface $passwordHasher,
-                           ApiResponse $apiResponse): JsonResponse
+                                   ApiResponse $apiResponse): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
