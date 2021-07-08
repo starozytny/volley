@@ -10,7 +10,6 @@ use App\Service\Export;
 use App\Service\FileUploader;
 use App\Service\MailerService;
 use App\Service\NotificationService;
-use App\Service\SanitizeData;
 use App\Service\SettingsService;
 use App\Service\ValidatorService;
 use DateTime;
@@ -140,13 +139,13 @@ class UserController extends AbstractController
      * @param ValidatorService $validator
      * @param NotificationService $notificationService
      * @param ApiResponse $apiResponse
-     * @param SanitizeData $sanitizeData
      * @param User $obj
      * @param FileUploader $fileUploader
+     * @param DataUser $dataEntity
      * @return JsonResponse
      */
     public function update(Request $request, ValidatorService $validator, NotificationService $notificationService,
-                           ApiResponse $apiResponse, SanitizeData $sanitizeData, User $obj, FileUploader $fileUploader, DataUser $dataEntity): JsonResponse
+                           ApiResponse $apiResponse, User $obj, FileUploader $fileUploader, DataUser $dataEntity): JsonResponse
     {
         if ($this->getUser() != $obj && !$this->isGranted("ROLE_ADMIN")) {
             return $apiResponse->apiJsonResponseForbidden();
