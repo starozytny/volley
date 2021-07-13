@@ -424,34 +424,37 @@ class UserController extends AbstractController
     public function export(Export $export, $format): BinaryFileResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class)->findBy(array(), array('username' => 'ASC'));
-        $data = array();
+        $users = $em->getRepository(User::class)->findBy([], ['username' => 'ASC']);
+        $data = [];
+
+        $nameFile = 'utilisateurs';
+        $nameFolder = 'export/';
 
         foreach ($users as $user) {
-            $tmp = array(
+            $tmp = [
                 $user->getId(),
                 $user->getUsername(),
                 $user->getHighRole(),
                 $user->getEmail(),
                 date_format($user->getCreatedAt(), 'd/m/Y'),
-            );
+            ];
             if(!in_array($tmp, $data)){
                 array_push($data, $tmp);
             }
         }
 
         if($format == 'excel'){
-            $fileName = 'utilisateurs.xlsx';
+            $fileName = $nameFile . '.xlsx';
             $header = array(array('ID', 'Nom utilisateur', 'Role', 'Email', 'Date de creation'));
         }else{
-            $fileName = 'utilisateurs.csv';
+            $fileName = $nameFile . '.csv';
             $header = array(array('id', 'username', 'role', 'email', 'createAt'));
 
             header('Content-Type: application/csv');
             header('Content-Disposition: attachment; filename="'.$fileName.'"');
         }
 
-        $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5, 'export/');
-        return new BinaryFileResponse($this->getParameter('private_directory'). 'export/' . $fileName);
+        $export->createFile($format, 'Liste des ' . $nameFile, $fileName , $header, $data, 5, $nameFolder);
+        return new BinaryFileResponse($this->getParameter('private_directory'). $nameFolder . $fileName);
     }
 }
