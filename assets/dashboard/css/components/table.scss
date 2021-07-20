@@ -1,5 +1,14 @@
 @import "../vars/vars";
 
+.role{
+  display: inline-block;
+  padding: 4px 8px;
+  background: var(--primaryShadow);
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
 .items-table{
   padding-top: 0;
   padding-bottom: 0;
@@ -127,12 +136,6 @@
   }
 
   .role{
-    display: inline-block;
-    padding: 4px 8px;
-    background: var(--primaryShadow);
-    border-radius: 4px;
-    font-size: 12px;
-    opacity: 0.5;
     margin-top: 4px;
   }
 
