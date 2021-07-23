@@ -55,6 +55,7 @@ class Notification
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"admin:read"})
      */
     private $url;
 
