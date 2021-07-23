@@ -46,7 +46,7 @@
 
   .icon{
     font-size: 26px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .title{
@@ -58,6 +58,10 @@
     font-size: 18px;
     @include fontSemibold();
   }
+}
+
+.dash-line-2{
+  margin-top: 24px;
 }
 
 //                      __   _____ __    ___    __
