@@ -265,6 +265,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * return ll -> 5 janv. 2017
+     * return LL -> 5 janvier 2017
+     *
      * @return string|null
      * @Groups({"admin:read"})
      */
