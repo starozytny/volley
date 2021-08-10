@@ -117,6 +117,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $notifications;
 
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
         $createdAt = new \DateTime();
