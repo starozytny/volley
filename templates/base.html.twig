@@ -14,7 +14,7 @@
 
         {% set consent = "logilinkLocalCookie" %} <!-- CONSENT Value -->
         <!-- Matomo -->
-        <script type="text/javascript">
+        <script defer type="text/javascript">
             var _paq = window._paq = window._paq || [];
             <!-- CODE CNIL OBLIGATOIRE -->
             _paq.push([function() {
@@ -64,7 +64,6 @@
             })();
         </script>
         <!-- End Matomo Code -->
-        {% block javascripts %}{% endblock %}
     </head>
 <body>
 
@@ -84,5 +83,6 @@
         {% block body %}{% endblock %}
     </div>
 
+    {% block javascripts %}{% endblock %}
 </body>
 </html>

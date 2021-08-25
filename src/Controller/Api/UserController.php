@@ -176,7 +176,12 @@ class UserController extends AbstractController
         $em->persist($obj);
         $em->flush();
 
-        $notificationService->createNotification("Mise à jour d'un utilisateur", self::ICON, $this->getUser());
+        $notificationService->createNotification(
+            "Mise à jour d'un utilisateur",
+            self::ICON,
+            $this->getUser(),
+            $this->generateUrl('admin_users_index', ['search' => 'test234'])
+        );
 
         return $apiResponse->apiJsonResponse($obj, $groups);
     }
@@ -338,10 +343,7 @@ class UserController extends AbstractController
 
         $code = uniqid($user->getId());
 
-        $forgetAt = new \DateTime();
-        $forgetAt->setTimezone(new \DateTimeZone("Europe/Paris"));
-
-        $user->setForgetAt($forgetAt);
+        $user->setForgetAt(new \DateTime()); // no set timezone to compare expired
         $user->setForgetCode($code);
 
         $url = $this->generateUrl('app_password_reinit', ['token' => $user->getToken(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
