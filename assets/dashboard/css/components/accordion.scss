@@ -10,6 +10,7 @@
     @include flex(row, center, space-between);
     cursor: pointer;
     @include fontSemibold();
+    font-size: 18px;
   }
 
   .accordion-item-content{
@@ -26,6 +27,7 @@
       height: auto;
       margin-top: 4px;
       transition: all 0.2s ease-in-out;
+      margin-bottom: 16px;
     }
   }
 }
