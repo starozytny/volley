@@ -180,7 +180,7 @@ class UserController extends AbstractController
             "Mise à jour d'un utilisateur",
             self::ICON,
             $this->getUser(),
-            $this->generateUrl('admin_users_index', ['search' => 'test234'])
+            $this->generateUrl('admin_users_index', ['search' => $obj->getUsername()])
         );
 
         return $apiResponse->apiJsonResponse($obj, $groups);
