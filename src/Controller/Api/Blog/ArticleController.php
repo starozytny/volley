@@ -56,7 +56,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    public function setArticle($em, $apiResponse, BoArticle $article, $request, $fileName)
+    public function setArticle($em, $apiResponse, BoArticle $article, $request, $fileName): BoArticle
     {
         $title = $request->get('title');
         $introduction = $request->get('introduction');
@@ -227,7 +227,7 @@ class ArticleController extends AbstractController
         $article->setIsPublished(!$article->getIsPublished());
         $em->flush();
 
-        return $apiResponse->apiJsonResponse($article, User::ADMIN_READ);
+        return $apiResponse->apiJsonResponse($article, User::VISITOR_READ);
     }
 
     /**
