@@ -408,6 +408,46 @@ class UserController extends AbstractController
     }
 
     /**
+     * Reinitialize password
+     *
+     * @Route("/password/reinit/{token}", name="password_reinit", options={"expose"=true}, methods={"POST"})
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a message",
+     * )
+     *
+     * @OA\Tag(name="Users")
+     *
+     * @param $token
+     * @param ValidatorService $validator
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @param ApiResponse $apiResponse
+     * @return JsonResponse
+     */
+    public function passwordReinit($token, ValidatorService $validator, UserPasswordHasherInterface $passwordHasher,
+                                   ApiResponse $apiResponse): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->findOneBy(['token' => $token]);
+
+        $pass = uniqid();
+
+        $user->setPassword($passwordHasher->hashPassword($user, $pass));
+        $user->setForgetAt(null);
+        $user->setForgetCode(null);
+
+        $noErrors = $validator->validate($user);
+        if ($noErrors !== true) {
+            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+        }
+
+        $em->flush();
+        return $apiResponse->apiJsonResponseSuccessful("Veuillez noter le nouveau mot de passe : " . $pass);
+    }
+
+    /**
      * Export list users
      *
      * @Route("/export/{format}", name="export", options={"expose"=true}, methods={"GET"})

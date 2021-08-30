@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 
+import axios             from "axios";
+import toastr            from "toastr";
+import Swal              from "sweetalert2";
+import SwalOptions       from "@dashboardComponents/functions/swalOptions";
 import Routing           from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Layout }        from "@dashboardComponents/Layout/Page";
 import Sort              from "@dashboardComponents/functions/sort";
+import Formulaire              from "@dashboardComponents/functions/Formulaire";
 
 import { UserList }       from "./UserList";
 import { UserRead }       from "./UserRead";
@@ -65,6 +70,7 @@ export class User extends Component {
         this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleGetFilters = this.handleGetFilters.bind(this);
+        this.handleRegenPassword = this.handleRegenPassword.bind(this);
 
         this.handleContentList = this.handleContentList.bind(this);
         this.handleContentCreate = this.handleContentCreate.bind(this);
@@ -88,6 +94,24 @@ export class User extends Component {
 
     handleSearch = (search) => { this.layout.current.handleSearch(search, searchFunction, true, filterFunction); }
 
+    handleRegenPassword = (elem) => {
+        Swal.fire(SwalOptions.options("Réinitialiser son mot de passe", "Le nouveau mot de passe ne s'affichera <u>qu'une seule fois</u>. Pensez donc à le noter."))
+            .then((result) => {
+                if (result.isConfirmed) {
+                    axios.post(Routing.generate('api_users_password_reinit', {'token': elem.token}), {})
+                        .then(function (response) {
+                            Swal.fire(response.data.message, '', 'success');
+                            toastr.info("Mot de passe réinitialisé avec succès !");
+                        })
+                        .catch(function (error) {
+                            Formulaire.displayErrors(self, error, "Une erreur est survenue, veuillez contacter le support.")
+                        })
+                    ;
+                }
+            })
+        ;
+    }
+
     handleContentList = (currentData, changeContext, getFilters, filters) => {
         return <UserList onChangeContext={changeContext}
                          onDelete={this.handleDelete}
@@ -108,7 +132,7 @@ export class User extends Component {
     }
 
     handleContentRead = (changeContext, element) => {
-        return <UserRead elem={element} onChangeContext={changeContext}/>
+        return <UserRead elem={element} onChangeContext={changeContext} onRegenPassword={this.handleRegenPassword}/>
     }
 
     render () {
