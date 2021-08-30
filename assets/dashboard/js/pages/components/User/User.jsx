@@ -78,7 +78,7 @@ export class User extends Component {
         this.handleContentRead = this.handleContentRead.bind(this);
     }
 
-    handleGetData = (self) => { self.handleSetDataPagination(this.props.donnees, SORTER); }
+    handleGetData = (self) => { self.handleSetDataPagination(this.props.donnees, SORTER, "read", "username"); }
 
     handleUpdateList = (element, newContext=null) => { this.layout.current.handleUpdateList(element, newContext, SORTER); }
 
