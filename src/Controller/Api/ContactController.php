@@ -185,6 +185,6 @@ class ContactController extends AbstractController
      */
     public function deleteSelected(Request $request, DataService $dataService): JsonResponse
     {
-        return $dataService->deleteSelected(Contact::class, json_decode($request->getContent()), true);
+        return $dataService->deleteSelected(Contact::class, json_decode($request->getContent()));
     }
 }
