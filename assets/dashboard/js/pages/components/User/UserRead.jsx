@@ -23,6 +23,7 @@ export class UserRead extends Component {
 
                     <div className="user-read-infos">
                         <div className="actions">
+                            <ButtonIcon icon="refresh" tooltipWidth={160} onClick={() => onChangeContext("update", elem)}>Réinitialiser son mot de passe</ButtonIcon>
                             <ButtonIcon icon="pencil" onClick={() => onChangeContext('update', elem)} >Modifier</ButtonIcon>
                         </div>
                         <div className="user-read-infos-container">

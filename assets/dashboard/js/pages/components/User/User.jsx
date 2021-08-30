@@ -95,6 +95,7 @@ export class User extends Component {
                          onSearch={this.handleSearch}
                          onDeleteAll={this.handleDeleteGroup}
                          filters={filters}
+                         developer={parseInt(this.props.developer)}
                          data={currentData} />
     }
 
