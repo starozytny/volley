@@ -7,6 +7,7 @@ use App\Entity\Blog\BoCategory;
 use App\Entity\User;
 use App\Repository\Blog\BoArticleRepository;
 use App\Service\ApiResponse;
+use App\Service\Data\DataService;
 use App\Service\FileUploader;
 use App\Service\SanitizeData;
 use App\Service\ValidatorService;
@@ -25,6 +26,8 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
  */
 class ArticleController extends AbstractController
 {
+    const FOLDER = "articles";
+
     /**
      * Get array of articles
      *
@@ -216,18 +219,13 @@ class ArticleController extends AbstractController
      *
      * @OA\Tag(name="Blog")
      *
-     * @param ApiResponse $apiResponse
-     * @param BoArticle $article
+     * @param DataService $dataService
+     * @param BoArticle $obj
      * @return JsonResponse
      */
-    public function switchIsPublished(ApiResponse $apiResponse, BoArticle $article): JsonResponse
+    public function switchIsPublished(DataService $dataService, BoArticle $obj): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $article->setIsPublished(!$article->getIsPublished());
-        $em->flush();
-
-        return $apiResponse->apiJsonResponse($article, User::VISITOR_READ);
+        return $dataService->switchIsPublished($obj, User::VISITOR_READ);
     }
 
     /**
@@ -249,16 +247,16 @@ class ArticleController extends AbstractController
      * @OA\Tag(name="Blog")
      *
      * @param ApiResponse $apiResponse
-     * @param BoArticle $article
+     * @param BoArticle $obj
      * @param FileUploader $fileUploader
      * @return JsonResponse
      */
-    public function delete(ApiResponse $apiResponse, BoArticle $article, FileUploader $fileUploader): JsonResponse
+    public function delete(ApiResponse $apiResponse, BoArticle $obj, FileUploader $fileUploader): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
 
-        $fileUploader->deleteFile($article->getFile(), 'articles');
-        $em->remove($article);
+        $fileUploader->deleteFile($obj->getFile(), self::FOLDER);
+        $em->remove($obj);
         $em->flush();
 
         return $apiResponse->apiJsonResponseSuccessful("Supression réussie !");
@@ -292,12 +290,12 @@ class ArticleController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent());
 
-        $articles = $em->getRepository(BoArticle::class)->findBy(['id' => $data]);
+        $objs = $em->getRepository(BoArticle::class)->findBy(['id' => $data]);
 
-        if ($articles) {
-            foreach ($articles as $article) {
-                $fileUploader->deleteFile($article->getFile(), 'articles');
-                $em->remove($article);
+        if ($objs) {
+            foreach ($objs as $obj) {
+                $fileUploader->deleteFile($obj->getFile(), self::FOLDER);
+                $em->remove($obj);
             }
         }
 
