@@ -59,7 +59,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    public function setArticle($em, $apiResponse, BoArticle $article, $request, $fileName): BoArticle
+    public function setArticle($em, $apiResponse, BoArticle $article, $request, $fileName)
     {
         $title = $request->get('title');
         $introduction = $request->get('introduction');
