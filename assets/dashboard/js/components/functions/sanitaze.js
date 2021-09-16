@@ -89,7 +89,7 @@ function getPostalCodes(self){
     ;
 }
 
-function setCityFromZipcode(self, arrayPostalCode, e){
+function setCityFromZipcode(self, e, arrayPostalCode){
     let name = e.currentTarget.name;
     let value = e.currentTarget.value;
 
