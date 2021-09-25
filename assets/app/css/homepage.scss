@@ -35,6 +35,8 @@
 
       img{
         border-radius: 0 0 4px 4px;
+        object-fit: cover;
+        height: 100%;
       }
     }
   }
@@ -94,11 +96,11 @@
 //                     |__|                       |__|
 @media (min-width: 1024px) {
   .news{
-    width: calc(100% + 12px);
+    width: 100%;
     justify-content: space-between;
   }
   .card, .card:first-child{
-    margin-right: 12px;
+    margin-right: 0;
   }
 }
 
@@ -110,12 +112,28 @@
 //                     |__|                      |__|
 @media (min-width:1280px) {
   .news{
-    width: calc(100% + 24px);
+    align-items: stretch;
   }
 
   .card{
-    width: calc(33% - 24px);
+    width: 33%;
+  }
 
+  .card:nth-child(1){
+    width: calc(33% - 24px);
+    margin-right: 24px;
+  }
+  .card:nth-child(2){
+    width: calc(33% - 48px);
+    margin-right: 24px;
+    margin-left: 24px;
+  }
+  .card:nth-child(3){
+    width: calc(33% - 24px);
+    margin-left: 24px;
+  }
+
+  .card{
     .card-header{
       .subtitle{
         font-size: 18px;
@@ -125,9 +143,14 @@
         font-size: 20px;
       }
     }
-  }
-  .card, .card:first-child{
-    margin-right: 24px;
+
+    .card-body{
+      height: 250px;
+
+      .image{
+        height: 100%;
+      }
+    }
   }
 }
 
@@ -138,14 +161,5 @@
 //                     | |  |_|\___/ \___/ \___/   | |
 //                     |__|                       |__|
 @media (min-width: 1600px){
-  .news{
-    width: calc(100% + 48px);
-  }
 
-  .card{
-    width: calc(33% - 48px);
-  }
-  .card, .card:first-child{
-    margin-right: 48px;
-  }
 }
