@@ -1,0 +1,151 @@
+@import "vars/vars";
+
+.main-header{
+  background-color: var(--greyShadow);
+}
+
+.card{
+  width: calc(320px - 24px);
+  background-color: var(--alpha);
+  box-shadow: 0 0 12px var(--greyShadow);
+  margin-bottom: 24px;
+  border-radius: 4px;
+
+  .card-header{
+    padding: 32px 24px;
+    @include fontSemibold();
+
+    .subtitle{
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+
+    .title{
+      text-transform: uppercase;
+      font-size: 18px;
+    }
+  }
+
+  .card-body{
+    background-color: red;
+    border-radius: 0 0 4px 4px;
+
+    .image{
+      width: 100%;
+
+      img{
+        border-radius: 0 0 4px 4px;
+      }
+    }
+  }
+}
+
+.news-container{
+  @include flex(column, center, center);
+}
+
+.agenda-list{
+  border-radius: 8px;
+  border: 1px solid var(--greyShadow);
+  margin-top: 24px;
+
+  .item{
+    padding: 24px;
+    @include fontSemibold();
+    @include flex(row, center, space-between);
+
+    .date{
+      color: var(--color0);
+      text-transform: uppercase;
+    }
+
+    .location{
+      color: var(--grey);
+    }
+  }
+
+  .item:nth-child(even){
+    background-color: var(--color0Shadow);
+  }
+}
+
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+  .news{
+    @include flex(row, flex-start, center);
+    flex-wrap: wrap;
+  }
+
+  .card:first-child{
+    margin-right: 24px;
+  }
+}
+
+//                      __   _  ___ ____  _  _     __
+//                     | _| / |/ _ \___ \| || |   |_ |
+//    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
+//   |_____|_____|_____| |  | | |_| / __/|__   _|  | |_____|_____|_____|
+//                     | |  |_|\___/_____|  |_|    | |
+//                     |__|                       |__|
+@media (min-width: 1024px) {
+  .news{
+    width: calc(100% + 12px);
+    justify-content: space-between;
+  }
+  .card, .card:first-child{
+    margin-right: 12px;
+  }
+}
+
+//                      __   _ ____  ___   ___    __
+//                     | _| / |___ \( _ ) / _ \  |_ |
+//    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |/ __/ (_) | |_| |  | |_____|_____|_____|
+//                     | |  |_|_____\___/ \___/   | |
+//                     |__|                      |__|
+@media (min-width:1280px) {
+  .news{
+    width: calc(100% + 24px);
+  }
+
+  .card{
+    width: calc(33% - 24px);
+
+    .card-header{
+      .subtitle{
+        font-size: 18px;
+      }
+
+      .title{
+        font-size: 20px;
+      }
+    }
+  }
+  .card, .card:first-child{
+    margin-right: 24px;
+  }
+}
+
+//                      __   _  __    ___   ___    __
+//                     | _| / |/ /_  / _ \ / _ \  |_ |
+//    _____ _____ _____| |  | | '_ \| | | | | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | | (_) | |_| | |_| |  | |_____|_____|_____|
+//                     | |  |_|\___/ \___/ \___/   | |
+//                     |__|                       |__|
+@media (min-width: 1600px){
+  .news{
+    width: calc(100% + 48px);
+  }
+
+  .card{
+    width: calc(33% - 48px);
+  }
+  .card, .card:first-child{
+    margin-right: 48px;
+  }
+}
