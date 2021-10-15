@@ -44,6 +44,11 @@
 
 .news-container{
   @include flex(column, center, center);
+  margin-bottom: 48px;
+
+  .btn{
+    margin-top: 24px;
+  }
 }
 
 .agenda-list{
@@ -59,15 +64,21 @@
     .date{
       color: var(--color0);
       text-transform: uppercase;
+
+      [class^="icon-"]{
+        display: inline-block;
+        margin-right: 8px;
+        transform: translateY(1px);
+      }
     }
 
     .location{
-      color: var(--grey);
+      color: var(--grey2);
     }
   }
 
   .item:nth-child(even){
-    background-color: var(--color0Shadow);
+    background-color: var(--color0Shadow2);
   }
 }
 

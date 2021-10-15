@@ -9,6 +9,7 @@
     --color1: #004887;
 
     --color0Shadow: rgba(215, 121, 47, 0.4);
+    --color0Shadow2: rgba(215, 121, 47, 0.1);
 }
 
 @import "vars/fonts";
@@ -126,6 +127,10 @@ h2{
 //                     | |  |_|\___/ \___/ \___/   | |
 //                     |__|                       |__|
 @media (min-width: 1600px){
+    body {
+        font-size: 18px;
+    }
+
     .main-content{
         @include maxscreen();
     }

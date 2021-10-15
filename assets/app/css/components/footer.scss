@@ -29,6 +29,7 @@ footer{
 
     .title{
       @include fontSemibold();
+      margin-bottom: 8px;
     }
 
     .footer-sociaux{

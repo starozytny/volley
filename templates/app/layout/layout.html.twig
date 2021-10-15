@@ -14,20 +14,19 @@
             'name': 'accueil'
         },
         {
-            'dropdown': true,
-            'label': 'Dropdown',
-            'items': [
-                {
-                    'path': path('app_homepage'),
-                    'label': 'Item 1',
-                    'name': 'item-2'
-                },
-                {
-                    'path': path('app_homepage'),
-                    'label': 'Item 2',
-                    'name': 'item-2'
-                }
-            ]
+            'path': path('app_homepage'),
+            'label': 'Actualités',
+            'name': 'actualites'
+        },
+        {
+            'path': path('app_homepage'),
+            'label': 'Adhésion',
+            'name': 'adhesion'
+        },
+        {
+            'path': path('app_contact'),
+            'label': 'Contact',
+            'name': 'contact'
         }
     ] %}
 
@@ -45,15 +44,6 @@
             }
         ] %}
         {% set menu = menu | merge(menuLogged) %}
-    {% else %}
-        {% set menuLogged = [
-            {
-                'path': path('app_login'),
-                'label': 'Mon espace',
-                'name': 'login'
-            }
-        ] %}
-        {% set menu = menu | merge(menuLogged) %}
     {% endif %}
 
     <div class="body">
@@ -62,7 +52,7 @@
                 <div class="nav-header">
                     <div class="nav-header-logo">
                         <a href="{{ path("app_homepage") }}">
-                            <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo du site">
+                            <span class="nav-header-logo-span">M.M.V.B</span>
                         </a>
                     </div>
                 </div>
