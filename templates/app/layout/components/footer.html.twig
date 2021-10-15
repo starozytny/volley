@@ -1,25 +1,52 @@
 <footer>
     <div class="footer">
         <div class="footer-menu">
-            <div class="footer-logo">
-                <a href="{{ path('app_homepage') }}" title="Logilink">
-                    <img src="{{ asset('build/dashboard/images/logilink-logo.svg') }}" alt="Logo"/>
-                </a>
-                <span>Website </span>
-            </div>
+
             <div class="footer-items">
+                <span class="title">Menu</span>
+                <a rel="nofollow" href="{{ path('app_mentions') }}">Accueil</a>
+                <a rel="nofollow" href="{{ path('app_politique') }}">Gestion locative</a>
+                <a rel="nofollow" href="{{ path('app_contact') }}">Estimer mon bien</a>
+                <a rel="nofollow" href="{{ path('app_contact') }}">Nous contacter</a>
+            </div>
+
+            <div class="footer-items">
+                <span class="title">Légales</span>
                 <a rel="nofollow" href="{{ path('app_mentions') }}">Mentions légales</a>
                 <a rel="nofollow" href="{{ path('app_politique') }}">Politique de confidentialité</a>
                 <a rel="nofollow" href="{{ path('app_cookies') }}">Gestion des cookies</a>
-                <a rel="nofollow" href="{{ path('app_contact') }}">Nous contacter</a>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <a rel="nofollow" href="{{ path('app_login') }}">Mon espace</a>
                     <a rel="nofollow" href="{{ path('app_logout') }}">Me déconnecter</a>
-                {% else %}
-                    <a rel="nofollow" href="{{ path('app_login') }}">Mon espace</a>
                 {% endif %}
             </div>
+
+            <div class="footer-items">
+                <span class="title">Informations</span>
+                <div class="horaires">
+                    <div>
+                        <p>Adresse, 13000 Marseille</p>
+                        <p>email@email.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-logo">
+                <div class="title">M.M.V.B</div>
+                <div>Marseille Métropole</div>
+                <div>Volley Ball</div>
+                <div class="footer-sociaux">
+                    <a href="" target="_blank" class="btn-icon">
+                        <span class="icon-facebook"></span>
+                        <span class="tooltip">Facebook</span>
+                    </a>
+                    <a href="" target="_blank" class="btn-icon">
+                        <span class="icon-instagram"></span>
+                        <span class="tooltip">Instagram</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="copyright">Copyright 2020 - <a href="https://logilink.fr" target="_blank">Logilink</a></div>
+        <div class="copyright">Copyright 2021 - <a href="https://logilink.fr" target="_blank">MMVB Marseille</a></div>
     </div>
 </footer>

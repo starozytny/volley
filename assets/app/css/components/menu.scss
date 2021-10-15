@@ -40,6 +40,8 @@ nav.fixed{
     width: calc(100% - 24px);
     color: var(--fond);
     opacity: 0.6;
+    text-transform: uppercase;
+    @include fontSemibold();
 
     [class^="icon-"]{
       display: inline-block;

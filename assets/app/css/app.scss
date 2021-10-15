@@ -5,8 +5,10 @@
 @import "../../common/css/color";
 
 :root{
-    --color0: #a9aac9;
-    --color0Shadow: rgba(169, 170, 201, 0.4);
+    --color0: #D7792F;
+    --color1: #004887;
+
+    --color0Shadow: rgba(215, 121, 47, 0.4);
 }
 
 @import "vars/fonts";
@@ -26,6 +28,7 @@
 @import "components/cookies";
 @import "components/page";
 @import "components/toastr-custom";
+@import "components/tooltip";
 
 html, body{
     scroll-behavior: smooth;
@@ -65,6 +68,43 @@ h2{
 
 .matomo-iframe-display.remove{
     display: none;
+}
+
+.txt-color0{
+    color: var(--color0);
+}
+
+.main-news{
+    background-color: var(--alpha);
+    box-shadow: 0 0 12px var(--greyShadow);
+    border-radius: 12px;
+    max-width: 250px;
+
+    .main-news-title{
+        background-color: var(--color0);
+        color: var(--alpha);
+        @include fontSemibold();
+        text-align: center;
+        padding: 12px 0;
+        border-radius: 12px 12px 0 0;
+        font-size: 20px;
+    }
+
+    .main-news-body{
+        padding: 24px;
+        opacity: 0.8;
+    }
+}
+
+.main-socials{
+    a{
+        color: var(--txt);
+        opacity: 0.8;
+
+        [class^="icon-"]{
+            font-size: 24px;
+        }
+    }
 }
 
 //                      __   _ ____  ___   ___    __

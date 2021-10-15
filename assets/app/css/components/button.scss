@@ -1,3 +1,11 @@
 @import "../vars/vars";
 
 @import "../../../common/css/components/button";
+
+.btn-color0 {
+  background: var(--color0);
+  color: var(--alpha);
+  border: 1px solid transparent;
+  box-shadow: 0 4px 12px var(--color0Shadow);
+  @include fontSemibold();
+}
