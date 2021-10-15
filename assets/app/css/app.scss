@@ -75,39 +75,6 @@ h2{
     color: var(--color0);
 }
 
-.main-news{
-    background-color: var(--alpha);
-    box-shadow: 0 0 12px var(--greyShadow);
-    border-radius: 12px;
-    max-width: 250px;
-
-    .main-news-title{
-        background-color: var(--color0);
-        color: var(--alpha);
-        @include fontSemibold();
-        text-align: center;
-        padding: 12px 0;
-        border-radius: 12px 12px 0 0;
-        font-size: 20px;
-    }
-
-    .main-news-body{
-        padding: 24px;
-        opacity: 0.8;
-    }
-}
-
-.main-socials{
-    a{
-        color: var(--txt);
-        opacity: 0.8;
-
-        [class^="icon-"]{
-            font-size: 24px;
-        }
-    }
-}
-
 //                      __   _ ____  ___   ___    __
 //                     | _| / |___ \( _ ) / _ \  |_ |
 //    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____

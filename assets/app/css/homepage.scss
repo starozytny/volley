@@ -4,6 +4,40 @@
   background-color: var(--greyShadow);
 }
 
+.main-news{
+  background-color: var(--alpha);
+  box-shadow: 0 0 12px var(--greyShadow);
+  border-radius: 12px;
+  max-width: 250px;
+
+  .main-news-title{
+    background-color: var(--color0);
+    color: var(--alpha);
+    @include fontSemibold();
+    text-align: center;
+    padding: 12px 0;
+    border-radius: 12px 12px 0 0;
+    font-size: 20px;
+  }
+
+  .main-news-body{
+    padding: 24px;
+    opacity: 0.8;
+  }
+}
+
+.main-socials{
+  a{
+    color: var(--txt);
+    opacity: 0.8;
+
+    [class^="icon-"]{
+      font-size: 24px;
+    }
+  }
+}
+
+
 .card{
   width: calc(320px - 24px);
   background-color: var(--alpha);
@@ -55,6 +89,7 @@
   border-radius: 8px;
   border: 1px solid var(--greyShadow);
   margin-top: 24px;
+  margin-bottom: 48px;
 
   .item{
     padding: 24px;
