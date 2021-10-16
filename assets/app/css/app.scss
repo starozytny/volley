@@ -31,6 +31,8 @@
 @import "components/toastr-custom";
 @import "components/tooltip";
 
+@import "pages/adhesion";
+
 html, body{
     scroll-behavior: smooth;
 }
@@ -58,12 +60,13 @@ h1{
 }
 
 h2{
-    @include fontSemibold();
+    @include fontBold();
     text-transform: uppercase;
+    color: var(--color1);
 }
 
 .main-content{
-    min-height: 100vh;
+    min-height: 70vh;
     padding: 14px 12px 12px 12px;
 }
 
@@ -91,9 +94,15 @@ h2{
         top: 0; left: 0;
         background: url("../images/fond-2.jpg") center no-repeat fixed;
         background-size: cover;
+        background-position-y: -378px;
         display: block;
         width: 100%;
         height: 165px;
+    }
+
+    main{
+        position: relative;
+        z-index: 4;
     }
 }
 
