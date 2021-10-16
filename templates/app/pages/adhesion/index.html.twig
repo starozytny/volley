@@ -56,7 +56,9 @@
                 </div>
             </div>
             <div class="col-2">
-                {% include "app/layout/components/main-illustration.html.twig" %}
+                {% include "app/layout/components/main-illustration.html.twig" with {
+                    image: 'adhesion.jpg',
+                } %}
             </div>
         </div>
     </div>

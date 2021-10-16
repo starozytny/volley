@@ -57,7 +57,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/actualite/{slug}", name="app_actualite_read")
+     * @Route("/actualites/{slug}", name="app_actualites_read")
      */
     public function actualite(): Response
     {

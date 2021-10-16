@@ -18,7 +18,9 @@
                 <div id="contact" data-aos="fade-down"></div>
             </div>
             <div class="col-2">
-                {% include "app/layout/components/main-illustration.html.twig" %}
+                {% include "app/layout/components/main-illustration.html.twig" with {
+                    image: 'contact.jpg',
+                } %}
             </div>
         </div>
     </div>

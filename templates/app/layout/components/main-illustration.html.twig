@@ -1,6 +1,6 @@
 <div class="main-illustration">
     <div class="images">
-        <img data-aos="fade-in" class="lozad" data-src="{{ asset('build/app/images/homepage.jpg') }}" alt="Adhésion à marseille métropole provence volley ball">
+        <img data-aos="fade-in" class="lozad" data-src="{{ asset('build/app/images/' ~ (image is defined ? image : 'homepage.jpg')) }}" alt="{{ image is defined ? image : "Volley"}} à marseille métropole provence volley ball">
     </div>
     {% include "app/layout/components/dots.html.twig" %}
 </div>
