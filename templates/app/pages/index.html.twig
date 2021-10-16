@@ -48,7 +48,7 @@
 
     <div class="news-container">
         <div class="news">
-            <div class="card">
+            <a href="" class="card">
                 <div class="card-header">
                     <div class="subtitle">25 septembre 2021</div>
                     <div class="title">Title news</div>
@@ -58,8 +58,8 @@
                         <img src="{{ asset('build/app/images/article-1.jpg') }}" alt="illustration news">
                     </div>
                 </div>
-            </div>
-            <div class="card">
+            </a>
+            <a href="" class="card">
                 <div class="card-header">
                     <div class="subtitle">25 septembre 2021</div>
                     <div class="title">Title news</div>
@@ -69,8 +69,8 @@
                         <img src="{{ asset('build/app/images/article-2.jpg') }}" alt="illustration news">
                     </div>
                 </div>
-            </div>
-            <div class="card">
+            </a>
+            <a href="" class="card">
                 <div class="card-header">
                     <div class="subtitle">25 septembre 2021</div>
                     <div class="title">Title news</div>
@@ -80,17 +80,17 @@
                         <img src="{{ asset('build/app/images/article-3.jpg') }}" alt="illustration news">
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <a href="" class="btn btn-color0">Voir toutes les actualités</a>
     </div>
 
     <div class="agenda-container">
-{#        <div class="illustration">#}
-{#            <div class="image">#}
-{#                <img src="{{ asset('build/app/images/maintenance.svg') }}" alt="illustration agenda marseille volley">#}
-{#            </div>#}
-{#        </div>#}
+        <div class="illustration">
+            <div class="images">
+                <img src="{{ asset('build/app/images/agenda.jpg') }}" alt="illustration agenda marseille volley">
+            </div>
+        </div>
         <div class="agenda">
             <h2>Agenda</h2>
             <div class="agenda-list">
@@ -110,6 +110,7 @@
                     <div class="location">A Marseille</div>
                 </div>
             </div>
+            {% include "app/layout/components/dots.html.twig" %}
         </div>
     </div>
 </div>

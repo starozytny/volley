@@ -125,6 +125,10 @@ footer{
 //                     | |  |_|  |_|    |_|  \___/   | |
 //                     |__|                         |__|
 @media (min-width: 1440px){
+  footer{
+    margin-top: 80px;
+  }
+
   .footer {
     max-width: 1366px;
   }
