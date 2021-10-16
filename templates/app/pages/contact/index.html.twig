@@ -8,10 +8,19 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="main-content">
+    <div class="title-page">
         <h1>Nous contacter</h1>
+    </div>
 
-        <div id="contact"></div>
+    <div class="main-content">
+        <div class="default-page">
+            <div class="col-1">
+                <div id="contact"></div>
+            </div>
+            <div class="col-2">
+                {% include "app/layout/components/main-illustration.html.twig" %}
+            </div>
+        </div>
     </div>
 {% endblock %}
 
