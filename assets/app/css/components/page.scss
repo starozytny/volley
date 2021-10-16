@@ -2,6 +2,8 @@
 
 .title-page{
   padding: 24px 12px 12px 12px;
+  background-color: var(--fondContent);
+  margin-bottom: 24px;
 }
 
 .custom-shape-divider {
@@ -21,6 +23,10 @@
   fill: var(--fondContent);
 }
 
+.main-illustration{
+  display: none;
+}
+
 //                      __   _  ___ ____  _  _     __
 //                     | _| / |/ _ \___ \| || |   |_ |
 //    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
@@ -32,11 +38,17 @@
     background-color: var(--fondContent);
     min-height: calc(174px - 48px - 24px);
     padding: 48px 24px 24px 24px;
-    margin: 0 12px;
+    margin: 0 12px 24px 12px;
 
     h1{
       font-size: 46px;
     }
+  }
+
+  .deco-title-page{
+    width: 100%;
+    height: 24px;
+    background-color: var(--color1);
   }
 
   .default-page{
@@ -66,6 +78,8 @@
   }
 
   .main-illustration{
+    display: block;
+
     .images{
       position: relative;
       height: 511px;

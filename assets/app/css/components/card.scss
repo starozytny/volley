@@ -1,6 +1,7 @@
 @import "../vars/vars";
 
 .card{
+  display: block;
   width: calc(320px - 24px);
   background-color: var(--alpha);
   box-shadow: 0 0 12px var(--greyShadow);
