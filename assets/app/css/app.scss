@@ -31,8 +31,11 @@
 @import "components/page";
 @import "components/toastr-custom";
 @import "components/tooltip";
+@import "components/card";
+@import "components/news";
 
 @import "pages/adhesion";
+@import "pages/news";
 
 html, body{
     scroll-behavior: smooth;

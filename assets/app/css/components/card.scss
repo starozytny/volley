@@ -1,0 +1,109 @@
+@import "../vars/vars";
+
+.card{
+  width: calc(320px - 24px);
+  background-color: var(--alpha);
+  box-shadow: 0 0 12px var(--greyShadow);
+  border: 1px solid var(--fond);
+  margin-bottom: 24px;
+  border-radius: 4px;
+  color: var(--txt);
+
+  &:hover{
+    .card-body{
+      .image{
+        img{
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
+  .card-header{
+    padding: 32px 24px;
+    @include fontSemibold();
+
+    .subtitle{
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+
+    .title{
+      text-transform: uppercase;
+      font-size: 18px;
+    }
+  }
+
+  .card-body{
+    border-radius: 0 0 4px 4px;
+
+    .image{
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+
+      img{
+        border-radius: 0 0 4px 4px;
+        object-fit: cover;
+        height: 100%;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+  }
+}
+
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+  .card:first-child{
+    margin-right: 24px;
+  }
+}
+
+//                      __   _  ___ ____  _  _     __
+//                     | _| / |/ _ \___ \| || |   |_ |
+//    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
+//   |_____|_____|_____| |  | | |_| / __/|__   _|  | |_____|_____|_____|
+//                     | |  |_|\___/_____|  |_|    | |
+//                     |__|                       |__|
+@media (min-width: 1024px) {
+  .card, .card:first-child{
+    margin-right: 0;
+  }
+}
+
+//                      __   _ ____  ___   ___    __
+//                     | _| / |___ \( _ ) / _ \  |_ |
+//    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |/ __/ (_) | |_| |  | |_____|_____|_____|
+//                     | |  |_|_____\___/ \___/   | |
+//                     |__|                      |__|
+@media (min-width:1280px) {
+  .card{
+    width: 33%;
+  }
+
+  .card{
+    .card-header{
+      .subtitle{
+        font-size: 18px;
+      }
+
+      .title{
+        font-size: 20px;
+      }
+    }
+
+    .card-body{
+      height: 250px;
+
+      .image{
+        height: 100%;
+      }
+    }
+  }
+}

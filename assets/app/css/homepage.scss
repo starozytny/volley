@@ -78,58 +78,6 @@ h2{
   }
 }
 
-.card{
-  width: calc(320px - 24px);
-  background-color: var(--alpha);
-  box-shadow: 0 0 12px var(--greyShadow);
-  border: 1px solid var(--fond);
-  margin-bottom: 24px;
-  border-radius: 4px;
-  color: var(--txt);
-
-  &:hover{
-    .card-body{
-      .image{
-        img{
-          transform: scale(1.05);
-        }
-      }
-    }
-  }
-
-  .card-header{
-    padding: 32px 24px;
-    @include fontSemibold();
-
-    .subtitle{
-      color: var(--grey);
-      margin-bottom: 12px;
-    }
-
-    .title{
-      text-transform: uppercase;
-      font-size: 18px;
-    }
-  }
-
-  .card-body{
-    border-radius: 0 0 4px 4px;
-
-    .image{
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
-
-      img{
-        border-radius: 0 0 4px 4px;
-        object-fit: cover;
-        height: 100%;
-        transition: all 0.2s ease-in-out;
-      }
-    }
-  }
-}
-
 .news-container{
   @include flex(column, center, center);
   margin-bottom: 48px;
@@ -226,16 +174,6 @@ h2{
   .main-news, .main-socials{
     margin: 0;
   }
-
-
-  .news{
-    @include flex(row, flex-start, center);
-    flex-wrap: wrap;
-  }
-
-  .card:first-child{
-    margin-right: 24px;
-  }
 }
 
 //                      __   _  ___ ____  _  _     __
@@ -321,15 +259,6 @@ h2{
     & > .btn{
       margin-top: 24px;
     }
-  }
-
-  .news{
-    width: calc(100% - 48px);
-    justify-content: space-between;
-    margin: 0 24px;
-  }
-  .card, .card:first-child{
-    margin-right: 0;
   }
 
   .agenda-container{
@@ -418,27 +347,6 @@ h2{
     }
   }
 
-  .main-header-illustration{
-    .images{
-      &:before{
-        height: 84%;
-        top: 168px;
-        left: -72px;
-      }
-    }
-    .dots{
-      transform: rotate(90deg) translate(120px, 310px);
-    }
-  }
-
-  .news{
-    align-items: stretch;
-  }
-
-  .card{
-    width: 33%;
-  }
-
   .card:nth-child(1){
     width: calc(33% - 24px);
     margin-right: 24px;
@@ -453,23 +361,16 @@ h2{
     margin-left: 24px;
   }
 
-  .card{
-    .card-header{
-      .subtitle{
-        font-size: 18px;
-      }
-
-      .title{
-        font-size: 20px;
+  .main-header-illustration{
+    .images{
+      &:before{
+        height: 84%;
+        top: 168px;
+        left: -72px;
       }
     }
-
-    .card-body{
-      height: 250px;
-
-      .image{
-        height: 100%;
-      }
+    .dots{
+      transform: rotate(90deg) translate(120px, 310px);
     }
   }
 }
