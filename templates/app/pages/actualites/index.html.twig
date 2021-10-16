@@ -16,72 +16,25 @@
     <div class="main-content">
         <div class="default-page">
             <div class="page-news news">
-                <a href="{{ path('app_actualites_read', {"slug": "salut"}) }}" class="card">
-                    <div class="card-header">
-                        <div class="subtitle">25 septembre 2021</div>
-                        <div class="title">Title news</div>
+                {% if articles | length > 0 %}
+                    {% for article in articles %}
+                        <a href="{{ path('app_actualites_read', {'slug': article.slug}) }}" class="card" data-aos="fade-down" data-aos-delay="0">
+                            <div class="card-header">
+                                <div class="subtitle">{{ article.createAtStringLong }}</div>
+                                <div class="title">{{ article.title }}</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="image">
+                                    <img class="lozad" data-src="{{ asset('articles/' ~ article.file) }}" alt="illustration news">
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="card">
+                        Aucun article pour le moment.
                     </div>
-                    <div class="card-body">
-                        <div class="image">
-                            <img class="lozad" data-src="{{ asset('build/app/images/article-1.jpg') }}" alt="illustration news">
-                        </div>
-                    </div>
-                </a>
-                <a href="" class="card">
-                    <div class="card-header">
-                        <div class="subtitle">25 septembre 2021</div>
-                        <div class="title">Title news</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="image">
-                            <img class="lozad" data-src="{{ asset('build/app/images/article-2.jpg') }}" alt="illustration news">
-                        </div>
-                    </div>
-                </a>
-                <a href="" class="card">
-                    <div class="card-header">
-                        <div class="subtitle">25 septembre 2021</div>
-                        <div class="title">Title news</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="image">
-                            <img class="lozad" data-src="{{ asset('build/app/images/article-3.jpg') }}" alt="illustration news">
-                        </div>
-                    </div>
-                </a>
-                <a href="" class="card">
-                    <div class="card-header">
-                        <div class="subtitle">25 septembre 2021</div>
-                        <div class="title">Title news</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="image">
-                            <img class="lozad" data-src="{{ asset('build/app/images/article-4.jpg') }}" alt="illustration news">
-                        </div>
-                    </div>
-                </a>
-                <a href="" class="card">
-                    <div class="card-header">
-                        <div class="subtitle">25 septembre 2021</div>
-                        <div class="title">Title news</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="image">
-                            <img class="lozad" data-src="{{ asset('build/app/images/article-5.jpg') }}" alt="illustration news">
-                        </div>
-                    </div>
-                </a>
-                <a href="" class="card">
-                    <div class="card-header">
-                        <div class="subtitle">25 septembre 2021</div>
-                        <div class="title">Title news</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="image">
-                            <img class="lozad" data-src="{{ asset('build/app/images/article-2.jpg') }}" alt="illustration news">
-                        </div>
-                    </div>
-                </a>
+                {% endif %}
             </div>
         </div>
     </div>

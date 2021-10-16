@@ -15,7 +15,13 @@ class AppController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('app/pages/index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $articles = $em->getRepository(BoArticle::class)->findBy([], ['createdAt' => 'DESC'], 3);
+
+        return $this->render('app/pages/index.html.twig', [
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -55,7 +61,12 @@ class AppController extends AbstractController
      */
     public function actualites(): Response
     {
-        return $this->render('app/pages/actualites/index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em->getRepository(BoArticle::class)->findBy([], ['createdAt' => 'DESC']);
+
+        return $this->render('app/pages/actualites/index.html.twig', [
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -70,8 +81,11 @@ class AppController extends AbstractController
             throw new NotFoundException("Cette article n'existe pas.");
         }
 
+        $articles = $em->getRepository(BoArticle::class)->findBy([], ['createdAt' => 'DESC'], 3);
+
         return $this->render('app/pages/actualites/read.html.twig', [
-            'elem' => $obj
+            'elem' => $obj,
+            'articles' => $articles
         ]);
     }
 

@@ -46,44 +46,25 @@
         </div>
     </div>
 
-    <div class="news-container">
-        <div class="news">
-            <a href="" class="card" data-aos="fade-down" data-aos-delay="0">
-                <div class="card-header">
-                    <div class="subtitle">25 septembre 2021</div>
-                    <div class="title">Title news</div>
-                </div>
-                <div class="card-body">
-                    <div class="image">
-                        <img class="lozad" data-src="{{ asset('build/app/images/article-1.jpg') }}" alt="illustration news">
-                    </div>
-                </div>
-            </a>
-            <a href="" class="card" data-aos="fade-down" data-aos-delay="200">
-                <div class="card-header">
-                    <div class="subtitle">25 septembre 2021</div>
-                    <div class="title">Title news</div>
-                </div>
-                <div class="card-body">
-                    <div class="image">
-                        <img class="lozad" data-src="{{ asset('build/app/images/article-2.jpg') }}" alt="illustration news">
-                    </div>
-                </div>
-            </a>
-            <a href="" class="card" data-aos="fade-down" data-aos-delay="400">
-                <div class="card-header">
-                    <div class="subtitle">25 septembre 2021</div>
-                    <div class="title">Title news</div>
-                </div>
-                <div class="card-body">
-                    <div class="image">
-                        <img class="lozad" data-src="{{ asset('build/app/images/article-3.jpg') }}" alt="illustration news">
-                    </div>
-                </div>
-            </a>
+    {% if articles | length > 0 %}
+        <div class="news-container">
+            <div class="news">
+                {% for article in articles %}
+                    <a href="{{ path('app_actualites_read', {'slug': article.slug}) }}" class="card" data-aos="fade-down" data-aos-delay="0">
+                        <div class="card-header">
+                            <div class="subtitle">{{ article.createAtStringLong }}</div>
+                            <div class="title">{{ article.title }}</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="image">
+                                <img class="lozad" data-src="{{ asset('articles/' ~ article.file) }}" alt="illustration news">
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
         </div>
-        <a href="" data-aos="fade-up" class="btn btn-color0">Voir toutes les actualités</a>
-    </div>
+    {% endif %}
 
     <div class="agenda-container">
         <div class="illustration" data-aos="fade-right">
