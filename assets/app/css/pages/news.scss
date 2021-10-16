@@ -1,5 +1,59 @@
 @import "../vars/vars";
 
+.title-page-news-read{
+  .date{
+    width: 100%;
+    text-align: center;
+    @include fontSemibold();
+    color: var(--grey2);
+  }
+
+  h1{
+    text-align: center;
+    margin-top: 12px;
+  }
+}
+
+.page-news-read{
+  width: 100%;
+
+  h2{
+    color: var(--txt);
+  }
+
+  .article{
+    max-width: 768px;
+    margin: 0 auto;
+
+    .image{
+      margin: 0 auto 24px auto;
+    }
+
+    .content{
+      margin-bottom: 80px;
+
+      h2{
+        margin-bottom: 8px;
+      }
+    }
+
+    .intro{
+      @include fontSemibold();
+      margin-bottom: 48px;
+    }
+  }
+}
+
+.other-news{
+  padding-top: 24px;
+  border-top: 1px solid var(--fond);
+
+  h2{
+    margin-bottom: 24px;
+    text-align: center;
+  }
+}
+
 //                      __   _ ____  ___   ___    __
 //                     | _| / |___ \( _ ) / _ \  |_ |
 //    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
@@ -7,8 +61,10 @@
 //                     | |  |_|_____\___/ \___/   | |
 //                     |__|                      |__|
 @media (min-width:1280px) {
-  .card{
-    width: calc(33% - 24px);
-    margin: 12px;
+  .page-news, .page-news-read{
+    .card{
+      width: calc(33% - 24px);
+      margin: 12px;
+    }
   }
 }

@@ -57,6 +57,14 @@ class AppController extends AbstractController
     }
 
     /**
+     * @Route("/actualite/{slug}", name="app_actualite_read")
+     */
+    public function actualite(): Response
+    {
+        return $this->render('app/pages/actualites/read.html.twig');
+    }
+
+    /**
      * @Route("/adhesion", name="app_adhesion")
      */
     public function adhesion(): Response
