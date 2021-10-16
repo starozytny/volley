@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\App\Volley\VoMatch;
 use App\Entity\Blog\BoArticle;
 use Http\Discovery\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,11 @@ class AppController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $articles = $em->getRepository(BoArticle::class)->findBy([], ['createdAt' => 'DESC'], 3);
+        $matches = $em->getRepository(VoMatch::class)->findBy([], ['startAt' => 'ASC'], 3);
 
         return $this->render('app/pages/index.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'matches' => $matches
         ]);
     }
 

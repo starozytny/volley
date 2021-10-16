@@ -75,21 +75,19 @@
         <div class="agenda" data-aos="fade-right">
             <h2>Agenda</h2>
             <div class="agenda-list">
-                <div class="item">
-                    <div class="date"><span class="icon-earth"></span>25 sept 2021</div>
-                    <div class="versus">Equipe 1 vs équipe 2</div>
-                    <div class="location">A Marseille</div>
-                </div>
-                <div class="item">
-                    <div class="date"><span class="icon-earth"></span>25 sept 2021</div>
-                    <div class="versus">Equipe 1 vs équipe 2</div>
-                    <div class="location">A Marseille</div>
-                </div>
-                <div class="item">
-                    <div class="date"><span class="icon-earth"></span>25 sept 2021</div>
-                    <div class="versus">Equipe 1 vs équipe 2</div>
-                    <div class="location">A Marseille</div>
-                </div>
+                {% if matches | length > 0 %}
+                    {% for match in matches %}
+                        <div class="item">
+                            <div class="date"><span class="icon-earth"></span>{{ match.startAtStringLong }}</div>
+                            <div class="versus">{{ match.team | capitalize }} vs {{ match.versus | capitalize }}</div>
+                            <div class="location">A {{ match.localisation }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="item">
+                        <div>Aucun match prévu pour le moment.</div>
+                    </div>
+                {% endif %}
             </div>
             {% include "app/layout/components/dots.html.twig" %}
         </div>
