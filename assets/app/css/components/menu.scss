@@ -1,5 +1,10 @@
 @import "../vars/vars";
 
+nav{
+  position: relative;
+  z-index: 5;
+}
+
 nav.fixed{
   position: fixed;
   top: 0;
@@ -110,7 +115,7 @@ nav.fixed{
     }
   }
   nav{
-    background: var(--alpha);
+    background: transparent;
   }
   .nav-container{
     @include flex(row, center, space-between);
@@ -118,6 +123,10 @@ nav.fixed{
   }
   .nav-header-logo{
     padding: 0;
+
+    .nav-header-logo-span{
+      color: var(--alpha);
+    }
   }
   .nav-mobile{ display: none; }
   .nav-body{
@@ -132,7 +141,7 @@ nav.fixed{
 
     a, .item-dropdown > span{
       padding: 24px 12px;
-      color: var(--txt);
+      color: var(--alpha);
       opacity: 0.8;
     }
 

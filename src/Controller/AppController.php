@@ -49,6 +49,14 @@ class AppController extends AbstractController
     }
 
     /**
+     * @Route("/adhesion", name="app_adhesion")
+     */
+    public function adhesion(): Response
+    {
+        return $this->render('app/pages/adhesion/index.html.twig');
+    }
+
+    /**
      * @Route("/nous-contacter", name="app_contact")
      */
     public function contact(): Response
