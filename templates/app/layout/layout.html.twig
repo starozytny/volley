@@ -30,22 +30,6 @@
         }
     ] %}
 
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        {% set menuLogged = [
-            {
-                'path': path('app_login'),
-                'label': 'Mon espace',
-                'name': 'login'
-            },
-            {
-                'path': path('app_logout'),
-                'label': 'Déconnexion',
-                'name': 'logout'
-            }
-        ] %}
-        {% set menu = menu | merge(menuLogged) %}
-    {% endif %}
-
     <div class="body">
         <div class="deco"></div>
         <nav>
