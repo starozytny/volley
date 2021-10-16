@@ -3,6 +3,7 @@
 nav{
   position: relative;
   z-index: 5;
+  box-shadow: 0 4px 12px var(--greyShadow);
 }
 
 nav.fixed{
@@ -116,6 +117,7 @@ nav.fixed{
   }
   nav{
     background: transparent;
+    box-shadow: none;
   }
   .nav-container{
     @include flex(row, center, space-between);

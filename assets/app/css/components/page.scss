@@ -65,7 +65,6 @@
     .images{
       position: relative;
       height: 511px;
-      background-color: red;
 
       &:before{
         content: "";
@@ -81,22 +80,10 @@
         object-fit: cover;
       }
     }
-  }
 
-  .dots{
-    position: relative;
-    z-index: 3;
-    @include flex(row, flex-start, flex-start);
-    margin-top: -72px;
-    margin-left: -56px;
-
-    .dot{
-      width: 14px; height: 14px;
-      background-color: var(--color0);
-      border-radius: 50px;
-      margin-right: 12px;
-      margin-bottom: 12px;
-
+    .dots{
+      margin-top: -72px;
+      margin-left: -56px;
     }
   }
 }

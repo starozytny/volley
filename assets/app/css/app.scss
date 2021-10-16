@@ -82,6 +82,21 @@ h2{
     display: none;
 }
 
+.dots{
+    position: relative;
+    z-index: 3;
+    @include flex(row, flex-start, flex-start);
+
+    .dot{
+        width: 10px; height: 10px;
+        background-color: var(--color0);
+        border-radius: 50px;
+        margin-right: 12px;
+        margin-bottom: 12px;
+
+    }
+}
+
 //                      __   _  ___ ____  _  _     __
 //                     | _| / |/ _ \___ \| || |   |_ |
 //    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
@@ -103,6 +118,12 @@ h2{
     main{
         position: relative;
         z-index: 4;
+    }
+
+    .dots{
+        .dot{
+            width: 14px; height: 14px;
+        }
     }
 }
 
