@@ -49,6 +49,10 @@
       h2{
         margin-bottom: 12px;
       }
+
+      & > *{
+        padding-left: 24px;
+      }
     }
 
     & > .col-2{
@@ -129,6 +133,12 @@
   }
 
   .default-page{
+    & > .col-1{
+      & > *{
+        padding-left: 48px;
+      }
+    }
+
     & > .col-2{
       width: calc(50% - 206px);
       margin-left: 206px;
