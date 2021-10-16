@@ -1,0 +1,29 @@
+<Files ".env">
+  Order Allow,Deny
+  Deny from all
+</Files>
+
+IndexIgnore *
+
+Options +FollowSymlinks
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^www.volley.chanbora-chhun.fr$
+RewriteRule ^(.*) http://volley.chanbora-chhun.fr/$1 [QSA,L,R=301]
+
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+SetEnv SHORT_OPEN_TAGS 0
+SetEnv REGISTER_GLOBALS 0
+SetEnv MAGIC_QUOTES 0
+SetEnv SESSION_AUTOSTART 0
+SetEnv ZEND_OPTIMIZER 1
+
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1 [L]
+
+Redirect 301 http://volley.chanbora-chhun.fr/ https://chanbora-chhun.fr/
