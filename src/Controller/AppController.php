@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Blog\BoArticle;
+use Http\Discovery\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,11 +59,20 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/actualites/{slug}", name="app_actualites_read")
+     * @Route("/actualites/{slug}", options={"expose"=true}, name="app_actualites_read")
      */
-    public function actualite(): Response
+    public function actualite($slug): Response
     {
-        return $this->render('app/pages/actualites/read.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $obj = $em->getRepository(BoArticle::class)->findOneBy(['slug' => $slug]);
+        if(!$obj){
+            throw new NotFoundException("Cette article n'existe pas.");
+        }
+
+        return $this->render('app/pages/actualites/read.html.twig', [
+            'elem' => $obj
+        ]);
     }
 
     /**

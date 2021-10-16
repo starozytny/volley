@@ -1,6 +1,6 @@
 {% extends 'app/layout/layout.html.twig' %}
 
-{% block title %}Nom de l'actualité {{ parent() }}{% endblock %}
+{% block title %}{{ elem.title }} {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,8 +9,8 @@
 
 {% block main_content %}
     <div class="title-page title-page-news-read">
-        <p class="date">Publié le 20 janvier 2021</p>
-        <h1 data-aos="fade-right">Nom de l'actualité</h1>
+        <p class="date">Publié le {{ elem.createAtStringLong }}</p>
+        <h1 data-aos="fade-right">{{ elem.title }}</h1>
     </div>
 
     <div class="main-content">
@@ -18,37 +18,15 @@
             <div class="page-news-read">
                 <div class="article">
                     <div class="image">
-                        <img class="lozad" data-src="{{ asset('build/app/images/article-2.jpg') }}" alt="illustration news">
+                        <img class="lozad" data-src="{{ asset('articles/' ~ elem.file) }}" alt="illustration news">
                     </div>
 
                     <div class="intro">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, assumenda commodi eius
-                        facere magni maxime minus quisquam temporibus tenetur voluptatibus. Animi aut
-                        debitis eligendi inventore minima pariatur repellat, repudiandae ullam.
+                        {{ elem.introduction | raw }}
                     </div>
 
                     <div class="content">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, assumenda commodi eius
-                            facere magni maxime minus quisquam temporibus tenetur voluptatibus. Animi aut
-                            debitis eligendi inventore minima pariatur repellat, repudiandae ullam.Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Aspernatur, assumenda commodi eius
-                            facere magni maxime minus quisquam temporibus tenetur voluptatibus. Animi aut
-                            debitis eligendi inventore minima pariatur repellat, repudiandae ullam.
-                        </p>
-                        <br><br>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, assumenda commodi eius
-                            facere magni maxime minus quisquam temporibus tenetur voluptatibus. Animi aut
-                            debitis eligendi inventore minima pariatur repellat, repudiandae ullam.
-                        </p>
-                        <br><br>
-                        <h2>How to improve article</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, assumenda commodi eius
-                            facere magni maxime minus quisquam temporibus tenetur voluptatibus. Animi aut
-                            debitis eligendi inventore minima pariatur repellat, repudiandae ullam.
-                        </p>
+                        {{ elem.content | raw }}
                     </div>
                 </div>
                 <div class="other-news">

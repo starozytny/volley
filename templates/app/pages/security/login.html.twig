@@ -1,11 +1,12 @@
 {% extends 'app/pages/security/template.html.twig' %}
 
-{% block title %}Connexion à son espace{% endblock %}
+{% block title %}Connexion à son espace {{ parent() }}{% endblock %}
 
 {% block main_content %}
+    <div class="title-page">
+        <h1 data-aos="fade-right">Se connecter</h1>
+    </div>
     <div class="main-content">
-        <h1>Se connecter</h1>
-
         <form method="post" class="form-login">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
