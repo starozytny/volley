@@ -26,6 +26,10 @@ function compareCreatedAtInverse(a, b){
     return comparison(b.createdAt, a.createdAt);
 }
 
+function compareStartAt(a, b){
+    return comparison(a.startAt, b.startAt);
+}
+
 function comparison (objA, objB){
     let comparison = 0;
     if (objA > objB) {
@@ -43,5 +47,6 @@ module.exports = {
     compareTitle,
     compareName,
     compareCreatedAt,
-    compareCreatedAtInverse
+    compareCreatedAtInverse,
+    compareStartAt
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\App\Volley\VoMatch;
 use App\Entity\Blog\BoArticle;
 use App\Entity\Blog\BoCategory;
 use App\Entity\Contact;
@@ -104,6 +105,18 @@ class AdminController extends AbstractController
         return $this->render('admin/pages/blog/index.html.twig', [
             'donnees' => $objs,
             'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @Route("/volley/matches", name="volley_matchs_index")
+     */
+    public function matchs(SerializerInterface $serializer): Response
+    {
+        $objs = $this->getAllData(VoMatch::class, $serializer, User::VISITOR_READ);
+
+        return $this->render('admin/pages/volley/index.html.twig', [
+            'donnees' => $objs
         ]);
     }
 

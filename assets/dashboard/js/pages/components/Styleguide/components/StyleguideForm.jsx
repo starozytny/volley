@@ -27,7 +27,7 @@ export class StyleguideForm extends Component {
             roles: [], // default : ["ROLE_USER"]
             sexe: "",  // default : 0
             pays: "",  // default : "France"
-            birthday: "", // from entity : new Date(getCreatedAtJavascript)
+            birthday: "", // from entity : new Date(getCreatedAtJavascript) see below
             createAt: "",
             arrived: "",
             postalCode: "",

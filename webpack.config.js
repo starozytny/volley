@@ -64,6 +64,7 @@ Encore
     .addEntry('dashboard_blog', './assets/dashboard/js/pages/blog.js')
     .addEntry('dashboard_contact', './assets/dashboard/js/pages/contact.js')
     .addEntry('dashboard_notifications', './assets/dashboard/js/pages/notifications.js')
+    .addEntry('dashboard_volley', './assets/dashboard/js/pages/volley.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
